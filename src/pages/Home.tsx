@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import Scene from "@/components/Scene";
 import Loading from "@/components/Loading";
+import Layout from "@/components/ui/Layout";
 
 const cameraSettings = {
   fov: 45,
@@ -45,7 +46,7 @@ function Home() {
   };
 
   return (
-    <div className="w-full h-screen relative">
+    <Layout>
       {isLoading && (
         <Loading progress={loadingProgress} isTransitioning={isTransitioning} />
       )}
@@ -58,7 +59,7 @@ function Home() {
           <Scene />
         </Suspense>
       </Canvas>
-    </div>
+    </Layout>
   );
 }
 
