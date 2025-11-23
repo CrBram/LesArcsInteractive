@@ -1,36 +1,21 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import Scene from "@/components/Scene";
 
-function Scene() {
-  return (
-    <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <pointLight position={[-10, -10, -5]} intensity={0.5} />
-
-      <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="orange" />
-      </mesh>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
-        <planeGeometry args={[10, 10]} />
-        <meshStandardMaterial color="lightgray" />
-      </mesh>
-    </>
-  );
-}
+const cameraSettings = {
+  fov: 45,
+  near: 0.1,
+  far: 400,
+  position: [-15, 8, 115],
+};
 
 function Home() {
   return (
     <div className="w-full h-screen">
-      <Canvas shadows>
-        <PerspectiveCamera makeDefault position={[5, 5, 5]} fov={50} />
+      <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>
           <Scene />
         </Suspense>
-        <OrbitControls enableDamping dampingFactor={0.05} />
       </Canvas>
     </div>
   );
