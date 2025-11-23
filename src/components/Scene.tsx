@@ -1,6 +1,7 @@
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
+import Lights from "./scene/Lights";
 
 const Scene = () => {
   return (
@@ -13,42 +14,7 @@ const Scene = () => {
         maxPolarAngle={Math.PI / 2.5}
         target={[0, 2.5, 127]}
       />
-      <Environment preset="sunset" />
-      <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
-      <directionalLight position={[-3, 2, 1]} intensity={0.5} color="#ffa500" />
-
-      <pointLight
-        position={[-1.559, 2.016, 126.75]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[-1.485, 2.745, 129.501]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[-2.165, 1.845, 133.833]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[2.248, 4.186, 126.642]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
+      <Lights />
 
       <LesArcs />
       <Snow centerX={0} centerY={0} centerZ={127} />
