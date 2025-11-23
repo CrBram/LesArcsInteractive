@@ -4,10 +4,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Comme", "system-ui", "sans-serif"],
+        secondary: ["Arimo", "system-ui", "sans-serif"],
       },
       colors: {
-        accent: "#b36868",
+        accent: "#A4E3D8",
+        text: "#1D1D1D",
+        white: "#E9E9E9",
       },
     },
   },

@@ -32,8 +32,8 @@
   }
   body {
     background-color: hsl(0 0% 100%);
-    color: var(--color-foreground);
-    font-family: "Inter", system-ui, sans-serif;
+    color: #1D1D1D;
+    font-family: "Comme", system-ui, sans-serif;
   }
 }
 
