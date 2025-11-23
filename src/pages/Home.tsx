@@ -35,15 +35,25 @@ function ProgressTracker({
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleLoadingComplete = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  };
 
   return (
     <div className="w-full h-screen relative">
-      {isLoading && <Loading progress={loadingProgress} />}
+      {isLoading && (
+        <Loading progress={loadingProgress} isTransitioning={isTransitioning} />
+      )}
       <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>
           <ProgressTracker
             onProgress={setLoadingProgress}
-            onComplete={() => setIsLoading(false)}
+            onComplete={handleLoadingComplete}
           />
           <Scene />
         </Suspense>

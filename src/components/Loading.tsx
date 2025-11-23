@@ -1,10 +1,15 @@
 interface LoadingProps {
   progress?: number;
+  isTransitioning?: boolean;
 }
 
-const Loading = ({ progress = 0 }: LoadingProps) => {
+const Loading = ({ progress = 0, isTransitioning = false }: LoadingProps) => {
   return (
-    <div className="fixed inset-0 bg-[#E9E9E9] flex flex-col items-center justify-center z-50">
+    <div
+      className={`fixed inset-0 bg-[#E9E9E9] flex flex-col items-center justify-center z-50 transition-opacity duration-500 ease-out ${
+        isTransitioning ? "opacity-0" : "opacity-100"
+      }`}
+    >
       <div className="flex flex-col items-center gap-6">
         <img
           src="/images/les_arcs_icon.svg"
