@@ -26,6 +26,12 @@ const Scene = () => {
         description="2.965m"
         icon={<img src="/images/mountain_icon.svg" />}
       />
+      <InfoPoint
+        position={[2.4, 4.65, 125.95]}
+        targetPosition={[2.454, 5.4, 124.5]}
+        title="ARC 2000"
+        icon={<img src="/images/cabin_icon.svg" />}
+      />
     </>
   );
 };

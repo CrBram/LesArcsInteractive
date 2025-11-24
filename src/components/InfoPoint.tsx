@@ -46,7 +46,7 @@ export function InfoPoint({
         >
           <div className="select-none bg-[#DBDBDB]/30 backdrop-blur-sm rounded-[8px] px-6 py-3">
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 whitespace-nowrap">
+              <div className="flex items-center justify-center gap-2 whitespace-nowrap">
                 {icon && <div className="flex-shrink-0 w-6">{icon}</div>}
                 <p className="text-black text-base font-medium whitespace-nowrap">
                   {title}
