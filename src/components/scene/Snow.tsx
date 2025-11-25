@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -19,24 +19,20 @@ export function Snow({
   centerRef.current = { x: centerX, y: centerY, z: centerZ };
 
   const particleCount = 5000;
-  const positions = useMemo(() => {
-    const pos = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3;
-      pos[i3] = (Math.random() - 0.5) * 100 + centerX;
-      pos[i3 + 1] = Math.random() * 30 + 5 + centerY;
-      pos[i3 + 2] = (Math.random() - 0.5) * 100 + centerZ;
-    }
-    return pos;
-  }, [particleCount, centerX, centerY, centerZ]);
+  const pos = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    const i3 = i * 3;
+    pos[i3] = (Math.random() - 0.5) * 100 + centerX;
+    pos[i3 + 1] = Math.random() * 30 + 5 + centerY;
+    pos[i3 + 2] = (Math.random() - 0.5) * 100 + centerZ;
+  }
+  const positions = pos;
 
-  const velocities = useMemo(() => {
-    const vel = new Float32Array(particleCount);
-    for (let i = 0; i < particleCount; i++) {
-      vel[i] = Math.random() * 0.5 + 0.1;
-    }
-    return vel;
-  }, [particleCount]);
+  const vel = new Float32Array(particleCount);
+  for (let i = 0; i < particleCount; i++) {
+    vel[i] = Math.random() * 0.5 + 0.1;
+  }
+  const velocities = vel;
 
   useFrame((state, delta) => {
     if (!particlesRef.current) return;
