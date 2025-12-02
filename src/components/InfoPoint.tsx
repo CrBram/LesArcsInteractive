@@ -1,7 +1,9 @@
 import { Html, Line } from "@react-three/drei";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { ReactNode } from "react";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { gsap } from "gsap";
 
 interface InfoPointProps {
   position: [number, number, number];
@@ -21,11 +23,111 @@ export function InfoPoint({
   onClick,
 }: InfoPointProps) {
   const [hovered, setHovered] = useState(false);
+  const { camera, controls } = useThree();
+  const animationRef = useRef<gsap.core.Timeline | null>(null);
+  const onClickExecutedRef = useRef(false);
 
   const points = [
     new THREE.Vector3(...position),
     new THREE.Vector3(...targetPosition),
   ];
+
+  // Refactor
+  const handleClick = () => {
+    if (!controls) return;
+
+    if (animationRef.current) {
+      animationRef.current.kill();
+    }
+
+    onClickExecutedRef.current = false;
+
+    const currentCameraPos = new THREE.Vector3();
+    const currentTarget = new THREE.Vector3();
+    camera.getWorldPosition(currentCameraPos);
+
+    const orbitControls = controls as any;
+    currentTarget.copy(orbitControls.target);
+
+    const targetVec = new THREE.Vector3(...position);
+
+    const currentDirection = new THREE.Vector3()
+      .subVectors(currentCameraPos, currentTarget)
+      .normalize();
+
+    const distance = -5;
+    const heightOffset = 2;
+
+    const offset = currentDirection.clone().multiplyScalar(-distance);
+    offset.y = heightOffset;
+
+    const desiredCameraPos = new THREE.Vector3().addVectors(targetVec, offset);
+
+    const startCameraPos = currentCameraPos.clone();
+    const startTarget = currentTarget.clone();
+
+    const cameraAnim = {
+      x: startCameraPos.x,
+      y: startCameraPos.y,
+      z: startCameraPos.z,
+    };
+
+    const targetAnim = {
+      x: startTarget.x,
+      y: startTarget.y,
+      z: startTarget.z,
+    };
+
+    orbitControls.enabled = false;
+
+    const timeline = gsap.timeline({
+      onUpdate: () => {
+        if (!controls) return;
+        camera.position.set(cameraAnim.x, cameraAnim.y, cameraAnim.z);
+        orbitControls.target.set(targetAnim.x, targetAnim.y, targetAnim.z);
+        orbitControls.update();
+
+        if (
+          onClick &&
+          !onClickExecutedRef.current &&
+          timeline.progress() >= 0.9
+        ) {
+          onClickExecutedRef.current = true;
+          onClick();
+        }
+      },
+      onComplete: () => {
+        orbitControls.enabled = true;
+
+        if (onClick && !onClickExecutedRef.current) {
+          onClickExecutedRef.current = true;
+          onClick();
+        }
+      },
+    });
+
+    timeline.to(cameraAnim, {
+      x: desiredCameraPos.x,
+      y: desiredCameraPos.y,
+      z: desiredCameraPos.z,
+      duration: 2.5,
+      ease: "power2.inOut",
+    });
+
+    timeline.to(
+      targetAnim,
+      {
+        x: targetVec.x,
+        y: targetVec.y,
+        z: targetVec.z,
+        duration: 2.5,
+        ease: "power2.inOut",
+      },
+      "<" // Start at the same time as camera animation
+    );
+
+    animationRef.current = timeline;
+  };
 
   return (
     <group>
@@ -41,8 +143,8 @@ export function InfoPoint({
           className="info-point-container"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          onClick={onClick}
-          style={{ cursor: onClick ? "pointer" : "default" }}
+          onClick={handleClick}
+          style={{ cursor: "pointer" }}
         >
           <div className="select-none bg-[#DBDBDB]/30 backdrop-blur-sm rounded-[8px] px-6 py-3">
             <div className="flex flex-col">

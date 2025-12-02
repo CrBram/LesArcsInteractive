@@ -19,6 +19,38 @@ const MainScene = () => {
         target={[0, 2.5, 127]}
       />
       <Lights />
+      <pointLight
+        position={[-1.559, 2.016, 126.75]}
+        intensity={1.5}
+        scale={0.2}
+        color="#ffd700"
+        distance={5}
+        decay={2}
+      />
+      <pointLight
+        position={[-1.485, 2.745, 129.501]}
+        intensity={1.5}
+        scale={0.2}
+        color="#ffd700"
+        distance={5}
+        decay={2}
+      />
+      <pointLight
+        position={[-2.165, 1.845, 133.833]}
+        intensity={1.5}
+        scale={0.2}
+        color="#ffd700"
+        distance={5}
+        decay={2}
+      />
+      <pointLight
+        position={[2.248, 4.186, 126.642]}
+        intensity={1.5}
+        scale={0.2}
+        color="#ffd700"
+        distance={5}
+        decay={2}
+      />
 
       <LesArcs />
       <Snow centerX={0} centerY={0} centerZ={127} />
