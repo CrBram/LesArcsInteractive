@@ -73,7 +73,7 @@ function Arc2000Page() {
             />
           </svg>
         </span>
-        <span>Back</span>
+        <span>Arc 2000</span>
       </button>
       <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>
