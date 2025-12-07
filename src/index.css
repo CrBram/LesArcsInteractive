@@ -32,7 +32,7 @@
   }
   body {
     background-color: hsl(0 0% 100%);
-    color: #1D1D1D;
+    color: #1d1d1d;
     font-family: "Comme", system-ui, sans-serif;
   }
 }
@@ -45,4 +45,62 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+
+.toggle-checkbox {
+  visibility: hidden;
+  position: absolute;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 4rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  background-color: rgba(219, 219, 219, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 9999px;
+  border: 1px solid rgba(233, 233, 233, 0.6);
+  transition: background-color 250ms ease-in-out;
+}
+
+.toggle-label:hover {
+  background-color: rgba(233, 233, 233, 0.9);
+}
+
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: 1.75rem;
+  background-color: #a4e3d8;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: transform 300ms ease-in-out;
+  z-index: 1;
+}
+
+.toggle-checkbox:checked + .toggle-label::before {
+  transform: translateX(calc(4rem - 1.75rem - 0.5rem));
+}
+
+.toggle-label .sun-icon {
+  position: absolute;
+  left: calc(0.25rem + 1.75rem / 2);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.toggle-label .moon-icon {
+  position: absolute;
+  left: calc(0.25rem + 1.75rem + 1.75rem / 2);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
