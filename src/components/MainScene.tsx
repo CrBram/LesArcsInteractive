@@ -4,9 +4,16 @@ import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import { InfoPoint } from "./InfoPoint";
+import { useControls } from "leva";
 
 const MainScene = () => {
   const navigate = useNavigate();
+
+  // const { targetX, targetY, targetZ } = useControls({
+  //   targetX: { value: 0, step: 0.1 },
+  //   targetY: { value: 2.5, step: 0.1 },
+  //   targetZ: { value: 127, step: 0.1 },
+  // });
 
   return (
     <>
@@ -17,6 +24,9 @@ const MainScene = () => {
         minPolarAngle={Math.PI / 8}
         maxPolarAngle={Math.PI / 2.5}
         target={[0, 2.5, 127]}
+        enablePan={false}
+        enableRotate={false}
+        enableZoom={false}
       />
       <Lights />
       <pointLight
