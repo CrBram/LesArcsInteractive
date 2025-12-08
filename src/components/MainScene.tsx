@@ -21,6 +21,8 @@ const MainScene = () => {
         makeDefault
         minPolarAngle={Math.PI / 8}
         maxPolarAngle={Math.PI / 2.5}
+        minAzimuthAngle={-Math.PI / 1}
+        maxAzimuthAngle={Math.PI / 18}
         target={[0.02400202305203503, 3.3597511357778416, 129.852306087246]}
         enablePan={false}
         enableRotate={true}
