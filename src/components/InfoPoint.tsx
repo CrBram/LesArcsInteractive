@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
+import { playWhoosh } from "./scene/WhooshGust";
 
 interface InfoPointProps {
   position: [number, number, number];
@@ -99,6 +100,8 @@ export function InfoPoint({
 
   const handleClick = () => {
     if (!controls) return;
+
+    playWhoosh();
 
     if (animationRef.current) {
       animationRef.current.kill();

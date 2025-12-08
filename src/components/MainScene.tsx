@@ -4,6 +4,8 @@ import { useRef, useEffect } from "react";
 import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
+import SnowfallAmbient from "./scene/SnowfallAmbient";
+import WhooshGust from "./scene/WhooshGust";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow } from "lucide-react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
@@ -150,6 +152,8 @@ const MainScene = ({
         // }}
       />
       <Lights />
+      <SnowfallAmbient />
+      <WhooshGust />
       <pointLight
         position={[-1.559, 2.016, 126.75]}
         intensity={1.5}
