@@ -81,7 +81,7 @@ function Home() {
         <InformationCard
           icon={MountainSnow}
           title="Aiguilles Rouges"
-          description="Aiguille Rouge is the highest mountain in the ski area of Les Arcs, it rises to 3226 metres above sea level, making it the top point of the resort. From there starts the iconic 7 km long descent down to Villaroger with a vertical drop of around 2026 metres — one of the largest in Europe. The summit can be reached by a cable-car and offers a spectacular 360° panoramic view of the Alps — including views of peaks such as Mont Blanc — and features a footbridge at the top for visitors to enjoy the scenery."
+          description="Aiguille Rouges (Red Peaks) is the highest mountain in the ski area of Les Arcs, it rises to 3226 metres above sea level, making it the top point of the resort. From there starts the iconic 7 km long descent down to Villaroger with a vertical drop of around 2026 metres — one of the largest in Europe. The summit can be reached by a cable-car and offers a spectacular 360° panoramic view of the Alps — including views of peaks such as Mont Blanc — and features a footbridge at the top for visitors to enjoy the scenery."
           isVisible={showAiguillesRougesButton}
         />
       )}
