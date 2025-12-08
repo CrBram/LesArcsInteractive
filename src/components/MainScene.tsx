@@ -13,6 +13,7 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { useSound } from "@/contexts/SoundContext";
+import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 
 interface MainSceneProps {
   onAiguillesRougesClick?: () => void;
@@ -36,9 +37,16 @@ const MainScene = ({
 }: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
-  const { camera, gl } = useThree();
+  const { camera, gl, scene } = useThree();
   const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
   const { startAudio } = useSound();
+  const { preset } = useEnvironmentPreset();
+
+  const backgroundColor = preset === "night" ? "#4A4870" : "#8785B9";
+
+  useEffect(() => {
+    scene.background = new THREE.Color(backgroundColor);
+  }, [scene, backgroundColor]);
 
   useEffect(() => {
     if (!controlsRef.current) return;
@@ -140,8 +148,7 @@ const MainScene = ({
 
   return (
     <>
-      <color attach="background" args={["#8785B9"]} />
-      <fogExp2 attach="fog" args={["#8785B9", 0.03]} />
+      <fogExp2 attach="fog" args={[backgroundColor, 0.03]} />
       <OrbitControls
         ref={controlsRef}
         makeDefault

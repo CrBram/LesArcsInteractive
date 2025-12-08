@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import { Snow } from "./scene/Snow";
 import Lights from "./scene/Lights";
 import { Arc2000 } from "./models/Arc2000";
@@ -8,12 +9,19 @@ import { CameraNavigator } from "./CameraNavigator";
 import TownAmbience from "./scene/TownAmbience";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
 import { useSound } from "@/contexts/SoundContext";
+import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 
 const Arc2000Scene = () => {
-  const { gl } = useThree();
+  const { gl, scene } = useThree();
   const { startAudio } = useSound();
+  const { preset } = useEnvironmentPreset();
 
-  // Add click handler to canvas to start audio on any click
+  const backgroundColor = preset === "night" ? "#4A4870" : "#8785B9";
+
+  useEffect(() => {
+    scene.background = new THREE.Color(backgroundColor);
+  }, [scene, backgroundColor]);
+
   useEffect(() => {
     const canvas = gl.domElement;
     const handleClick = () => {
@@ -29,8 +37,7 @@ const Arc2000Scene = () => {
 
   return (
     <>
-      <color attach="background" args={["#8785B9"]} />
-      <fogExp2 attach="fog" args={["#8785B9", 0.015]} />
+      <fogExp2 attach="fog" args={[backgroundColor, 0.015]} />
       <Lights />
       <Arc2000 />
       <Snow centerX={0} centerY={0} centerZ={0} />
