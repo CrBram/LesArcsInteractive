@@ -1,5 +1,5 @@
 import { Html, Line } from "@react-three/drei";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -26,11 +26,76 @@ export function InfoPoint({
   const { camera, controls } = useThree();
   const animationRef = useRef<gsap.core.Timeline | null>(null);
   const onClickExecutedRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const hoverAnimationRef = useRef<gsap.core.Timeline | null>(null);
 
   const points = [
     new THREE.Vector3(...position),
     new THREE.Vector3(...targetPosition),
   ];
+
+  useEffect(() => {
+    if (!containerRef.current || !contentRef.current || !textRef.current)
+      return;
+
+    if (hoverAnimationRef.current) {
+      hoverAnimationRef.current.kill();
+    }
+
+    if (hovered) {
+      gsap.set(textRef.current, { display: "flex", width: "auto", opacity: 0 });
+      const contentWidth = contentRef.current.scrollWidth;
+      gsap.set(textRef.current, { width: 0, opacity: 0 });
+
+      hoverAnimationRef.current = gsap.timeline();
+      hoverAnimationRef.current
+        .to(containerRef.current, {
+          borderRadius: "8px",
+          width: contentWidth,
+          height: "auto",
+          duration: 0.3,
+          ease: "power2.out",
+        })
+        .to(
+          textRef.current,
+          {
+            opacity: 1,
+            width: "auto",
+            duration: 0.3,
+            ease: "power2.out",
+          },
+          "<0.1"
+        );
+    } else {
+      hoverAnimationRef.current = gsap.timeline({
+        onComplete: () => {
+          if (textRef.current) {
+            gsap.set(textRef.current, { display: "none" });
+          }
+        },
+      });
+      hoverAnimationRef.current
+        .to(textRef.current, {
+          opacity: 0,
+          width: 0,
+          duration: 0.2,
+          ease: "power2.in",
+        })
+        .to(
+          containerRef.current,
+          {
+            borderRadius: "50%",
+            width: "40px",
+            height: "40px",
+            duration: 0.3,
+            ease: "power2.in",
+          },
+          "<"
+        );
+    }
+  }, [hovered]);
 
   const handleClick = () => {
     if (!controls) return;
@@ -145,19 +210,41 @@ export function InfoPoint({
           onClick={handleClick}
           style={{ cursor: "pointer" }}
         >
-          <div className="select-none bg-[#DBDBDB]/30 backdrop-blur-sm rounded-[8px] px-6 py-3">
-            <div className="flex flex-col">
-              <div className="flex items-center justify-center gap-2 whitespace-nowrap">
-                {icon && <div className="flex-shrink-0 w-6">{icon}</div>}
+          <div
+            ref={containerRef}
+            className="select-none bg-[#DBDBDB]/30 backdrop-blur-sm rounded-full overflow-hidden flex items-center justify-center"
+            style={{
+              width: "40px",
+              height: "40px",
+            }}
+          >
+            <div
+              ref={contentRef}
+              className="flex items-center gap-2 whitespace-nowrap px-6 py-3"
+            >
+              {icon && (
+                <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                  {icon}
+                </div>
+              )}
+              <div
+                ref={textRef}
+                className="flex flex-col overflow-hidden"
+                style={{
+                  opacity: 0,
+                  width: 0,
+                  display: "none",
+                }}
+              >
                 <p className="text-black text-base font-medium whitespace-nowrap">
                   {title}
                 </p>
+                {description && (
+                  <p className="text-center italic text-black text-sm whitespace-nowrap -mt-1">
+                    {description}
+                  </p>
+                )}
               </div>
-              {description && (
-                <p className="text-center italic text-black text-sm whitespace-nowrap -mt-1">
-                  {description}
-                </p>
-              )}
             </div>
           </div>
         </div>

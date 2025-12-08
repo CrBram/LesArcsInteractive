@@ -4,15 +4,10 @@ import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import { InfoPoint } from "./InfoPoint";
+import { MountainSnow, School } from "lucide-react";
 
 const MainScene = () => {
   const navigate = useNavigate();
-
-  // const { targetX, targetY, targetZ } = useControls({
-  //   targetX: { value: 0, step: 0.1 },
-  //   targetY: { value: 2.5, step: 0.1 },
-  //   targetZ: { value: 127, step: 0.1 },
-  // });
 
   return (
     <>
@@ -68,13 +63,13 @@ const MainScene = () => {
         targetPosition={[3.238, 7.5, 132]}
         title="Aiguilles Rouges"
         description="2.965m"
-        icon={<img src="/images/mountain_icon.svg" />}
+        icon={<MountainSnow />}
       />
       <InfoPoint
         position={[2.4, 4.65, 125.95]}
         targetPosition={[2.454, 5.4, 124.5]}
         title="ARC 2000"
-        icon={<img src="/images/cabin_icon.svg" />}
+        icon={<School />}
         onClick={() => navigate("/arc-2000")}
       />
     </>
