@@ -14,18 +14,21 @@ export const playWhoosh = () => {
 
 const WhooshGust = () => {
   const { camera } = useThree();
-  const { soundEnabled } = useSound();
+  const { soundEnabled, isAudioInitialized } = useSound();
   const audioRef = useRef<Audio | null>(null);
   const listenerRef = useRef<AudioListener | null>(null);
   const audioBuffer = useLoader(AudioLoader, "/sound/whoosh_gust.mp3");
 
+  // Only create AudioListener after user interaction (when isAudioInitialized is true)
   useEffect(() => {
+    if (!isAudioInitialized || !audioBuffer) return;
+
     if (!listenerRef.current) {
       listenerRef.current = new AudioListener();
       camera.add(listenerRef.current);
     }
 
-    if (!audioRef.current && audioBuffer) {
+    if (!audioRef.current) {
       audioRef.current = new Audio(listenerRef.current);
       audioRef.current.setBuffer(audioBuffer);
       audioRef.current.setLoop(false);
@@ -59,7 +62,7 @@ const WhooshGust = () => {
         listenerRef.current = null;
       }
     };
-  }, [audioBuffer, camera, soundEnabled]);
+  }, [audioBuffer, camera, soundEnabled, isAudioInitialized]);
 
   useEffect(() => {
     if (!soundEnabled && audioRef.current && audioRef.current.isPlaying) {

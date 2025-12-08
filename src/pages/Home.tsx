@@ -7,6 +7,7 @@ import Layout from "@/components/ui/Layout";
 import { BackButton } from "@/components/ui/BackButton";
 import { InformationCard } from "@/components/InformationCard";
 import { MountainSnow } from "lucide-react";
+import { useSound } from "@/contexts/SoundContext";
 
 const cameraSettings = {
   fov: 45,
@@ -44,6 +45,7 @@ function Home() {
     useState(false);
   const [showInfoPoints, setShowInfoPoints] = useState(true);
   const resetViewRef = useRef<(() => void) | null>(null);
+  const { startAudio } = useSound();
 
   const handleLoadingComplete = () => {
     setIsTransitioning(true);
@@ -85,7 +87,13 @@ function Home() {
           isVisible={showAiguillesRougesButton}
         />
       )}
-      <Canvas camera={cameraSettings as any} shadows>
+      <Canvas
+        camera={cameraSettings as any}
+        shadows
+        onPointerMissed={() => {
+          startAudio();
+        }}
+      >
         <Suspense fallback={null}>
           <ProgressTracker
             onProgress={setLoadingProgress}

@@ -4,6 +4,7 @@ import {
   useState,
   useRef,
   useCallback,
+  useEffect,
 } from "react";
 import type { ReactNode } from "react";
 import type { Audio } from "three";
@@ -16,15 +17,18 @@ interface SoundContextType {
     audio: Audio,
     hasStartedRef: { current: boolean }
   ) => () => void;
+  isAudioInitialized: boolean;
 }
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export function SoundProvider({ children }: { children: ReactNode }) {
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const audioInstancesRef = useRef<
     Map<Audio, { hasStartedRef: { current: boolean } }>
   >(new Map());
+  const hasSetUpGlobalHandlerRef = useRef(false);
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev);
@@ -34,7 +38,9 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     (audio: Audio, hasStartedRef: { current: boolean }) => {
       audioInstancesRef.current.set(audio, { hasStartedRef });
 
+      // Start audio if it's already initialized (user has clicked) or if sessionStorage indicates it should start
       const shouldStart =
+        isAudioInitialized ||
         sessionStorage.getItem("audioStartRequested") === "true";
       if (shouldStart && soundEnabled && !hasStartedRef.current) {
         try {
@@ -49,10 +55,13 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         audioInstancesRef.current.delete(audio);
       };
     },
-    [soundEnabled]
+    [soundEnabled, isAudioInitialized]
   );
 
   const startAudio = useCallback(() => {
+    if (isAudioInitialized) return;
+    
+    setIsAudioInitialized(true);
     sessionStorage.setItem("audioStartRequested", "true");
 
     try {
@@ -73,11 +82,39 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         }
       }
     });
-  }, [soundEnabled]);
+  }, [soundEnabled, isAudioInitialized]);
+
+  // Set up global click handler for first user interaction
+  useEffect(() => {
+    if (hasSetUpGlobalHandlerRef.current) return;
+    hasSetUpGlobalHandlerRef.current = true;
+
+    const handleFirstInteraction = () => {
+      startAudio();
+    };
+
+    window.addEventListener("click", handleFirstInteraction, { once: true });
+    window.addEventListener("touchstart", handleFirstInteraction, {
+      once: true,
+    });
+    window.addEventListener("keydown", handleFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+    };
+  }, [startAudio]);
 
   return (
     <SoundContext.Provider
-      value={{ soundEnabled, toggleSound, startAudio, registerAudio }}
+      value={{
+        soundEnabled,
+        toggleSound,
+        startAudio,
+        registerAudio,
+        isAudioInitialized,
+      }}
     >
       {children}
     </SoundContext.Provider>

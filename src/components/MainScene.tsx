@@ -12,6 +12,7 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
+import { useSound } from "@/contexts/SoundContext";
 
 interface MainSceneProps {
   onAiguillesRougesClick?: () => void;
@@ -35,8 +36,9 @@ const MainScene = ({
 }: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
-  const { camera } = useThree();
+  const { camera, gl } = useThree();
   const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
+  const { startAudio } = useSound();
 
   useEffect(() => {
     if (!controlsRef.current) return;
@@ -121,6 +123,20 @@ const MainScene = ({
       onResetReady(resetView);
     }
   }, [onResetReady]);
+
+  // Add click handler to canvas to start audio on any click
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const handleClick = () => {
+      startAudio();
+    };
+
+    canvas.addEventListener("click", handleClick);
+
+    return () => {
+      canvas.removeEventListener("click", handleClick);
+    };
+  }, [gl, startAudio]);
 
   return (
     <>
