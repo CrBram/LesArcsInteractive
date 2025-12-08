@@ -3,6 +3,8 @@ import Lights from "./scene/Lights";
 import { Arc2000 } from "./models/Arc2000";
 import { MouseLook } from "./MouseLook";
 import { CameraNavigator } from "./CameraNavigator";
+import TownAmbience from "./scene/TownAmbience";
+import SnowfallAmbient from "./scene/SnowfallAmbient";
 
 const Arc2000Scene = () => {
   return (
@@ -13,6 +15,8 @@ const Arc2000Scene = () => {
       <Arc2000 />
       <Snow centerX={0} centerY={0} centerZ={0} />
       <MouseLook />
+      <SnowfallAmbient />
+      <TownAmbience />
       <CameraNavigator />
     </>
   );
