@@ -1,5 +1,6 @@
 import { useCameraNavigation } from "@/contexts/CameraNavigationContext";
 import type { LucideIcon } from "lucide-react";
+import { InformationCard } from "./InformationCard";
 
 interface InfoButtonItem {
   position: [number, number, number];
@@ -27,7 +28,7 @@ export function InfoButtons({ items }: InfoButtonsProps) {
     if (!activeTarget) return false;
     const [x1, y1, z1] = item.position;
     const [x2, y2, z2] = activeTarget.position;
-    const threshold = 0.1;
+    const threshold = 1;
     return (
       Math.abs(x1 - x2) < threshold &&
       Math.abs(y1 - y2) < threshold &&
@@ -36,29 +37,40 @@ export function InfoButtons({ items }: InfoButtonsProps) {
     );
   };
 
+  const activeItem = items.find((item) => isActive(item));
+
   return (
-    <div className="absolute left-4 sm:left-8 md:left-12 bottom-4 sm:bottom-8 md:bottom-12 z-40 flex flex-row gap-2">
-      {items.map((item, index) => (
-        <button
-          key={index}
-          type="button"
-          onClick={() => handleClick(item)}
-          className={`w-14 h-14 rounded-full backdrop-blur-sm border flex items-center justify-center hover:bg-[#E9E9E9]/90 transition cursor-pointer ${
-            isActive(item)
-              ? "bg-[#E9E9E9]/90 border-[#A4E3D8] border-2"
-              : "bg-[#DBDBDB]/70 border-[#E9E9E9]/60"
-          }`}
-          title={item.description || item.title}
-        >
-          {item.icon ? (
-            <item.icon className="w-6 h-6 text-black" />
-          ) : (
-            <span className="text-black text-xs font-medium text-center px-2">
-              {item.title}
-            </span>
-          )}
-        </button>
-      ))}
-    </div>
+    <>
+      <div className="absolute left-4 sm:left-8 md:left-12 bottom-4 sm:bottom-8 md:bottom-12 z-40 flex flex-row gap-2">
+        {items.map((item, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => handleClick(item)}
+            className={`w-14 h-14 rounded-full backdrop-blur-sm border flex items-center justify-center hover:bg-[#E9E9E9]/90 transition cursor-pointer ${
+              isActive(item)
+                ? "bg-[#E9E9E9]/90 border-[#A4E3D8] border-2"
+                : "bg-[#DBDBDB]/70 border-[#E9E9E9]/60"
+            }`}
+            title={item.description || item.title}
+          >
+            {item.icon ? (
+              <item.icon className="w-6 h-6 text-black" />
+            ) : (
+              <span className="text-black text-xs font-medium text-center px-2">
+                {item.title}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+      {activeItem && activeItem.description && (
+        <InformationCard
+          icon={activeItem.icon}
+          title={activeItem.title}
+          description={activeItem.description}
+        />
+      )}
+    </>
   );
 }

@@ -32,7 +32,6 @@ export function InfoPoint({
     new THREE.Vector3(...targetPosition),
   ];
 
-  // Refactor
   const handleClick = () => {
     if (!controls) return;
 

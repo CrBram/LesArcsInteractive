@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
-import { Home, Building2, Tent } from "lucide-react";
+import { Home, CableCar, Store } from "lucide-react";
 import Arc2000Scene from "@/components/Arc2000Scene";
 import Loading from "@/components/Loading";
 import Layout from "@/components/ui/Layout";
@@ -55,20 +55,21 @@ function Arc2000Page() {
       position: [-12.5, 1, 0] as [number, number, number],
       icon: Home,
       title: "Home",
-      description: "Return to initial view",
       restoreInitial: true,
     },
     {
-      position: [-6, 1.5, 2] as [number, number, number],
-      icon: Building2,
-      title: "House 3",
-      description: "3rd house on the left",
+      position: [-2, -1.0, -1] as [number, number, number],
+      icon: Store,
+      title: "Ski Shop",
+      description:
+        "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
     },
     {
-      position: [11.655, 1.772, 0.148] as [number, number, number],
-      icon: Tent,
-      title: "Cabin",
-      description: "Furthest cabin on the right",
+      position: [10, -1.0, -1] as [number, number, number],
+      icon: CableCar,
+      title: "Ski Lodge",
+      description:
+        "This is the main ski lodge of Arc 2000. This contains a restaurant, bar, and a gift shop. The lift going up to the Aiguilles Rouges starts here.",
     },
   ];
 
