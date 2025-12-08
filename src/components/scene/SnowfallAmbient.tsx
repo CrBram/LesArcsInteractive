@@ -2,9 +2,11 @@ import { useRef, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
 import { useThree } from "@react-three/fiber";
 import { AudioLoader, Audio, AudioListener } from "three";
+import { useSound } from "@/contexts/SoundContext";
 
 const SnowfallAmbient = () => {
   const { camera } = useThree();
+  const { soundEnabled } = useSound();
   const audioRef = useRef<Audio | null>(null);
   const listenerRef = useRef<AudioListener | null>(null);
   const hasStartedRef = useRef(false);
@@ -24,7 +26,7 @@ const SnowfallAmbient = () => {
     }
 
     const handleUserInteraction = () => {
-      if (audioRef.current && !hasStartedRef.current) {
+      if (audioRef.current && !hasStartedRef.current && soundEnabled) {
         try {
           audioRef.current.play();
           hasStartedRef.current = true;
@@ -54,7 +56,24 @@ const SnowfallAmbient = () => {
         listenerRef.current = null;
       }
     };
-  }, [audioBuffer, camera]);
+  }, [audioBuffer, camera, soundEnabled]);
+
+  useEffect(() => {
+    if (!soundEnabled && audioRef.current && audioRef.current.isPlaying) {
+      audioRef.current.stop();
+    } else if (
+      soundEnabled &&
+      audioRef.current &&
+      !audioRef.current.isPlaying &&
+      hasStartedRef.current
+    ) {
+      try {
+        audioRef.current.play();
+      } catch (error) {
+        console.warn("Audio playback failed:", error);
+      }
+    }
+  }, [soundEnabled]);
 
   return null;
 };
