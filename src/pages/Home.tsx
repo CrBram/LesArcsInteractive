@@ -9,7 +9,7 @@ const cameraSettings = {
   fov: 45,
   near: 0.1,
   far: 400,
-  position: [-15, 8, 115],
+  position: [-17.105249709288742, 8.932276283830646, 128.99947616462492],
 };
 
 function ProgressTracker({

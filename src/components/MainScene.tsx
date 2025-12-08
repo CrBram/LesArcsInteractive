@@ -1,26 +1,43 @@
 import { OrbitControls } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow, School } from "lucide-react";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 const MainScene = () => {
   const navigate = useNavigate();
+  const controlsRef = useRef<OrbitControlsImpl>(null);
 
   return (
     <>
       <color attach="background" args={["#8785B9"]} />
       <fogExp2 attach="fog" args={["#8785B9", 0.03]} />
       <OrbitControls
+        ref={controlsRef}
         makeDefault
         minPolarAngle={Math.PI / 8}
         maxPolarAngle={Math.PI / 2.5}
-        target={[0, 2.5, 127]}
-        enablePan={true}
+        target={[0.02400202305203503, 3.3597511357778416, 129.852306087246]}
+        enablePan={false}
         enableRotate={true}
-        enableZoom={true}
+        enableZoom={false}
+        // onChange={() => {
+        //   if (controlsRef.current) {
+        //     const target = controlsRef.current.target;
+        //     const position = camera.position;
+        //     console.log("Camera Position:", [
+        //       position.x,
+        //       position.y,
+        //       position.z,
+        //     ]);
+        //     console.log("Target:", [target.x, target.y, target.z]);
+        //     console.log("---");
+        //   }
+        // }}
       />
       <Lights />
       <pointLight
