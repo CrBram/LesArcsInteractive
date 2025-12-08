@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import { useCameraNavigation } from "@/contexts/CameraNavigationContext";
 import type { LucideIcon } from "lucide-react";
 import { InformationCard } from "./InformationCard";
@@ -15,7 +16,11 @@ interface InfoButtonsProps {
 }
 
 export function InfoButtons({ items }: InfoButtonsProps) {
-  const { navigateTo, activeTarget } = useCameraNavigation();
+  const { navigateTo, activeTarget, currentTarget } = useCameraNavigation();
+  const [displayedItem, setDisplayedItem] = useState<InfoButtonItem | null>(
+    null
+  );
+  const timeoutRef = useRef<number | null>(null);
 
   const handleClick = (item: InfoButtonItem) => {
     navigateTo({
@@ -25,6 +30,7 @@ export function InfoButtons({ items }: InfoButtonsProps) {
   };
 
   const isActive = (item: InfoButtonItem) => {
+    if (currentTarget) return false;
     if (!activeTarget) return false;
     const [x1, y1, z1] = item.position;
     const [x2, y2, z2] = activeTarget.position;
@@ -39,6 +45,45 @@ export function InfoButtons({ items }: InfoButtonsProps) {
 
   const activeItem = items.find((item) => isActive(item));
 
+  useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    const shouldShow = activeItem && activeItem.description;
+
+    if (shouldShow) {
+      if (displayedItem !== activeItem) {
+        if (displayedItem) {
+          timeoutRef.current = setTimeout(() => {
+            setDisplayedItem(activeItem);
+          }, 300);
+        } else {
+          setDisplayedItem(activeItem);
+        }
+      }
+    } else {
+      if (displayedItem) {
+        timeoutRef.current = setTimeout(() => {
+          setDisplayedItem(null);
+        }, 300);
+      }
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [activeItem, displayedItem]);
+
+  const isVisible = !!(
+    displayedItem &&
+    activeItem &&
+    displayedItem === activeItem &&
+    displayedItem.description
+  );
+
   return (
     <>
       <div className="absolute left-4 sm:left-8 md:left-12 bottom-4 sm:bottom-8 md:bottom-12 z-40 flex flex-row gap-2">
@@ -52,7 +97,6 @@ export function InfoButtons({ items }: InfoButtonsProps) {
                 ? "bg-[#E9E9E9]/90 border-[#A4E3D8] border-2"
                 : "bg-[#DBDBDB]/70 border-[#E9E9E9]/60"
             }`}
-            title={item.description || item.title}
           >
             {item.icon ? (
               <item.icon className="w-6 h-6 text-black" />
@@ -64,11 +108,12 @@ export function InfoButtons({ items }: InfoButtonsProps) {
           </button>
         ))}
       </div>
-      {activeItem && activeItem.description && (
+      {displayedItem && displayedItem.description && (
         <InformationCard
-          icon={activeItem.icon}
-          title={activeItem.title}
-          description={activeItem.description}
+          icon={displayedItem.icon}
+          title={displayedItem.title}
+          description={displayedItem.description}
+          isVisible={!!isVisible}
         />
       )}
     </>
