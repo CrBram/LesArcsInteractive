@@ -2,9 +2,12 @@ import { Suspense, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
+import { Home, Building2, Tent } from "lucide-react";
 import Arc2000Scene from "@/components/Arc2000Scene";
 import Loading from "@/components/Loading";
 import Layout from "@/components/ui/Layout";
+import { CameraNavigationProvider } from "@/contexts/CameraNavigationContext";
+import { InfoButtons } from "@/components/InfoButtons";
 
 const cameraSettings = {
   fov: 45,
@@ -47,44 +50,72 @@ function Arc2000Page() {
     }, 500);
   };
 
+  const infoButtons = [
+    {
+      position: [-12.5, 1, 0] as [number, number, number],
+      icon: Home,
+      title: "Home",
+      description: "Return to initial view",
+      restoreInitial: true,
+    },
+    {
+      position: [-6, 1.5, 2] as [number, number, number],
+      icon: Building2,
+      title: "House 3",
+      description: "3rd house on the left",
+    },
+    {
+      position: [11.655, 1.772, 0.148] as [number, number, number],
+      icon: Tent,
+      title: "Cabin",
+      description: "Furthest cabin on the right",
+    },
+  ];
+
   return (
-    <Layout>
-      {isLoading && (
-        <Loading progress={loadingProgress} isTransitioning={isTransitioning} />
-      )}
-      <button
-        type="button"
-        onClick={() => navigate("/")}
-        className="cursor-pointer absolute left-4 sm:left-8 md:left-12 top-22 z-40 flex items-center gap-2 bg-[#DBDBDB]/70 backdrop-blur-sm rounded-full px-3 py-2 border border-[#E9E9E9]/60 text-sm font-medium text-black hover:bg-[#E9E9E9]/90 transition"
-      >
-        <span className="inline-block h-4 w-4">
-          <svg
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-          >
-            <path
-              d="M11.5 4.5L6 10l5.5 5.5"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-        <span>Arc 2000</span>
-      </button>
-      <Canvas camera={cameraSettings as any} shadows>
-        <Suspense fallback={null}>
-          <ProgressTracker
-            onProgress={setLoadingProgress}
-            onComplete={handleLoadingComplete}
+    <CameraNavigationProvider>
+      <Layout>
+        {isLoading && (
+          <Loading
+            progress={loadingProgress}
+            isTransitioning={isTransitioning}
           />
-          <Arc2000Scene />
-        </Suspense>
-      </Canvas>
-    </Layout>
+        )}
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="cursor-pointer absolute left-4 sm:left-8 md:left-12 top-22 z-40 flex items-center gap-2 bg-[#DBDBDB]/70 backdrop-blur-sm rounded-full px-3 py-2 border border-[#E9E9E9]/60 text-sm font-medium text-black hover:bg-[#E9E9E9]/90 transition"
+        >
+          <span className="inline-block h-4 w-4">
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+            >
+              <path
+                d="M11.5 4.5L6 10l5.5 5.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <span>Arc 2000</span>
+        </button>
+        <InfoButtons items={infoButtons} />
+        <Canvas camera={cameraSettings as any} shadows>
+          <Suspense fallback={null}>
+            <ProgressTracker
+              onProgress={setLoadingProgress}
+              onComplete={handleLoadingComplete}
+            />
+            <Arc2000Scene />
+          </Suspense>
+        </Canvas>
+      </Layout>
+    </CameraNavigationProvider>
   );
 }
 
