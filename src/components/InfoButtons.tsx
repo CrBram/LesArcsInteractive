@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useCameraNavigation } from "@/contexts/CameraNavigationContext";
+import { useSound } from "@/contexts/SoundContext";
 import type { LucideIcon } from "lucide-react";
 import { InformationCard } from "./InformationCard";
 
@@ -17,12 +18,14 @@ interface InfoButtonsProps {
 
 export function InfoButtons({ items }: InfoButtonsProps) {
   const { navigateTo, activeTarget, currentTarget } = useCameraNavigation();
+  const { startAudio } = useSound();
   const [displayedItem, setDisplayedItem] = useState<InfoButtonItem | null>(
     null
   );
   const timeoutRef = useRef<number | null>(null);
 
   const handleClick = (item: InfoButtonItem) => {
+    startAudio();
     navigateTo({
       position: item.position,
       restoreInitial: item.restoreInitial,

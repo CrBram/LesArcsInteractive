@@ -5,6 +5,7 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { playWhoosh } from "./scene/WhooshGust";
+import { useSound } from "@/contexts/SoundContext";
 
 interface InfoPointProps {
   position: [number, number, number];
@@ -98,9 +99,12 @@ export function InfoPoint({
     }
   }, [hovered]);
 
+  const { startAudio } = useSound();
+
   const handleClick = () => {
     if (!controls) return;
 
+    startAudio();
     playWhoosh();
 
     if (animationRef.current) {

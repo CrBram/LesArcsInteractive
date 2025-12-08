@@ -6,7 +6,7 @@ import { useSound } from "@/contexts/SoundContext";
 
 const TownAmbience = () => {
   const { camera } = useThree();
-  const { soundEnabled } = useSound();
+  const { soundEnabled, registerAudio } = useSound();
   const audioRef = useRef<Audio | null>(null);
   const listenerRef = useRef<AudioListener | null>(null);
   const hasStartedRef = useRef(false);
@@ -23,6 +23,11 @@ const TownAmbience = () => {
       audioRef.current.setBuffer(audioBuffer);
       audioRef.current.setLoop(true);
       audioRef.current.setVolume(0.1);
+    }
+
+    let unregister: (() => void) | null = null;
+    if (audioRef.current) {
+      unregister = registerAudio(audioRef.current, hasStartedRef);
     }
 
     const handleUserInteraction = () => {
@@ -42,6 +47,7 @@ const TownAmbience = () => {
     window.addEventListener("keydown", handleUserInteraction, { once: true });
 
     return () => {
+      if (unregister) unregister();
       window.removeEventListener("click", handleUserInteraction);
       window.removeEventListener("touchstart", handleUserInteraction);
       window.removeEventListener("keydown", handleUserInteraction);
@@ -56,7 +62,7 @@ const TownAmbience = () => {
         listenerRef.current = null;
       }
     };
-  }, [audioBuffer, camera, soundEnabled]);
+  }, [audioBuffer, camera, soundEnabled, registerAudio]);
 
   useEffect(() => {
     if (!soundEnabled && audioRef.current && audioRef.current.isPlaying) {
