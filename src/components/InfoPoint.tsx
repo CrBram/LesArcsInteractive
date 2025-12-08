@@ -57,6 +57,7 @@ export function InfoPoint({
           borderRadius: "8px",
           width: contentWidth,
           height: "auto",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
           duration: 0.3,
           ease: "power2.out",
         })
@@ -91,6 +92,7 @@ export function InfoPoint({
             borderRadius: "50%",
             width: "40px",
             height: "40px",
+            backgroundColor: "rgba(219, 219, 219, 0.3)",
             duration: 0.3,
             ease: "power2.in",
           },
