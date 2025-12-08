@@ -5,6 +5,8 @@ import MainScene from "@/components/MainScene";
 import Loading from "@/components/Loading";
 import Layout from "@/components/ui/Layout";
 import { BackButton } from "@/components/ui/BackButton";
+import { InformationCard } from "@/components/InformationCard";
+import { MountainSnow } from "lucide-react";
 
 const cameraSettings = {
   fov: 45,
@@ -74,6 +76,14 @@ function Home() {
       )}
       {showAiguillesRougesButton && (
         <BackButton label="Aiguilles Rouges" onClick={handleBackButtonClick} />
+      )}
+      {showAiguillesRougesButton && (
+        <InformationCard
+          icon={MountainSnow}
+          title="Aiguilles Rouges"
+          description="Aiguille Rouge is the highest mountain in the ski area of Les Arcs, it rises to 3226 metres above sea level, making it the top point of the resort. From there starts the iconic 7 km long descent down to Villaroger with a vertical drop of around 2026 metres — one of the largest in Europe. The summit can be reached by a cable-car and offers a spectacular 360° panoramic view of the Alps — including views of peaks such as Mont Blanc — and features a footbridge at the top for visitors to enjoy the scenery."
+          isVisible={showAiguillesRougesButton}
+        />
       )}
       <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>

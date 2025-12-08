@@ -191,7 +191,7 @@ const MainScene = ({
             position={[3.238, 6.65, 129.805]}
             targetPosition={[3.238, 7.5, 132]}
             title="Aiguilles Rouges"
-            description="2.965m"
+            description="3226m"
             icon={<MountainSnow />}
             onClick={onAiguillesRougesClick}
           />
