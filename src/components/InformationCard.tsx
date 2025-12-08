@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import type { LucideIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface InformationCardProps {
   icon?: LucideIcon;
@@ -18,6 +19,7 @@ export function InformationCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
   const isMountedRef = useRef(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const card = cardRef.current;
@@ -68,10 +70,18 @@ export function InformationCard({
   }, [isVisible]);
 
   return (
-    <div className="absolute right-4 sm:right-8 md:right-12 top-22 z-40">
+    <div
+      className={`absolute z-40 ${
+        isMobile
+          ? "left-4 right-4 bottom-20"
+          : "right-4 sm:right-8 md:right-12 top-22"
+      }`}
+    >
       <div
         ref={cardRef}
-        className="bg-[#DBDBDB]/70 backdrop-blur-sm rounded-lg border border-[#E9E9E9]/60 p-4 sm:p-6 max-w-xs shadow-lg"
+        className={`bg-[#DBDBDB]/70 backdrop-blur-sm rounded-lg border border-[#E9E9E9]/60 p-4 sm:p-6 shadow-lg ${
+          isMobile ? "w-full" : "max-w-xs"
+        }`}
       >
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
