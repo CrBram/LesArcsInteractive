@@ -6,6 +6,7 @@ import type { GLTF } from "three-stdlib";
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
   materials: Record<string, THREE.MeshStandardMaterial>;
+  animations: THREE.AnimationClip[];
 };
 
 export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
@@ -16,12 +17,13 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    Object.values(actions).forEach((action) => {
+    for (const action of Object.values(actions)) {
       if (action) {
         action.play();
       }
-    });
+    }
   }, [actions]);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
@@ -31,20 +33,20 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           rotation={[-1.519, -0.133, 1.761]}
           scale={0.004}
         >
-          <group name="root011" position={[-0.002, 0, 0]}>
+          <group name="root011" position={[-0.001, 0, 0]}>
             <group
               name="GLTF_SceneRootNode011"
-              position={[-0.002, 0, 0]}
+              position={[-0.001, 0, 0]}
               rotation={[Math.PI / 2, 0, 0]}
             >
-              <group name="node-0_0011" position={[-0.002, 0, 0]}>
+              <group name="node-0_0011" position={[-0.001, 0, 0]}>
                 <mesh
                   name="Object_4011"
                   castShadow
                   receiveShadow
                   geometry={nodes.Object_4011.geometry}
                   material={materials["03___Default.011"]}
-                  position={[-0.002, 0, 0]}
+                  position={[2.131, 31.72, 5.043]}
                 />
                 <mesh
                   name="Object_5011"
@@ -52,7 +54,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
                   receiveShadow
                   geometry={nodes.Object_5011.geometry}
                   material={materials["07___Default.012"]}
-                  position={[-0.002, 0, 0]}
+                  position={[0.658, 21.498, 3.988]}
                 />
               </group>
             </group>
@@ -64,20 +66,20 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           rotation={[-1.75, -0.389, -2.32]}
           scale={0.004}
         >
-          <group name="root012" position={[0.001, 0.002, 0]}>
+          <group name="root012" position={[0.002, 0, -0.001]}>
             <group
               name="GLTF_SceneRootNode012"
-              position={[0.001, 0.002, 0]}
+              position={[0.002, 0, -0.001]}
               rotation={[Math.PI / 2, 0, 0]}
             >
-              <group name="node-0_0012" position={[0.001, -0.001, -0.001]}>
+              <group name="node-0_0012" position={[-0.002, 0, 0]}>
                 <mesh
                   name="Object_4012"
                   castShadow
                   receiveShadow
                   geometry={nodes.Object_4012.geometry}
                   material={materials["03___Default.012"]}
-                  position={[25.359, 21.316, 2.133]}
+                  position={[27.488, 53.036, 7.177]}
                 />
                 <mesh
                   name="Object_5012"
@@ -85,7 +87,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
                   receiveShadow
                   geometry={nodes.Object_5012.geometry}
                   material={materials["07___Default.013"]}
-                  position={[25.359, 21.316, 2.133]}
+                  position={[26.014, 42.815, 6.123]}
                 />
               </group>
             </group>
@@ -97,12 +99,12 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.MountainLarge.geometry}
           material={materials["Rock.006"]}
-          position={[1.53, 1.876, 129.817]}
+          position={[1.53, 1.875, 129.817]}
           scale={[5.821, 7.276, 7.69]}
         />
         <group
           name="FullTree138"
-          position={[-1.4, 1.757, 126.07]}
+          position={[-1.417, 2.117, 126.063]}
           rotation={[-0.02, 0.002, 0.05]}
           scale={0.086}
         >
@@ -126,14 +128,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall019.geometry}
             material={materials["Snow.005"]}
-            position={[-0.007, 3.547, -0.02]}
+            position={[-0.019, -0.661, -0.017]}
             rotation={[0.019, -0.003, -0.05]}
             scale={11.694}
           />
         </group>
         <group
           name="FullTree139"
-          position={[-1.682, 1.748, 125.825]}
+          position={[-1.694, 2.005, 125.82]}
           rotation={[-0.02, 0.002, 0.05]}
           scale={[0.085, 0.061, 0.086]}
         >
@@ -157,14 +159,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall020.geometry}
             material={materials["Snow.006"]}
-            position={[-0.06, 3.345, -0.02]}
+            position={[-0.072, -0.863, -0.017]}
             rotation={[0.021, -0.003, -0.053]}
             scale={[11.711, 16.4, 11.697]}
           />
         </group>
         <group
           name="FullTree140"
-          position={[-1.985, 1.713, 126.032]}
+          position={[-2.035, 2.031, 126.025]}
           rotation={[-0.02, -0.001, 0.158]}
           scale={[0.085, 0.076, 0.086]}
         >
@@ -188,14 +190,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall021.geometry}
             material={materials["Snow.007"]}
-            position={[0.048, 3.415, -0.044]}
+            position={[0.036, -0.793, -0.041]}
             rotation={[0.02, -0.003, -0.159]}
             scale={[11.733, 13.041, 11.695]}
           />
         </group>
         <group
           name="FullTree141"
-          position={[-0.289, 1.757, 125.436]}
+          position={[-0.306, 2.11, 125.365]}
           rotation={[-0.197, 0.002, 0.05]}
           scale={0.086}
         >
@@ -219,14 +221,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall022.geometry}
             material={materials["Snow.020"]}
-            position={[-0.015, 3.611, 0.369]}
+            position={[-0.027, -0.598, 0.372]}
             rotation={[0.197, -0.011, -0.049]}
             scale={11.694}
           />
         </group>
         <group
           name="FullTree142"
-          position={[-1.4, 2.716, 130.738]}
+          position={[-1.417, 3.076, 130.73]}
           rotation={[-0.02, 0.002, 0.05]}
           scale={0.086}
         >
@@ -250,14 +252,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall023.geometry}
             material={materials["Snow.021"]}
-            position={[-0.018, 3.419, 0]}
+            position={[-0.03, -0.79, 0.003]}
             rotation={[0.019, -0.003, -0.05]}
             scale={11.694}
           />
         </group>
         <group
           name="FullTree143"
-          position={[-0.998, 2.716, 130.4]}
+          position={[-1.015, 3.076, 130.393]}
           rotation={[-0.02, 0.002, 0.05]}
           scale={0.086}
         >
@@ -281,14 +283,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall024.geometry}
             material={materials["Snow.022"]}
-            position={[-0.009, 3.46, -0.008]}
+            position={[-0.021, -0.749, -0.005]}
             rotation={[0.019, -0.003, -0.05]}
             scale={11.694}
           />
         </group>
         <group
           name="FullTree144"
-          position={[-0.98, 2.688, 129.006]}
+          position={[-0.997, 3.047, 129.018]}
           rotation={[0.033, 0.002, 0.05]}
           scale={0.086}
         >
@@ -312,14 +314,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall025.geometry}
             material={materials["Snow.023"]}
-            position={[-0.006, 3.465, -0.042]}
+            position={[-0.018, -0.743, -0.039]}
             rotation={[-0.033, 0, -0.05]}
             scale={11.694}
           />
         </group>
         <group
           name="FullTree145"
-          position={[-1.641, 1.585, 133.509]}
+          position={[-1.654, 1.868, 133.503]}
           rotation={[-0.02, 0.002, 0.05]}
           scale={[0.085, 0.067, 0.086]}
         >
@@ -343,14 +345,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall026.geometry}
             material={materials["Snow.024"]}
-            position={[0.009, 3.471, -0.017]}
+            position={[-0.003, -0.738, -0.014]}
             rotation={[0.02, -0.003, -0.051]}
             scale={[11.709, 14.865, 11.696]}
           />
         </group>
         <group
           name="FullTree146"
-          position={[1.415, 4.085, 130.141]}
+          position={[1.401, 4.387, 130.151]}
           rotation={[0.033, 0.002, 0.05]}
           scale={[0.085, 0.072, 0.085]}
         >
@@ -374,14 +376,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall027.geometry}
             material={materials["Snow.025"]}
-            position={[0, 3.19, -0.031]}
+            position={[-0.011, -1.019, -0.028]}
             rotation={[-0.034, 0, -0.051]}
             scale={[11.705, 13.914, 11.699]}
           />
         </group>
         <group
           name="FullTree147"
-          position={[0.736, 3.701, 131.017]}
+          position={[0.736, 4.003, 131.027]}
           rotation={[0.033, 0, 0.004]}
           scale={[0.085, 0.072, 0.085]}
         >
@@ -405,14 +407,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall028.geometry}
             material={materials["Snow.026"]}
-            position={[0.016, 3.231, -0.042]}
+            position={[0.004, -0.978, -0.039]}
             rotation={[-0.034, 0, -0.004]}
             scale={[11.699, 13.919, 11.699]}
           />
         </group>
         <group
           name="FullTree148"
-          position={[1.337, 3.718, 131.017]}
+          position={[1.293, 4.017, 131.027]}
           rotation={[0.033, 0.005, 0.148]}
           scale={[0.085, 0.072, 0.085]}
         >
@@ -436,14 +438,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall029.geometry}
             material={materials["Snow.027"]}
-            position={[-0.018, 3.04, -0.026]}
+            position={[-0.03, -1.169, -0.023]}
             rotation={[-0.034, 0, -0.15]}
             scale={[11.752, 13.875, 11.699]}
           />
         </group>
         <group
           name="FullTree149"
-          position={[1.337, 3.621, 130.699]}
+          position={[1.305, 3.84, 130.707]}
           rotation={[0.033, 0.005, 0.148]}
           scale={[0.085, 0.053, 0.085]}
         >
@@ -467,14 +469,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall030.geometry}
             material={materials["Snow.028"]}
-            position={[-0.001, 2.853, -0.023]}
+            position={[-0.013, -1.356, -0.02]}
             rotation={[-0.038, 0.001, -0.164]}
             scale={[11.964, 18.853, 11.71]}
           />
         </group>
         <group
           name="FullTree150"
-          position={[1.415, 3.848, 132.604]}
+          position={[1.401, 4.219, 132.316]}
           rotation={[0.033, 0.002, 0.05]}
           scale={[0.085, 0.072, 0.085]}
         >
@@ -498,14 +500,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall031.geometry}
             material={materials["Snow.029"]}
-            position={[-0.005, 3.269, 0.01]}
+            position={[-0.017, -0.94, 0.013]}
             rotation={[-0.034, 0, -0.051]}
             scale={[11.705, 13.914, 11.699]}
           />
         </group>
         <group
           name="FullTree151"
-          position={[2.631, 4.137, 127.333]}
+          position={[2.621, 4.374, 127.341]}
           rotation={[0.033, 0.002, 0.05]}
           scale={[0.085, 0.056, 0.085]}
         >
@@ -529,14 +531,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall033.geometry}
             material={materials["Snow.031"]}
-            position={[0, 2.801, -0.072]}
+            position={[-0.011, -1.407, -0.069]}
             rotation={[-0.036, 0, -0.054]}
             scale={[11.721, 17.771, 11.706]}
           />
         </group>
         <group
           name="FullTree152"
-          position={[2.159, 4.137, 127.103]}
+          position={[2.151, 4.331, 127.109]}
           rotation={[0.033, 0.002, 0.05]}
           scale={[0.07, 0.046, 0.07]}
         >
@@ -560,14 +562,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall034.geometry}
             material={materials["Snow.032"]}
-            position={[-0.027, 3.068, -0.053]}
+            position={[-0.038, -1.141, -0.05]}
             rotation={[-0.036, 0, -0.054]}
             scale={[14.322, 21.715, 14.304]}
           />
         </group>
         <group
           name="FullTree153"
-          position={[1.207, 3.84, 127.359]}
+          position={[1.185, 4.016, 127.365]}
           rotation={[0.033, 0.004, 0.128]}
           scale={[0.066, 0.042, 0.067]}
         >
@@ -591,14 +593,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall035.geometry}
             material={materials["Snow.033"]}
-            position={[0.11, 3.189, -0.02]}
+            position={[0.098, -1.02, -0.018]}
             rotation={[-0.037, 0, -0.055]}
             scale={[15.068, 23.816, 15.046]}
           />
         </group>
         <group
           name="FullTree154"
-          position={[1.207, 3.937, 126.114]}
+          position={[1.187, 4.123, 126.12]}
           rotation={[0.036, -0.006, 0.11]}
           scale={[0.067, 0.045, 0.067]}
         >
@@ -622,14 +624,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall036.geometry}
             material={materials.Snow}
-            position={[0.082, 3.053, -0.076]}
+            position={[0.07, -1.156, -0.073]}
             rotation={[-0.038, 0.01, -0.119]}
             scale={[15.149, 22.388, 15.044]}
           />
         </group>
         <group
           name="FullTree155"
-          position={[3.346, 4.702, 131.571]}
+          position={[3.36, 4.943, 131.626]}
           rotation={[0.224, -0.002, -0.053]}
           scale={[0.07, 0.059, 0.07]}
         >
@@ -653,9 +655,9 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall032.geometry}
             material={materials["Snow.030"]}
-            position={[-0.067, 3.084, -0.293]}
+            position={[-0.079, -1.124, -0.29]}
             rotation={[-0.226, -0.01, 0.054]}
-            scale={[14.329, 16.912, 14.464]}
+            scale={[14.33, 16.912, 14.464]}
           />
         </group>
         <mesh
@@ -664,7 +666,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Plane001.geometry}
           material={materials["Ground.001"]}
-          position={[0, 0, 127.115]}
+          position={[1.525, 4.306, 129.818]}
           scale={-39.205}
         />
         <mesh
@@ -673,7 +675,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Mountains_Backup006.geometry}
           material={materials["Rock.008"]}
-          position={[-26.052, -0.047, 138.437]}
+          position={[-26.053, 1.005, 138.436]}
           rotation={[0, -1.194, 0]}
           scale={3.74}
         />
@@ -683,7 +685,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Mountains_Backup008.geometry}
           material={materials["Rock.009"]}
-          position={[5.241, -0.248, 156.793]}
+          position={[5.241, 0.539, 156.792]}
           rotation={[0, -1.194, 0]}
           scale={2.799}
         />
@@ -693,7 +695,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Mountains_Backup009.geometry}
           material={materials["Rock.010"]}
-          position={[29.784, -0.248, 110.959]}
+          position={[29.783, 1.204, 110.958]}
           rotation={[0, -1.194, 0]}
           scale={5.163}
         />
@@ -703,12 +705,12 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Mountains_Backup010.geometry}
           material={materials["Rock.011"]}
-          position={[13.657, -0.248, 100.942]}
+          position={[13.656, 1.204, 100.942]}
           scale={5.163}
         />
         <group
           name="FullTree156"
-          position={[-12.462, 0.128, 126.439]}
+          position={[-12.459, 0.488, 126.433]}
           rotation={[-0.02, -0.307, -0.006]}
           scale={0.086}
         >
@@ -729,7 +731,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree157"
-          position={[-10.357, 0.114, 125.363]}
+          position={[-10.355, 0.474, 125.363]}
           rotation={[0, -0.309, 0]}
           scale={0.086}
         >
@@ -750,7 +752,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree158"
-          position={[-14.02, 0.081, 130.823]}
+          position={[-14.017, 0.441, 130.816]}
           rotation={[-0.02, -0.307, -0.006]}
           scale={0.086}
         >
@@ -771,7 +773,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree159"
-          position={[-13.02, 0.024, 131.165]}
+          position={[-13.031, 0.383, 131.142]}
           rotation={[-0.053, -0.3, 0.036]}
           scale={0.086}
         >
@@ -792,7 +794,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree160"
-          position={[-8.946, 0.114, 126.082]}
+          position={[-8.945, 0.474, 126.082]}
           rotation={[0, -0.309, 0]}
           scale={0.086}
         >
@@ -813,7 +815,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree161"
-          position={[-7.222, 0.074, 126.781]}
+          position={[-7.221, 0.434, 126.781]}
           rotation={[0, -0.309, 0]}
           scale={0.086}
         >
@@ -834,7 +836,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree162"
-          position={[-16.615, 0.115, 138.127]}
+          position={[-16.614, 0.475, 138.127]}
           rotation={[0, -0.037, 0]}
           scale={0.086}
         >
@@ -855,7 +857,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree163"
-          position={[-15.635, 0.154, 137.896]}
+          position={[-15.634, 0.514, 137.896]}
           rotation={[0, -0.037, 0]}
           scale={0.086}
         >
@@ -876,7 +878,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree164"
-          position={[-16.069, 0.115, 136.621]}
+          position={[-16.068, 0.475, 136.621]}
           rotation={[0, -0.378, 0]}
           scale={0.086}
         >
@@ -897,7 +899,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree165"
-          position={[-15.614, 0.154, 137.329]}
+          position={[-15.613, 0.514, 137.329]}
           rotation={[0, -0.037, 0]}
           scale={0.086}
         >
@@ -918,7 +920,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree166"
-          position={[-16.557, 0.115, 135.464]}
+          position={[-16.556, 0.475, 135.464]}
           rotation={[0, -0.037, 0]}
           scale={0.086}
         >
@@ -939,7 +941,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree167"
-          position={[-16.012, 0.115, 133.958]}
+          position={[-16.011, 0.475, 133.958]}
           rotation={[0, -0.378, 0]}
           scale={0.086}
         >
@@ -960,7 +962,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree168"
-          position={[-8.889, 0.285, 117.649]}
+          position={[-8.89, 0.645, 117.65]}
           rotation={[Math.PI, -0.329, Math.PI]}
           scale={0.086}
         >
@@ -981,7 +983,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree169"
-          position={[-7.384, 0.295, 117.135]}
+          position={[-7.385, 0.655, 117.136]}
           rotation={[Math.PI, -0.329, Math.PI]}
           scale={0.086}
         >
@@ -1002,7 +1004,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree170"
-          position={[-9.275, 0.285, 121.871]}
+          position={[-9.276, 0.645, 121.872]}
           rotation={[Math.PI, -0.671, Math.PI]}
           scale={0.086}
         >
@@ -1023,7 +1025,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree171"
-          position={[-8.535, 0.295, 119.68]}
+          position={[-8.535, 0.655, 119.681]}
           rotation={[Math.PI, -0.671, Math.PI]}
           scale={0.086}
         >
@@ -1044,7 +1046,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree172"
-          position={[-7.94, 0.256, 118.867]}
+          position={[-7.941, 0.616, 118.868]}
           rotation={[Math.PI, -0.671, Math.PI]}
           scale={0.086}
         >
@@ -1065,7 +1067,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree173"
-          position={[-10.936, 0.208, 122.058]}
+          position={[-10.936, 0.568, 122.059]}
           rotation={[Math.PI, -0.671, Math.PI]}
           scale={0.086}
         >
@@ -1086,7 +1088,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree174"
-          position={[-10.448, 0.23, 122.33]}
+          position={[-10.448, 0.59, 122.331]}
           rotation={[Math.PI, -0.671, Math.PI]}
           scale={0.086}
         >
@@ -1107,7 +1109,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree175"
-          position={[-9.929, 0.144, 137.601]}
+          position={[-9.928, 0.504, 137.601]}
           rotation={[0, -0.069, 0]}
           scale={0.086}
         >
@@ -1128,7 +1130,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree176"
-          position={[-11.515, 0.154, 137.492]}
+          position={[-11.514, 0.514, 137.492]}
           rotation={[0, -0.069, 0]}
           scale={0.086}
         >
@@ -1149,7 +1151,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree177"
-          position={[-9.579, 0.144, 140.342]}
+          position={[-9.578, 0.504, 140.342]}
           rotation={[0, 0.273, 0]}
           scale={0.086}
         >
@@ -1170,7 +1172,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree178"
-          position={[-11.11, 0.154, 140.771]}
+          position={[-11.11, 0.514, 140.77]}
           rotation={[0, 0.273, 0]}
           scale={0.086}
         >
@@ -1191,7 +1193,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree179"
-          position={[-11.974, 0.115, 141.289]}
+          position={[-11.973, 0.475, 141.289]}
           rotation={[0, 0.273, 0]}
           scale={0.086}
         >
@@ -1212,7 +1214,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree180"
-          position={[22.302, 0.115, 135.536]}
+          position={[22.302, 0.475, 135.535]}
           rotation={[0, 1.189, 0]}
           scale={0.086}
         >
@@ -1233,7 +1235,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree181"
-          position={[22.416, 0.154, 134.535]}
+          position={[22.416, 0.514, 134.534]}
           rotation={[0, 1.189, 0]}
           scale={0.086}
         >
@@ -1254,7 +1256,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree182"
-          position={[23.009, 0.144, 133.059]}
+          position={[23.009, 0.504, 133.058]}
           rotation={[0, 1.189, 0]}
           scale={0.086}
         >
@@ -1275,7 +1277,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree183"
-          position={[19.568, 0.154, 132.861]}
+          position={[19.569, 0.514, 132.86]}
           rotation={[0, 0.847, 0]}
           scale={0.086}
         >
@@ -1296,7 +1298,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree184"
-          position={[20.621, 0.144, 131.669]}
+          position={[20.621, 0.504, 131.668]}
           rotation={[0, 0.847, 0]}
           scale={0.086}
         >
@@ -1317,7 +1319,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree185"
-          position={[8.188, 0.23, 122.785]}
+          position={[8.189, 0.59, 122.786]}
           rotation={[0, -1.554, 0]}
           scale={0.086}
         >
@@ -1338,7 +1340,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree186"
-          position={[7.676, 0.208, 123.007]}
+          position={[7.676, 0.568, 123.008]}
           rotation={[0, -1.554, 0]}
           scale={0.086}
         >
@@ -1359,7 +1361,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree187"
-          position={[6.967, 0.256, 118.688]}
+          position={[6.968, 0.616, 118.689]}
           rotation={[0, -1.554, 0]}
           scale={0.086}
         >
@@ -1380,7 +1382,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree188"
-          position={[7.25, 0.295, 119.655]}
+          position={[7.251, 0.655, 119.656]}
           rotation={[0, -1.554, 0]}
           scale={0.086}
         >
@@ -1401,7 +1403,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree189"
-          position={[8.538, 0.285, 121.576]}
+          position={[8.538, 0.645, 121.577]}
           rotation={[0, -1.554, 0]}
           scale={0.086}
         >
@@ -1422,7 +1424,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree190"
-          position={[5.931, 0.295, 117.193]}
+          position={[5.931, 0.655, 117.194]}
           rotation={[Math.PI, -1.245, Math.PI]}
           scale={0.086}
         >
@@ -1443,7 +1445,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree191"
-          position={[5.423, 0.285, 118.7]}
+          position={[5.423, 0.645, 118.701]}
           rotation={[Math.PI, -1.245, Math.PI]}
           scale={0.086}
         >
@@ -1464,7 +1466,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree192"
-          position={[14.027, 0.115, 134.278]}
+          position={[14.028, 0.475, 134.277]}
           rotation={[0, 0.538, 0]}
           scale={0.086}
         >
@@ -1485,7 +1487,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree193"
-          position={[14.89, 0.115, 135.627]}
+          position={[14.891, 0.475, 135.626]}
           rotation={[0, 0.88, 0]}
           scale={0.086}
         >
@@ -1506,7 +1508,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree194"
-          position={[16.945, 0.154, 136.014]}
+          position={[16.945, 0.514, 136.013]}
           rotation={[0, 0.88, 0]}
           scale={0.086}
         >
@@ -1527,7 +1529,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree195"
-          position={[16.105, 0.115, 135.944]}
+          position={[16.106, 0.475, 135.943]}
           rotation={[0, 0.538, 0]}
           scale={0.086}
         >
@@ -1548,7 +1550,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree196"
-          position={[17.382, 0.154, 136.375]}
+          position={[17.382, 0.514, 136.374]}
           rotation={[0, 0.88, 0]}
           scale={0.086}
         >
@@ -1569,7 +1571,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree197"
-          position={[16.968, 0.115, 137.294]}
+          position={[16.969, 0.475, 137.293]}
           rotation={[0, 0.88, 0]}
           scale={0.086}
         >
@@ -1590,7 +1592,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree198"
-          position={[13.683, 0.074, 122.935]}
+          position={[13.684, 0.434, 122.934]}
           rotation={[0, 0.607, 0]}
           scale={0.086}
         >
@@ -1611,7 +1613,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree199"
-          position={[12.08, 0.114, 123.878]}
+          position={[12.08, 0.474, 123.877]}
           rotation={[0, 0.607, 0]}
           scale={0.086}
         >
@@ -1632,7 +1634,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree200"
-          position={[13.633, 0.024, 130.204]}
+          position={[13.608, 0.383, 130.199]}
           rotation={[-0.062, 0.615, 0.088]}
           scale={0.086}
         >
@@ -1653,7 +1655,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree201"
-          position={[12.752, 0.081, 130.789]}
+          position={[12.749, 0.441, 130.782]}
           rotation={[-0.024, 0.609, 0.013]}
           scale={0.086}
         >
@@ -1674,7 +1676,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree202"
-          position={[10.65, 0.114, 124.559]}
+          position={[10.651, 0.474, 124.558]}
           rotation={[0, 0.607, 0]}
           scale={0.086}
         >
@@ -1695,7 +1697,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree203"
-          position={[10.223, 0.128, 126.885]}
+          position={[10.22, 0.488, 126.878]}
           rotation={[-0.024, 0.609, 0.013]}
           scale={0.086}
         >
@@ -1716,7 +1718,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree204"
-          position={[-7.314, 0.128, 142.129]}
+          position={[-7.316, 0.488, 142.123]}
           rotation={[-0.022, 0.488, 0.01]}
           scale={0.086}
         >
@@ -1737,7 +1739,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree205"
-          position={[-6.608, 0.114, 139.873]}
+          position={[-6.607, 0.474, 139.872]}
           rotation={[0, 0.486, 0]}
           scale={0.086}
         >
@@ -1758,7 +1760,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree206"
-          position={[-5.276, 0.081, 146.311]}
+          position={[-5.278, 0.441, 146.304]}
           rotation={[-0.022, 0.488, 0.01]}
           scale={0.086}
         >
@@ -1779,7 +1781,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree207"
-          position={[-4.331, 0.024, 145.837]}
+          position={[-4.355, 0.383, 145.829]}
           rotation={[-0.058, 0.494, 0.079]}
           scale={0.086}
         >
@@ -1800,7 +1802,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree208"
-          position={[-5.107, 0.114, 139.369]}
+          position={[-5.106, 0.474, 139.369]}
           rotation={[0, 0.486, 0]}
           scale={0.086}
         >
@@ -1821,7 +1823,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree209"
-          position={[-3.401, 0.074, 138.628]}
+          position={[-3.4, 0.434, 138.627]}
           rotation={[0, 0.486, 0]}
           scale={0.086}
         >
@@ -1842,7 +1844,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree210"
-          position={[-1.878, 0.115, 153.278]}
+          position={[-1.877, 0.475, 153.277]}
           rotation={[0, 0.758, 0]}
           scale={0.086}
         >
@@ -1863,7 +1865,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree211"
-          position={[-1.357, 0.154, 152.416]}
+          position={[-1.356, 0.514, 152.416]}
           rotation={[0, 0.758, 0]}
           scale={0.086}
         >
@@ -1884,7 +1886,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree212"
-          position={[-2.571, 0.115, 151.834]}
+          position={[-2.571, 0.475, 151.834]}
           rotation={[0, 0.417, 0]}
           scale={0.086}
         >
@@ -1905,7 +1907,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree213"
-          position={[-1.747, 0.154, 152.005]}
+          position={[-1.746, 0.514, 152.004]}
           rotation={[0, 0.758, 0]}
           scale={0.086}
         >
@@ -1926,7 +1928,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree214"
-          position={[-3.739, 0.115, 151.373]}
+          position={[-3.738, 0.475, 151.372]}
           rotation={[0, 0.758, 0]}
           scale={0.086}
         >
@@ -1947,7 +1949,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree215"
-          position={[-4.432, 0.115, 149.928]}
+          position={[-4.431, 0.475, 149.928]}
           rotation={[0, 0.417, 0]}
           scale={0.086}
         >
@@ -1968,7 +1970,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree216"
-          position={[-11.088, 0.285, 133.424]}
+          position={[-11.088, 0.645, 133.425]}
           rotation={[Math.PI, -1.124, Math.PI]}
           scale={0.086}
         >
@@ -1989,7 +1991,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree217"
-          position={[-10.401, 0.295, 131.989]}
+          position={[-10.401, 0.655, 131.99]}
           rotation={[Math.PI, -1.124, Math.PI]}
           scale={0.086}
         >
@@ -2010,7 +2012,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree218"
-          position={[-8.344, 0.285, 136.655]}
+          position={[-8.344, 0.645, 136.656]}
           rotation={[Math.PI, -1.466, Math.PI]}
           scale={0.086}
         >
@@ -2031,7 +2033,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree219"
-          position={[-9.39, 0.295, 134.593]}
+          position={[-9.389, 0.655, 134.594]}
           rotation={[Math.PI, -1.466, Math.PI]}
           scale={0.086}
         >
@@ -2052,7 +2054,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree220"
-          position={[-9.554, 0.256, 133.599]}
+          position={[-9.553, 0.616, 133.6]}
           rotation={[Math.PI, -1.466, Math.PI]}
           scale={0.086}
         >
@@ -2073,7 +2075,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree221"
-          position={[-9.373, 0.208, 137.972]}
+          position={[-9.373, 0.568, 137.973]}
           rotation={[Math.PI, -1.466, Math.PI]}
           scale={0.086}
         >
@@ -2094,7 +2096,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree222"
-          position={[-8.837, 0.23, 137.814]}
+          position={[-8.837, 0.59, 137.815]}
           rotation={[Math.PI, -1.466, Math.PI]}
           scale={0.086}
         >
@@ -2115,7 +2117,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree223"
-          position={[2.429, 0.144, 148.137]}
+          position={[2.429, 0.504, 148.136]}
           rotation={[0, 0.726, 0]}
           scale={0.086}
         >
@@ -2136,7 +2138,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree224"
-          position={[1.239, 0.154, 149.193]}
+          position={[1.24, 0.514, 149.192]}
           rotation={[0, 0.726, 0]}
           scale={0.086}
         >
@@ -2157,7 +2159,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree225"
-          position={[4.631, 0.144, 149.806]}
+          position={[4.631, 0.504, 149.805]}
           rotation={[0, 1.068, 0]}
           scale={0.086}
         >
@@ -2178,7 +2180,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree226"
-          position={[3.864, 0.154, 151.2]}
+          position={[3.864, 0.514, 151.199]}
           rotation={[0, 1.068, 0]}
           scale={0.086}
         >
@@ -2199,7 +2201,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree227"
-          position={[3.63, 0.115, 152.179]}
+          position={[3.63, 0.475, 152.178]}
           rotation={[0, 1.068, 0]}
           scale={0.086}
         >
@@ -2220,7 +2222,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree228"
-          position={[9.309, 0.115, 138.731]}
+          position={[9.309, 0.475, 138.731]}
           rotation={[-Math.PI, 0.968, -Math.PI]}
           scale={0.086}
         >
@@ -2241,7 +2243,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree229"
-          position={[8.539, 0.154, 138.083]}
+          position={[8.538, 0.514, 138.082]}
           rotation={[-Math.PI, 0.968, -Math.PI]}
           scale={0.086}
         >
@@ -2262,7 +2264,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree230"
-          position={[7.637, 0.144, 136.772]}
+          position={[7.636, 0.504, 136.772]}
           rotation={[-Math.PI, 0.968, -Math.PI]}
           scale={0.086}
         >
@@ -2283,7 +2285,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree231"
-          position={[5.568, 0.154, 139.529]}
+          position={[5.568, 0.514, 139.528]}
           rotation={[-Math.PI, 1.31, -Math.PI]}
           scale={0.086}
         >
@@ -2304,7 +2306,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree232"
-          position={[5.158, 0.144, 137.992]}
+          position={[5.157, 0.504, 137.991]}
           rotation={[-Math.PI, 1.31, -Math.PI]}
           scale={0.086}
         >
@@ -2325,7 +2327,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree233"
-          position={[-9.121, 0.23, 143.434]}
+          position={[-9.12, 0.59, 143.434]}
           rotation={[0, -0.57, 0]}
           scale={0.086}
         >
@@ -2346,7 +2348,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree234"
-          position={[-9.22, 0.208, 143.983]}
+          position={[-9.219, 0.568, 143.984]}
           rotation={[0, -0.57, 0]}
           scale={0.086}
         >
@@ -2367,7 +2369,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree235"
-          position={[-13.209, 0.256, 142.184]}
+          position={[-13.208, 0.616, 142.184]}
           rotation={[0, -0.57, 0]}
           scale={0.086}
         >
@@ -2388,7 +2390,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree236"
-          position={[-12.248, 0.295, 142.483]}
+          position={[-12.247, 0.655, 142.483]}
           rotation={[0, -0.57, 0]}
           scale={0.086}
         >
@@ -2409,7 +2411,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree237"
-          position={[-9.935, 0.285, 142.473]}
+          position={[-9.934, 0.645, 142.473]}
           rotation={[0, -0.57, 0]}
           scale={0.086}
         >
@@ -2430,7 +2432,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree238"
-          position={[-15.028, 0.295, 142.219]}
+          position={[-15.027, 0.655, 142.22]}
           rotation={[0, -0.912, 0]}
           scale={0.086}
         >
@@ -2451,7 +2453,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree239"
-          position={[-14.054, 0.285, 143.477]}
+          position={[-14.053, 0.645, 143.477]}
           rotation={[0, -0.912, 0]}
           scale={0.086}
         >
@@ -2472,7 +2474,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree240"
-          position={[3.683, 0.115, 144.928]}
+          position={[3.683, 0.475, 144.927]}
           rotation={[0, 1.522, 0]}
           scale={0.086}
         >
@@ -2493,7 +2495,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree241"
-          position={[5.284, 0.115, 144.956]}
+          position={[5.284, 0.475, 144.955]}
           rotation={[-Math.PI, 1.277, -Math.PI]}
           scale={0.086}
         >
@@ -2514,7 +2516,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree242"
-          position={[6.743, 0.154, 143.458]}
+          position={[6.742, 0.514, 143.458]}
           rotation={[-Math.PI, 1.277, -Math.PI]}
           scale={0.086}
         >
@@ -2535,7 +2537,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree243"
-          position={[6.221, 0.115, 144.119]}
+          position={[6.22, 0.475, 144.118]}
           rotation={[0, 1.522, 0]}
           scale={0.086}
         >
@@ -2556,7 +2558,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree244"
-          position={[7.286, 0.154, 143.294]}
+          position={[7.285, 0.514, 143.294]}
           rotation={[-Math.PI, 1.277, -Math.PI]}
           scale={0.086}
         >
@@ -2577,7 +2579,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree245"
-          position={[7.822, 0.115, 144.147]}
+          position={[7.822, 0.475, 144.146]}
           rotation={[-Math.PI, 1.277, -Math.PI]}
           scale={0.086}
         >
@@ -2598,7 +2600,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree246"
-          position={[-5.956, 0.074, 138.939]}
+          position={[-5.956, 0.434, 138.938]}
           rotation={[-Math.PI, 1.55, -Math.PI]}
           scale={0.086}
         >
@@ -2619,7 +2621,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree247"
-          position={[-6.058, 0.114, 140.796]}
+          position={[-6.058, 0.474, 140.795]}
           rotation={[-Math.PI, 1.55, -Math.PI]}
           scale={0.086}
         >
@@ -2640,7 +2642,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree248"
-          position={[0.071, 0.024, 143.003]}
+          position={[0.053, 0.383, 143.021]}
           rotation={[-2.104, 1.512, 2.157]}
           scale={0.086}
         >
@@ -2661,7 +2663,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree249"
-          position={[0.071, 0.081, 144.06]}
+          position={[0.064, 0.441, 144.059]}
           rotation={[-2.447, 1.54, 2.447]}
           scale={0.086}
         >
@@ -2682,7 +2684,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree250"
-          position={[-6.281, 0.114, 142.364]}
+          position={[-6.281, 0.474, 142.363]}
           rotation={[-Math.PI, 1.55, -Math.PI]}
           scale={0.086}
         >
@@ -2703,7 +2705,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree251"
-          position={[-4.58, 0.128, 144.007]}
+          position={[-4.588, 0.488, 144.006]}
           rotation={[-2.447, 1.54, 2.447]}
           scale={0.086}
         >
@@ -2724,7 +2726,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree252"
-          position={[6.838, 0.448, 110.034]}
+          position={[6.845, 0.808, 110.033]}
           rotation={[-0.062, -1.254, -0.059]}
           scale={0.086}
         >
@@ -2745,7 +2747,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree253"
-          position={[8.941, 0.433, 111.115]}
+          position={[8.941, 0.793, 111.116]}
           rotation={[0, -1.257, 0]}
           scale={0.086}
         >
@@ -2766,7 +2768,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree254"
-          position={[2.37, 0.116, 111.329]}
+          position={[2.377, 0.476, 111.328]}
           rotation={[-0.062, -1.254, -0.059]}
           scale={0.086}
         >
@@ -2787,7 +2789,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree255"
-          position={[2.676, 0.059, 112.341]}
+          position={[2.688, 0.418, 112.318]}
           rotation={[-0.159, -1.244, -0.099]}
           scale={0.086}
         >
@@ -2808,7 +2810,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree256"
-          position={[9.181, 0.114, 112.681]}
+          position={[9.181, 0.474, 112.681]}
           rotation={[0, -1.257, 0]}
           scale={0.086}
         >
@@ -2829,7 +2831,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree257"
-          position={[9.62, 0.074, 114.488]}
+          position={[9.621, 0.434, 114.489]}
           rotation={[0, -1.257, 0]}
           scale={0.086}
         >
@@ -2850,7 +2852,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree258"
-          position={[-5.076, 0.115, 113.487]}
+          position={[-5.075, 0.475, 113.487]}
           rotation={[0, -0.984, 0]}
           scale={0.086}
         >
@@ -2871,7 +2873,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree259"
-          position={[-4.315, 0.154, 114.147]}
+          position={[-4.315, 0.514, 114.148]}
           rotation={[0, -0.984, 0]}
           scale={0.086}
         >
@@ -2892,7 +2894,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree260"
-          position={[-3.534, 0.115, 113.05]}
+          position={[-3.534, 0.475, 113.051]}
           rotation={[0, -1.326, 0]}
           scale={0.086}
         >
@@ -2913,7 +2915,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree261"
-          position={[-3.843, 0.154, 113.834]}
+          position={[-3.842, 0.514, 113.834]}
           rotation={[0, -0.984, 0]}
           scale={0.086}
         >
@@ -2934,7 +2936,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree262"
-          position={[-2.88, 0.115, 111.978]}
+          position={[-2.879, 0.475, 111.979]}
           rotation={[0, -0.984, 0]}
           scale={0.086}
         >
@@ -2955,7 +2957,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree263"
-          position={[-1.339, 0.115, 111.542]}
+          position={[-1.338, 0.475, 111.543]}
           rotation={[0, -1.326, 0]}
           scale={0.086}
         >
@@ -2976,7 +2978,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree264"
-          position={[16.06, 0.285, 107.803]}
+          position={[16.059, 0.645, 107.803]}
           rotation={[-Math.PI, 0.618, -Math.PI]}
           scale={0.086}
         >
@@ -2997,7 +2999,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree265"
-          position={[17.356, 0.295, 108.725]}
+          position={[17.355, 0.655, 108.724]}
           rotation={[-Math.PI, 0.618, -Math.PI]}
           scale={0.086}
         >
@@ -3018,7 +3020,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree266"
-          position={[12.407, 0.285, 109.955]}
+          position={[12.406, 0.645, 109.955]}
           rotation={[-Math.PI, 0.277, -Math.PI]}
           scale={0.086}
         >
@@ -3039,7 +3041,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree267"
-          position={[14.618, 0.295, 109.277]}
+          position={[14.617, 0.655, 109.277]}
           rotation={[-Math.PI, 0.277, -Math.PI]}
           scale={0.086}
         >
@@ -3060,7 +3062,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree268"
-          position={[15.626, 0.256, 109.285]}
+          position={[15.625, 0.616, 109.285]}
           rotation={[-Math.PI, 0.277, -Math.PI]}
           scale={0.086}
         >
@@ -3081,7 +3083,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree269"
-          position={[11.286, 0.528, 108.716]}
+          position={[11.285, 0.888, 108.716]}
           rotation={[-Math.PI, 0.277, -Math.PI]}
           scale={0.086}
         >
@@ -3102,7 +3104,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree270"
-          position={[11.35, 0.556, 109.27]}
+          position={[11.349, 0.916, 109.27]}
           rotation={[-Math.PI, 0.277, -Math.PI]}
           scale={0.086}
         >
@@ -3123,7 +3125,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree271"
-          position={[-0.745, 0.144, 118.608]}
+          position={[-0.744, 0.504, 118.609]}
           rotation={[0, -1.016, 0]}
           scale={0.086}
         >
@@ -3144,7 +3146,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree272"
-          position={[-1.582, 0.154, 117.256]}
+          position={[-1.582, 0.514, 117.256]}
           rotation={[0, -1.016, 0]}
           scale={0.086}
         >
@@ -3165,7 +3167,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree273"
-          position={[-2.766, 0.144, 120.492]}
+          position={[-2.765, 0.504, 120.493]}
           rotation={[0, -0.675, 0]}
           scale={0.086}
         >
@@ -3186,7 +3188,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree274"
-          position={[-4.008, 0.154, 119.499]}
+          position={[-4.007, 0.514, 119.499]}
           rotation={[0, -0.675, 0]}
           scale={0.086}
         >
@@ -3207,7 +3209,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="FullTree275"
-          position={[-4.933, 0.115, 119.101]}
+          position={[-4.932, 0.475, 119.101]}
           rotation={[0, -0.675, 0]}
           scale={0.086}
         >
@@ -3232,7 +3234,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2003.geometry}
           material={materials["Fence.012"]}
-          position={[-2.138, 2.678, 129.529]}
+          position={[-2.136, 2.707, 129.685]}
           rotation={[0.041, 0.011, 0]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3242,7 +3244,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1004.geometry}
           material={materials["Fence.013"]}
-          position={[-2.096, 2.702, 129.13]}
+          position={[-2.113, 2.728, 129.29]}
           rotation={[0.053, -0.114, -0.024]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3252,7 +3254,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1007.geometry}
           material={materials["Fence.015"]}
-          position={[-2.132, 2.653, 129.931]}
+          position={[-2.137, 2.685, 130.091]}
           rotation={[0.014, -0.033, -0.002]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3262,7 +3264,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2004.geometry}
           material={materials["Fence.016"]}
-          position={[-2.232, 1.622, 125.969]}
+          position={[-2.343, 1.623, 126.083]}
           rotation={[0.292, -0.752, 0.209]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3272,7 +3274,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2005.geometry}
           material={materials["Fence.007"]}
-          position={[-2.54, 1.568, 126.652]}
+          position={[-2.538, 1.617, 126.803]}
           rotation={[-0.097, 0.011, 0]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3282,7 +3284,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1006.geometry}
           material={materials["Fence.009"]}
-          position={[-2.531, 1.597, 127.06]}
+          position={[-2.563, 1.641, 127.214]}
           rotation={[-0.066, -0.203, 0]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3292,7 +3294,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1008.geometry}
           material={materials["Fence.010"]}
-          position={[-2.497, 1.547, 126.26]}
+          position={[-2.515, 1.585, 126.418]}
           rotation={[-0.027, -0.114, -0.024]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3302,7 +3304,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2006.geometry}
           material={materials["Fence.011"]}
-          position={[-2.149, 2.64, 130.355]}
+          position={[-2.166, 2.676, 130.509]}
           rotation={[-0.005, -0.108, 0.005]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3312,7 +3314,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1009.geometry}
           material={materials["Fence.014"]}
-          position={[-1.747, 2.705, 128.926]}
+          position={[-1.888, 2.74, 129.001]}
           rotation={[-0.009, -1.091, -0.067]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3322,7 +3324,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2007.geometry}
           material={materials["Fence.017"]}
-          position={[-2.459, 1.492, 134.552]}
+          position={[-2.367, 1.531, 134.676]}
           rotation={[-0.038, 0.627, -0.029]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3332,7 +3334,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1010.geometry}
           material={materials["Fence.018"]}
-          position={[-2.525, 1.519, 133.834]}
+          position={[-2.597, 1.547, 133.979]}
           rotation={[0.039, -0.475, -0.061]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3342,7 +3344,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1011.geometry}
           material={materials["Fence.019"]}
-          position={[-2.655, 1.493, 134.202]}
+          position={[-2.576, 1.526, 134.342]}
           rotation={[0.015, 0.501, -0.058]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3352,7 +3354,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2008.geometry}
           material={materials["Fence.020"]}
-          position={[1.78, 4.077, 125.905]}
+          position={[1.622, 4.103, 125.902]}
           rotation={[1.829, -1.507, 1.834]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3362,7 +3364,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2009.geometry}
           material={materials["Fence.021"]}
-          position={[2.589, 4.102, 125.9]}
+          position={[2.433, 4.136, 125.901]}
           rotation={[0.689, -1.561, 0.686]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3372,7 +3374,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1012.geometry}
           material={materials["Fence.022"]}
-          position={[3.231, 4.134, 126.234]}
+          position={[3.14, 4.156, 126.099]}
           rotation={[3.056, -0.589, 3.085]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3382,7 +3384,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1013.geometry}
           material={materials["Fence.023"]}
-          position={[2.19, 4.085, 125.908]}
+          position={[2.029, 4.117, 125.907]}
           rotation={[2.044, -1.555, 2.041]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3392,7 +3394,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var1014.geometry}
           material={materials["Fence.024"]}
-          position={[2.99, 4.11, 125.909]}
+          position={[2.829, 4.14, 125.909]}
           rotation={[1.778, -1.545, 1.748]}
           scale={[0.026, 0.042, 0.026]}
         />
@@ -3402,13 +3404,13 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Fence_Var2010.geometry}
           material={materials["Fence.025"]}
-          position={[1.356, 4.043, 125.905]}
+          position={[1.199, 4.018, 125.902]}
           rotation={[1.614, -1.19, 1.617]}
           scale={[0.026, 0.042, 0.026]}
         />
         <group
           name="Wall_Back002"
-          position={[-1.256, 1.717, 126.83]}
+          position={[-1.256, 2.059, 126.831]}
           rotation={[1.809, -0.471, 0.492]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3447,7 +3449,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Right002.geometry}
           material={materials["Cabin.013"]}
-          position={[-1.627, 2.031, 126.976]}
+          position={[-1.627, 1.874, 126.976]}
           rotation={[1.088, -0.212, -1.188]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3457,7 +3459,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Left002.geometry}
           material={materials["Cabin.013"]}
-          position={[-1.385, 2.031, 126.455]}
+          position={[-1.385, 1.874, 126.455]}
           rotation={[1.088, -0.212, -1.188]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3477,14 +3479,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall015.geometry}
             material={materials["Snow.001"]}
-            position={[-0.003, 4.109, 0.005]}
+            position={[-0.003, 4.11, 0.005]}
             rotation={[0, 0.44, 0]}
             scale={[2.782, 63.516, 2.404]}
           />
         </mesh>
         <group
           name="Wall_Front002"
-          position={[-1.751, 1.896, 126.6]}
+          position={[-1.751, 2.009, 126.6]}
           rotation={[1.809, -0.471, 0.492]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3523,7 +3525,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Chimney002.geometry}
           material={materials["Chimney.001"]}
-          position={[-1.3, 2.278, 126.686]}
+          position={[-1.3, 2.319, 126.686]}
           rotation={[0, -0.435, 0]}
           scale={[0.037, 0.083, 0.037]}
         />
@@ -3533,13 +3535,13 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Floor002.geometry}
           material={materials["Cabin.013"]}
-          position={[-1.488, 1.703, 126.714]}
+          position={[-1.503, 1.703, 126.719]}
           rotation={[0, -0.435, 0]}
           scale={0.387}
         />
         <group
           name="Wall_Back003"
-          position={[-1.231, 2.684, 129.587]}
+          position={[-1.231, 3.026, 129.588]}
           rotation={[1.382, -0.491, -0.385]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3578,7 +3580,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Right003.geometry}
           material={materials["Cabin.014"]}
-          position={[-1.395, 2.997, 129.95]}
+          position={[-1.395, 2.841, 129.95]}
           rotation={[1.072, 0.166, -1.866]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3588,7 +3590,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Left003.geometry}
           material={materials["Cabin.014"]}
-          position={[-1.585, 2.997, 129.409]}
+          position={[-1.585, 2.841, 129.409]}
           rotation={[1.072, 0.166, -1.866]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3615,7 +3617,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </mesh>
         <group
           name="Wall_Front003"
-          position={[-1.746, 2.863, 129.768]}
+          position={[-1.746, 2.975, 129.768]}
           rotation={[1.382, -0.491, -0.385]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3654,7 +3656,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Chimney003.geometry}
           material={materials["Chimney.002"]}
-          position={[-1.363, 3.245, 129.515]}
+          position={[-1.363, 3.286, 129.515]}
           rotation={[0, 0.338, 0]}
           scale={[0.037, 0.083, 0.037]}
         />
@@ -3664,13 +3666,13 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Floor003.geometry}
           material={materials["Cabin.014"]}
-          position={[-1.478, 2.669, 129.666]}
+          position={[-1.485, 2.669, 129.68]}
           rotation={[0, 0.338, 0]}
           scale={0.387}
         />
         <group
           name="Wall_Back004"
-          position={[-1.862, 1.546, 133.913]}
+          position={[-1.861, 1.888, 133.913]}
           rotation={[1.165, -0.34, -0.911]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3709,7 +3711,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Right004.geometry}
           material={materials["Cabin.027"]}
-          position={[-1.83, 1.86, 134.31]}
+          position={[-1.83, 1.703, 134.31]}
           rotation={[1.203, 0.382, -2.339]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3719,7 +3721,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Left004.geometry}
           material={materials["Cabin.027"]}
-          position={[-2.258, 1.86, 133.927]}
+          position={[-2.258, 1.703, 133.927]}
           rotation={[1.203, 0.382, -2.339]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3746,7 +3748,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </mesh>
         <group
           name="Wall_Front004"
-          position={[-2.226, 1.725, 134.319]}
+          position={[-2.226, 1.838, 134.319]}
           rotation={[1.165, -0.34, -0.911]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3785,7 +3787,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Chimney004.geometry}
           material={materials["Chimney.003"]}
-          position={[-2.012, 2.107, 133.913]}
+          position={[-2.012, 2.148, 133.913]}
           rotation={[0, 0.84, 0]}
           scale={[0.037, 0.083, 0.037]}
         />
@@ -3795,13 +3797,13 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Floor004.geometry}
           material={materials["Cabin.027"]}
-          position={[-2.04, 1.532, 134.1]}
+          position={[-2.039, 1.532, 134.116]}
           rotation={[0, 0.84, 0]}
           scale={0.387}
         />
         <group
           name="Wall_Back005"
-          position={[2.502, 4.125, 126.728]}
+          position={[2.502, 4.467, 126.728]}
           rotation={[2.088, -0.087, 1.419]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3840,7 +3842,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Right005.geometry}
           material={materials["Cabin.028"]}
-          position={[2.171, 4.438, 126.508]}
+          position={[2.171, 4.282, 126.508]}
           rotation={[1.471, -0.515, -0.201]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3850,7 +3852,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Wall_Left005.geometry}
           material={materials["Cabin.028"]}
-          position={[2.736, 4.438, 126.408]}
+          position={[2.736, 4.282, 126.408]}
           rotation={[1.471, -0.515, -0.201]}
           scale={[0.026, 0.33, 0.026]}
         />
@@ -3870,14 +3872,14 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes.SnowBall018.geometry}
             material={materials["Snow.004"]}
-            position={[0.004, 3.712, -0.002]}
+            position={[0.004, 3.713, -0.002]}
             rotation={[0, 1.391, 0]}
             scale={[2.309, 63.516, 2.862]}
           />
         </mesh>
         <group
           name="Wall_Front005"
-          position={[2.408, 4.304, 126.19]}
+          position={[2.408, 4.416, 126.19]}
           rotation={[2.088, -0.087, 1.419]}
           scale={[0.026, 0.33, 0.026]}
         >
@@ -3916,7 +3918,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Chimney005.geometry}
           material={materials["Chimney.004"]}
-          position={[2.595, 4.686, 126.61]}
+          position={[2.595, 4.727, 126.61]}
           rotation={[0, -1.396, 0]}
           scale={[0.037, 0.083, 0.037]}
         />
@@ -3926,7 +3928,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Floor005.geometry}
           material={materials["Cabin.028"]}
-          position={[2.465, 4.11, 126.472]}
+          position={[2.452, 4.11, 126.462]}
           rotation={[0, -1.396, 0]}
           scale={0.387}
         />
@@ -3936,7 +3938,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube005.geometry}
           material={materials["Material.001"]}
-          position={[-1.423, 2.407, 127.426]}
+          position={[-1.423, 2.19, 127.426]}
           rotation={[0, 0.15, 0]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -3970,7 +3972,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube006.geometry}
           material={materials["Material.006"]}
-          position={[1.47, 4.659, 126.85]}
+          position={[1.47, 4.443, 126.85]}
           rotation={[Math.PI, -0.267, Math.PI]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4076,7 +4078,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Catenary006.geometry}
           material={materials.Cable}
-          position={[-0.001, 3.424, 127.029]}
+          position={[1.19, 4.54, 127.371]}
         />
         <mesh
           name="Catenary008"
@@ -4084,39 +4086,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Catenary008.geometry}
           material={materials.Cable}
-          position={[2.333, 5.669, 127.903]}
-        />
-        <mesh
-          name="Catenary010"
-          castShadow
-          receiveShadow
-          geometry={nodes.Catenary010.geometry}
-          material={materials.Cable}
-          position={[-1.757, 2.729, 131.987]}
-        />
-        <mesh
-          name="Catenary011"
-          castShadow
-          receiveShadow
-          geometry={nodes.Catenary011.geometry}
-          material={materials.Cable}
-          position={[-1.938, 2.715, 132.092]}
-        />
-        <mesh
-          name="Catenary012"
-          castShadow
-          receiveShadow
-          geometry={nodes.Catenary012.geometry}
-          material={materials.Cable}
-          position={[-0.363, 3.302, 133.293]}
-        />
-        <mesh
-          name="Catenary013"
-          castShadow
-          receiveShadow
-          geometry={nodes.Catenary013.geometry}
-          material={materials.Cable}
-          position={[-0.304, 3.312, 133.08]}
+          position={[1.19, 4.545, 127.577]}
         />
         <mesh
           name="Catenary014"
@@ -4124,7 +4094,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Catenary014.geometry}
           material={materials.Cable}
-          position={[2.278, 5.017, 132.09]}
+          position={[0.072, 3.686, 132.386]}
         />
         <mesh
           name="Catenary015"
@@ -4132,7 +4102,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Catenary015.geometry}
           material={materials.Cable}
-          position={[2.342, 5.009, 132.303]}
+          position={[0.014, 3.675, 132.563]}
         />
         <mesh
           name="Cube009"
@@ -4140,7 +4110,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube009.geometry}
           material={materials["Material.007"]}
-          position={[-2.114, 3.346, 130.811]}
+          position={[-2.114, 3.13, 130.811]}
           rotation={[0, -1.551, 0]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4150,7 +4120,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube010.geometry}
           material={materials["Material.008"]}
-          position={[3.238, 6.842, 128.805]}
+          position={[3.237, 6.626, 128.805]}
           rotation={[-Math.PI, 0.776, -Math.PI]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4160,7 +4130,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube011.geometry}
           material={materials["Material.009"]}
-          position={[0.891, 4.508, 133.105]}
+          position={[0.891, 4.292, 133.106]}
           rotation={[Math.PI, -0.076, Math.PI]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4170,7 +4140,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube012.geometry}
           material={materials["Material.010"]}
-          position={[-1.553, 2.255, 133.256]}
+          position={[-1.553, 2.039, 133.256]}
           rotation={[0, -0.596, 0]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4180,7 +4150,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cube013.geometry}
           material={materials["Material.014"]}
-          position={[3.729, 5.806, 131.283]}
+          position={[3.729, 5.59, 131.283]}
           rotation={[Math.PI, -0.489, Math.PI]}
           scale={[0.035, 0.012, 0.146]}
         />
@@ -4234,24 +4204,24 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
         </group>
         <group
           name="Chairlift007"
-          position={[2.45, 4.604, 132.271]}
-          rotation={[-Math.PI / 2, 0, -1.017]}
+          position={[2.742, 4.762, 132.086]}
+          rotation={[-1.41, -0.197, -1.036]}
           scale={0.004}
         >
-          <group name="root007" position={[0.001, 0, 0]}>
+          <group name="root007" position={[-0.001, 0, 0]}>
             <group
               name="GLTF_SceneRootNode007"
-              position={[0.001, 0, 0]}
+              position={[-0.001, 0, 0]}
               rotation={[Math.PI / 2, 0, 0]}
             >
-              <group name="node-0_0007" position={[0.001, 0, 0]}>
+              <group name="node-0_0007" position={[-0.001, 0.001, 0.001]}>
                 <mesh
                   name="Object_4007"
                   castShadow
                   receiveShadow
                   geometry={nodes.Object_4007.geometry}
                   material={materials["03___Default.007"]}
-                  position={[0.001, 0, 0]}
+                  position={[2.132, 31.72, 5.043]}
                 />
                 <mesh
                   name="Object_5007"
@@ -4259,7 +4229,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
                   receiveShadow
                   geometry={nodes.Object_5007.geometry}
                   material={materials["07___Default.007"]}
-                  position={[0.001, 0, 0]}
+                  position={[0.657, 21.498, 3.987]}
                 />
               </group>
             </group>
@@ -4277,47 +4247,30 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
               position={[0.002, 0, 0]}
               rotation={[Math.PI / 2, 0, 0]}
             >
-              <group name="node-0_0008" position={[0.004, 0, 0]}>
-                <mesh
-                  name="Object_4008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Object_4008.geometry}
-                  material={materials["03___Default.008"]}
-                  position={[0.004, 0, 0]}
-                />
-                <mesh
-                  name="Object_5008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Object_5008.geometry}
-                  material={materials["07___Default.008"]}
-                  position={[0.004, 0, 0]}
-                />
-              </group>
+              <group name="node-0_0008" position={[0.004, 0, 0]} />
             </group>
           </group>
         </group>
         <group
           name="Chairlift009"
-          position={[-1.711, 2.293, 132.041]}
-          rotation={[-Math.PI / 2, 0, 0.238]}
+          position={[-1.934, 2.874, 130.975]}
+          rotation={[-1.282, 0.058, 0.143]}
           scale={0.004}
         >
-          <group name="root009" position={[0.001, 0.002, 0]}>
+          <group name="root009" position={[0, 0.003, -0.001]}>
             <group
               name="GLTF_SceneRootNode009"
-              position={[0.001, 0.002, 0]}
+              position={[0, 0.003, -0.001]}
               rotation={[Math.PI / 2, 0, 0]}
             >
-              <group name="node-0_0009" position={[0, 0, -0.002]}>
+              <group name="node-0_0009" position={[0, 0, -0.001]}>
                 <mesh
                   name="Object_4009"
                   castShadow
                   receiveShadow
                   geometry={nodes.Object_4009.geometry}
                   material={materials["03___Default.009"]}
-                  position={[0, 0, -0.002]}
+                  position={[2.133, 31.721, 5.042]}
                 />
                 <mesh
                   name="Object_5009"
@@ -4325,7 +4278,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
                   receiveShadow
                   geometry={nodes.Object_5009.geometry}
                   material={materials["07___Default.009"]}
-                  position={[0, 0, -0.002]}
+                  position={[0.659, 21.499, 3.989]}
                 />
               </group>
             </group>
