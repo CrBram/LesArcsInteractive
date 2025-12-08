@@ -191,7 +191,6 @@ const MainScene = ({
             position={[3.238, 6.65, 129.805]}
             targetPosition={[3.238, 7.5, 132]}
             title="Aiguilles Rouges"
-            description="3226m"
             icon={<MountainSnow />}
             onClick={onAiguillesRougesClick}
           />
@@ -199,6 +198,27 @@ const MainScene = ({
             position={[2.4, 4.65, 125.95]}
             targetPosition={[2.454, 5.4, 124.5]}
             title="ARC 2000"
+            icon={<School />}
+            onClick={() => navigate("/arc-2000")}
+          />
+          <InfoPoint
+            position={[-1.559, 2.016, 126.75]}
+            targetPosition={[-1.505, 2.766, 126.3]}
+            title="ARC 1600"
+            icon={<School />}
+            onClick={() => navigate("/arc-2000")}
+          />
+          <InfoPoint
+            position={[-1.485, 2.745, 129.501]}
+            targetPosition={[-1.3, 3.795, 129.051]}
+            title="ARC 1800"
+            icon={<School />}
+            onClick={() => navigate("/arc-2000")}
+          />
+          <InfoPoint
+            position={[-2.165, 1.945, 133.833]}
+            targetPosition={[-2.111, 2.595, 134.383]}
+            title="Vallandry 1600"
             icon={<School />}
             onClick={() => navigate("/arc-2000")}
           />
