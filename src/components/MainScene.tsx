@@ -5,7 +5,7 @@ import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import { InfoPoint } from "./InfoPoint";
-import { MountainSnow, School } from "lucide-react";
+import { MountainSnow } from "lucide-react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -198,28 +198,52 @@ const MainScene = ({
             position={[2.4, 4.65, 125.95]}
             targetPosition={[2.454, 5.4, 124.5]}
             title="ARC 2000"
-            icon={<School />}
+            icon={
+              <img
+                src="/images/cabin_icon.svg"
+                alt="Cabin"
+                className="w-6 h-6"
+              />
+            }
             onClick={() => navigate("/arc-2000")}
           />
           <InfoPoint
             position={[-1.559, 2.016, 126.75]}
             targetPosition={[-1.505, 2.766, 126.3]}
             title="ARC 1600"
-            icon={<School />}
+            icon={
+              <img
+                src="/images/cabin_icon.svg"
+                alt="Cabin"
+                className="w-6 h-6"
+              />
+            }
             onClick={() => navigate("/arc-2000")}
           />
           <InfoPoint
             position={[-1.485, 2.745, 129.501]}
             targetPosition={[-1.3, 3.795, 129.051]}
             title="ARC 1800"
-            icon={<School />}
+            icon={
+              <img
+                src="/images/cabin_icon.svg"
+                alt="Cabin"
+                className="w-6 h-6"
+              />
+            }
             onClick={() => navigate("/arc-2000")}
           />
           <InfoPoint
             position={[-2.165, 1.945, 133.833]}
             targetPosition={[-2.111, 2.595, 134.383]}
             title="Vallandry 1600"
-            icon={<School />}
+            icon={
+              <img
+                src="/images/cabin_icon.svg"
+                alt="Cabin"
+                className="w-6 h-6"
+              />
+            }
             onClick={() => navigate("/arc-2000")}
           />
         </>
