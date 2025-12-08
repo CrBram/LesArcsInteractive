@@ -1,16 +1,124 @@
 import { OrbitControls } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow, School } from "lucide-react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
+import { gsap } from "gsap";
 
-const MainScene = () => {
+interface MainSceneProps {
+  onAiguillesRougesClick?: () => void;
+  onResetReady?: (reset: () => void) => void;
+  showInfoPoints?: boolean;
+  enableAzimuthConstraints?: boolean;
+}
+
+const INITIAL_CAMERA_POSITION: [number, number, number] = [
+  -17.105249709288742, 8.932276283830646, 128.99947616462492,
+];
+const INITIAL_TARGET: [number, number, number] = [
+  0.02400202305203503, 3.3597511357778416, 129.852306087246,
+];
+
+const MainScene = ({
+  onAiguillesRougesClick,
+  onResetReady,
+  showInfoPoints = true,
+  enableAzimuthConstraints = true,
+}: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
+  const { camera } = useThree();
+  const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
+
+  useEffect(() => {
+    if (!controlsRef.current) return;
+
+    if (enableAzimuthConstraints) {
+      controlsRef.current.minAzimuthAngle = -Math.PI / 1;
+      controlsRef.current.maxAzimuthAngle = Math.PI / 18;
+    } else {
+      controlsRef.current.minAzimuthAngle = -Infinity;
+      controlsRef.current.maxAzimuthAngle = Infinity;
+    }
+    controlsRef.current.update();
+  }, [enableAzimuthConstraints]);
+
+  const resetView = () => {
+    if (!controlsRef.current) return;
+
+    if (resetAnimationRef.current) {
+      resetAnimationRef.current.kill();
+    }
+
+    const orbitControls = controlsRef.current as any;
+    const currentCameraPos = new THREE.Vector3();
+    const currentTarget = new THREE.Vector3();
+    camera.getWorldPosition(currentCameraPos);
+    currentTarget.copy(orbitControls.target);
+
+    const targetVec = new THREE.Vector3(...INITIAL_TARGET);
+    const desiredCameraPos = new THREE.Vector3(...INITIAL_CAMERA_POSITION);
+
+    const cameraAnim = {
+      x: currentCameraPos.x,
+      y: currentCameraPos.y,
+      z: currentCameraPos.z,
+    };
+
+    const targetAnim = {
+      x: currentTarget.x,
+      y: currentTarget.y,
+      z: currentTarget.z,
+    };
+
+    orbitControls.enabled = false;
+
+    const timeline = gsap.timeline({
+      onUpdate: () => {
+        if (!controlsRef.current) return;
+        camera.position.set(cameraAnim.x, cameraAnim.y, cameraAnim.z);
+        orbitControls.target.set(targetAnim.x, targetAnim.y, targetAnim.z);
+        orbitControls.update();
+      },
+      onComplete: () => {
+        orbitControls.enabled = true;
+      },
+    });
+
+    timeline.to(cameraAnim, {
+      x: desiredCameraPos.x,
+      y: desiredCameraPos.y,
+      z: desiredCameraPos.z,
+      duration: 2.5,
+      ease: "power2.inOut",
+    });
+
+    timeline.to(
+      targetAnim,
+      {
+        x: targetVec.x,
+        y: targetVec.y,
+        z: targetVec.z,
+        duration: 2.5,
+        ease: "power2.inOut",
+      },
+      "<"
+    );
+
+    resetAnimationRef.current = timeline;
+  };
+
+  useEffect(() => {
+    if (onResetReady) {
+      onResetReady(resetView);
+    }
+  }, [onResetReady]);
 
   return (
     <>
@@ -23,7 +131,7 @@ const MainScene = () => {
         maxPolarAngle={Math.PI / 2.5}
         minAzimuthAngle={-Math.PI / 1}
         maxAzimuthAngle={Math.PI / 18}
-        target={[0.02400202305203503, 3.3597511357778416, 129.852306087246]}
+        target={INITIAL_TARGET}
         enablePan={false}
         enableRotate={true}
         enableZoom={false}
@@ -77,20 +185,25 @@ const MainScene = () => {
 
       <LesArcs />
       <Snow centerX={0} centerY={0} centerZ={127} />
-      <InfoPoint
-        position={[3.238, 6.65, 129.805]}
-        targetPosition={[3.238, 7.5, 132]}
-        title="Aiguilles Rouges"
-        description="2.965m"
-        icon={<MountainSnow />}
-      />
-      <InfoPoint
-        position={[2.4, 4.65, 125.95]}
-        targetPosition={[2.454, 5.4, 124.5]}
-        title="ARC 2000"
-        icon={<School />}
-        onClick={() => navigate("/arc-2000")}
-      />
+      {showInfoPoints && (
+        <>
+          <InfoPoint
+            position={[3.238, 6.65, 129.805]}
+            targetPosition={[3.238, 7.5, 132]}
+            title="Aiguilles Rouges"
+            description="2.965m"
+            icon={<MountainSnow />}
+            onClick={onAiguillesRougesClick}
+          />
+          <InfoPoint
+            position={[2.4, 4.65, 125.95]}
+            targetPosition={[2.454, 5.4, 124.5]}
+            title="ARC 2000"
+            icon={<School />}
+            onClick={() => navigate("/arc-2000")}
+          />
+        </>
+      )}
     </>
   );
 };

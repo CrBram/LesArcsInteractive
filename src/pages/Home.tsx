@@ -1,9 +1,10 @@
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import MainScene from "@/components/MainScene";
 import Loading from "@/components/Loading";
 import Layout from "@/components/ui/Layout";
+import { BackButton } from "@/components/ui/BackButton";
 
 const cameraSettings = {
   fov: 45,
@@ -37,6 +38,10 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showAiguillesRougesButton, setShowAiguillesRougesButton] =
+    useState(false);
+  const [showInfoPoints, setShowInfoPoints] = useState(true);
+  const resetViewRef = useRef<(() => void) | null>(null);
 
   const handleLoadingComplete = () => {
     setIsTransitioning(true);
@@ -45,10 +50,30 @@ function Home() {
     }, 500);
   };
 
+  const handleAiguillesRougesClick = () => {
+    setShowAiguillesRougesButton(true);
+    setShowInfoPoints(false);
+  };
+
+  const handleResetReady = (reset: () => void) => {
+    resetViewRef.current = reset;
+  };
+
+  const handleBackButtonClick = () => {
+    setShowAiguillesRougesButton(false);
+    setShowInfoPoints(true);
+    if (resetViewRef.current) {
+      resetViewRef.current();
+    }
+  };
+
   return (
     <Layout>
       {isLoading && (
         <Loading progress={loadingProgress} isTransitioning={isTransitioning} />
+      )}
+      {showAiguillesRougesButton && (
+        <BackButton label="Aiguilles Rouges" onClick={handleBackButtonClick} />
       )}
       <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>
@@ -56,7 +81,12 @@ function Home() {
             onProgress={setLoadingProgress}
             onComplete={handleLoadingComplete}
           />
-          <MainScene />
+          <MainScene
+            onAiguillesRougesClick={handleAiguillesRougesClick}
+            onResetReady={handleResetReady}
+            showInfoPoints={showInfoPoints}
+            enableAzimuthConstraints={!showAiguillesRougesButton}
+          />
         </Suspense>
       </Canvas>
     </Layout>
