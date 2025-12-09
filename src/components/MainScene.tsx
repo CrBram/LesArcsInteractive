@@ -42,7 +42,7 @@ const MainScene = ({
   const { startAudio } = useSound();
   const { preset } = useEnvironmentPreset();
 
-  const backgroundColor = preset === "night" ? "#4A4870" : "#8785B9";
+  const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
 
   useEffect(() => {
     scene.background = new THREE.Color(backgroundColor);
