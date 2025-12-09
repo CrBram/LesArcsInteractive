@@ -1721,7 +1721,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder025_1.geometry}
           material={materials["LightRed.001"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="orange"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <group
         position={[-4.799, 1.653, -1.155]}
@@ -1739,7 +1745,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder060_1.geometry}
           material={materials["LightRed.002"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="purple"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <group
         position={[-4.675, 1.682, -0.39]}
@@ -1757,7 +1769,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder063_1.geometry}
           material={materials["LightRed.003"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="red"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <group
         position={[-4.556, 1.773, 0.334]}
@@ -1775,7 +1793,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder064_1.geometry}
           material={materials["LightRed.004"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="green"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <group
         position={[-4.45, 1.893, 0.986]}
@@ -1793,7 +1817,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder065_1.geometry}
           material={materials["LightRed.005"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="red"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <group
         position={[-4.337, 2.073, 1.677]}
@@ -1811,7 +1841,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           receiveShadow
           geometry={nodes.Cylinder066_1.geometry}
           material={materials["LightRed.006"]}
-        />
+        >
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="purple"
+            emissiveIntensity={2}
+          />
+        </mesh>
       </group>
       <mesh
         castShadow
