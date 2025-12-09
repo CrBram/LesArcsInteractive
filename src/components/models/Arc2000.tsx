@@ -1,7 +1,10 @@
 import { useGLTF } from "@react-three/drei";
+import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 
 export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
   const { nodes, materials } = useGLTF("/models/SkiTown.glb") as any;
+  const { preset } = useEnvironmentPreset();
+  const isNight = preset === "night";
   return (
     <group {...props} dispose={null}>
       <group
@@ -691,11 +694,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             geometry={nodes["candle-material001"].geometry}
             material={materials["candle.002"]}
           >
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="orange"
-              emissiveIntensity={10}
-            />
+            {isNight && (
+              <meshStandardMaterial
+                color="#ffffff"
+                emissive="orange"
+                emissiveIntensity={10}
+              />
+            )}
           </mesh>
           <mesh
             castShadow
@@ -703,11 +708,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             geometry={nodes["lamp_glass-material001"].geometry}
             material={materials["lamp_glass.003"]}
           >
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="orange"
-              emissiveIntensity={6}
-            />
+            {isNight && (
+              <meshStandardMaterial
+                color="#ffffff"
+                emissive="orange"
+                emissiveIntensity={6}
+              />
+            )}
           </mesh>
           <mesh
             castShadow
@@ -902,11 +909,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             geometry={nodes["lamp_glass-material002"].geometry}
             material={materials["lamp_glass.004"]}
           >
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="orange"
-              emissiveIntensity={6}
-            />
+            {isNight && (
+              <meshStandardMaterial
+                color="#ffffff"
+                emissive="orange"
+                emissiveIntensity={6}
+              />
+            )}
           </mesh>
           <mesh
             castShadow
@@ -960,11 +969,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             geometry={nodes["lamp_glass-material003"].geometry}
             material={materials["lamp_glass.005"]}
           >
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="orange"
-              emissiveIntensity={6}
-            />
+            {isNight && (
+              <meshStandardMaterial
+                color="#ffffff"
+                emissive="orange"
+                emissiveIntensity={6}
+              />
+            )}
           </mesh>
           <mesh
             castShadow
@@ -1018,11 +1029,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             geometry={nodes["lamp_glass-material004"].geometry}
             material={materials["lamp_glass.006"]}
           >
-            <meshStandardMaterial
-              color="#ffffff"
-              emissive="orange"
-              emissiveIntensity={6}
-            />
+            {isNight && (
+              <meshStandardMaterial
+                color="#ffffff"
+                emissive="orange"
+                emissiveIntensity={6}
+              />
+            )}
           </mesh>
           <mesh
             castShadow
@@ -1722,11 +1735,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder025_1.geometry}
           material={materials["LightRed.001"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="orange"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <group
@@ -1746,11 +1761,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder060_1.geometry}
           material={materials["LightRed.002"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="purple"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="purple"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <group
@@ -1770,11 +1787,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder063_1.geometry}
           material={materials["LightRed.003"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="red"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="red"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <group
@@ -1794,11 +1813,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder064_1.geometry}
           material={materials["LightRed.004"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="green"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="green"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <group
@@ -1818,11 +1839,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder065_1.geometry}
           material={materials["LightRed.005"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="red"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="red"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <group
@@ -1842,11 +1865,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           geometry={nodes.Cylinder066_1.geometry}
           material={materials["LightRed.006"]}
         >
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="purple"
-            emissiveIntensity={2}
-          />
+          {isNight && (
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="purple"
+              emissiveIntensity={2}
+            />
+          )}
         </mesh>
       </group>
       <mesh
