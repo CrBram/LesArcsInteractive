@@ -1764,7 +1764,7 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
           {isNight && (
             <meshStandardMaterial
               color="#ffffff"
-              emissive="purple"
+              emissive="green"
               emissiveIntensity={2}
             />
           )}
