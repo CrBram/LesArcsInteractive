@@ -690,13 +690,25 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes["candle-material001"].geometry}
             material={materials["candle.002"]}
-          />
+          >
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={10}
+            />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes["lamp_glass-material001"].geometry}
             material={materials["lamp_glass.003"]}
-          />
+          >
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={6}
+            />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -889,7 +901,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes["lamp_glass-material002"].geometry}
             material={materials["lamp_glass.004"]}
-          />
+          >
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={6}
+            />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -941,7 +959,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes["lamp_glass-material003"].geometry}
             material={materials["lamp_glass.005"]}
-          />
+          >
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={6}
+            />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -993,7 +1017,13 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
             receiveShadow
             geometry={nodes["lamp_glass-material004"].geometry}
             material={materials["lamp_glass.006"]}
-          />
+          >
+            <meshStandardMaterial
+              color="#ffffff"
+              emissive="orange"
+              emissiveIntensity={6}
+            />
+          </mesh>
           <mesh
             castShadow
             receiveShadow

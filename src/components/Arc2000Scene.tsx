@@ -10,6 +10,12 @@ import TownAmbience from "./scene/TownAmbience";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
 import { useSound } from "@/contexts/SoundContext";
 import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
+import {
+  Bloom,
+  EffectComposer,
+  ToneMapping,
+} from "@react-three/postprocessing";
+import { ToneMappingMode } from "postprocessing";
 
 const Arc2000Scene = () => {
   const { gl, scene } = useThree();
@@ -37,6 +43,10 @@ const Arc2000Scene = () => {
 
   return (
     <>
+      <EffectComposer>
+        <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+        <Bloom luminanceThreshold={1.1} mipmapBlur />
+      </EffectComposer>
       <fogExp2 attach="fog" args={[backgroundColor, 0.015]} />
       <Lights />
       <Arc2000 />

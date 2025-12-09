@@ -132,7 +132,6 @@ const MainScene = ({
     }
   }, [onResetReady]);
 
-  // Add click handler to canvas to start audio on any click
   useEffect(() => {
     const canvas = gl.domElement;
     const handleClick = () => {
