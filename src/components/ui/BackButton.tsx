@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { PlayMouseClick } from "../scene/MouseClickSound";
 
 interface BackButtonProps {
   label: string;
@@ -9,10 +10,14 @@ export function BackButton({ label, onClick }: BackButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    PlayMouseClick();
+
     if (onClick) {
       onClick();
     } else {
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 200);
     }
   };
 

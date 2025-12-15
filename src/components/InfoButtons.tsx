@@ -3,6 +3,7 @@ import { useCameraNavigation } from "@/contexts/CameraNavigationContext";
 import { useSound } from "@/contexts/SoundContext";
 import type { LucideIcon } from "lucide-react";
 import { InformationCard } from "./InformationCard";
+import { PlayMouseClick } from "./scene/MouseClickSound";
 
 interface InfoButtonItem {
   position: [number, number, number];
@@ -26,6 +27,7 @@ export function InfoButtons({ items }: InfoButtonsProps) {
 
   const handleClick = (item: InfoButtonItem) => {
     startAudio();
+    PlayMouseClick();
     navigateTo({
       position: item.position,
       restoreInitial: item.restoreInitial,

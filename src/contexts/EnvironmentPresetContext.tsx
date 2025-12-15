@@ -1,3 +1,4 @@
+import { PlayMouseClick } from "@/hooks/useMouseClickSound";
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 
@@ -20,6 +21,7 @@ export function EnvironmentPresetProvider({
   const [preset, setPreset] = useState<EnvironmentPreset>("sunset");
 
   const togglePreset = () => {
+    PlayMouseClick();
     setPreset((prev) => (prev === "night" ? "sunset" : "night"));
   };
 

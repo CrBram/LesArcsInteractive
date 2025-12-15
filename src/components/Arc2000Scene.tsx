@@ -8,6 +8,7 @@ import { MouseLook } from "./MouseLook";
 import { CameraNavigator } from "./CameraNavigator";
 import TownAmbience from "./scene/TownAmbience";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
+import MouseClickSound from "./scene/MouseClickSound";
 import { useSound } from "@/contexts/SoundContext";
 import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 import {
@@ -54,6 +55,7 @@ const Arc2000Scene = () => {
       <MouseLook />
       <SnowfallAmbient />
       <TownAmbience />
+      <MouseClickSound />
       <CameraNavigator />
     </>
   );

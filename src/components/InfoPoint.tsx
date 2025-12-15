@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { gsap } from "gsap";
 import { playWhoosh } from "./scene/WhooshGust";
 import { useSound } from "@/contexts/SoundContext";
+import { PlayMouseClick } from "./scene/MouseClickSound";
 
 interface InfoPointProps {
   position: [number, number, number];
@@ -107,6 +108,7 @@ export function InfoPoint({
     if (!controls) return;
 
     startAudio();
+    PlayMouseClick();
     playWhoosh();
 
     if (animationRef.current) {

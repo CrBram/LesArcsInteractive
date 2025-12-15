@@ -6,6 +6,7 @@ import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
 import WhooshGust from "./scene/WhooshGust";
+import MouseClickSound from "./scene/MouseClickSound";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow } from "lucide-react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
@@ -176,6 +177,7 @@ const MainScene = ({
       <Lights />
       <SnowfallAmbient />
       <WhooshGust />
+      <MouseClickSound />
       <pointLight
         position={[-1.559, 2.016, 126.75]}
         intensity={1.5}
