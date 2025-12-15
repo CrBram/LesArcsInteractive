@@ -29,7 +29,7 @@ const MouseClickSound = () => {
       audioRef.current = new Audio(listenerRef.current);
       audioRef.current.setBuffer(audioBuffer);
       audioRef.current.setLoop(false);
-      audioRef.current.setVolume(0.1);
+      audioRef.current.setVolume(0.15);
     }
 
     const play = () => {
