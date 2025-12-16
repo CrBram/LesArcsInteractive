@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
+import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Arc2000Page from "./pages/Arc2000";
 import Arc1800Page from "./pages/Arc1800";
@@ -16,7 +17,8 @@ function App() {
       <SoundProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/arc-2000" element={<Arc2000Page />} />
             <Route path="/arc-1800" element={<Arc1800Page />} />
             <Route path="/arc-1600" element={<Arc1600Page />} />
