@@ -62,6 +62,54 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group
+          name="Sketchfab_model"
+          position={[3.779, 6.177, 128.905]}
+          rotation={[-1.79, -0.013, -2.802]}
+          scale={7.641}
+        >
+          <group name="root010">
+            <group name="GLTF_SceneRootNode010" rotation={[Math.PI / 2, 0, 0]}>
+              <group name="Root_40">
+                <group name="Rig_39" scale={0.02}>
+                  <group name="GLTF_created_0">
+                    <skinnedMesh
+                      name="Object_11"
+                      geometry={nodes.Object_11.geometry}
+                      material={materials["Material.013"]}
+                      skeleton={nodes.Object_11.skeleton}
+                    />
+                    <skinnedMesh
+                      name="Object_8"
+                      geometry={nodes.Object_8.geometry}
+                      material={materials["Material.011"]}
+                      skeleton={nodes.Object_8.skeleton}
+                    />
+                    <skinnedMesh
+                      name="Object_9"
+                      geometry={nodes.Object_9.geometry}
+                      material={materials["Material.012"]}
+                      skeleton={nodes.Object_9.skeleton}
+                    />
+                    <group name="Player001_38" />
+                    <group name="Player_37" />
+                    <primitive object={nodes.GLTF_created_0_rootJoint} />
+                  </group>
+                </group>
+              </group>
+            </group>
+          </group>
+        </group>
+        <mesh
+          name="chimney_smoke1"
+          castShadow
+          receiveShadow
+          geometry={nodes.chimney_smoke1.geometry}
+          material={nodes.chimney_smoke1.material}
+          position={[2.595, 4.743, 126.607]}
+          rotation={[0, 0.185, 0]}
+          scale={0.026}
+        />
+        <group
           name="Chairlift011"
           position={[-1.032, 2.31, 127.195]}
           rotation={[-1.519, -0.133, 1.761]}
@@ -4331,6 +4379,120 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
               </group>
             </group>
           </group>
+        </group>
+        <mesh
+          name="chimney_smoke1001"
+          castShadow
+          receiveShadow
+          geometry={nodes.chimney_smoke1001.geometry}
+          material={nodes.chimney_smoke1001.material}
+          position={[-1.3, 2.332, 126.686]}
+          rotation={[0, -0.441, 0]}
+          scale={0.026}
+        />
+        <mesh
+          name="chimney_smoke1002"
+          castShadow
+          receiveShadow
+          geometry={nodes.chimney_smoke1002.geometry}
+          material={nodes.chimney_smoke1002.material}
+          position={[-1.364, 3.303, 129.515]}
+          rotation={[0, -1.223, 0]}
+          scale={0.026}
+        />
+        <mesh
+          name="chimney_smoke1003"
+          castShadow
+          receiveShadow
+          geometry={nodes.chimney_smoke1003.geometry}
+          material={nodes.chimney_smoke1003.material}
+          position={[-2.011, 2.16, 133.913]}
+          rotation={[0, -0.732, 0]}
+          scale={0.026}
+        />
+        <group
+          name="sled1"
+          position={[1.579, 4.036, 126.746]}
+          rotation={[-0.021, 0.121, 0.17]}
+          scale={0.031}
+        >
+          <mesh
+            name="treepCube137_treewood_2_0003"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0003.geometry}
+            material={materials["treewood_2.003"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0003_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0003_1.geometry}
+            material={materials["treewood.003"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0003_2"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0003_2.geometry}
+            material={materials["treesilver.003"]}
+          />
+        </group>
+        <group
+          name="sled1001"
+          position={[-1.739, 2.684, 130.921]}
+          rotation={[-0.627, 1.372, 0.591]}
+          scale={0.031}
+        >
+          <mesh
+            name="treepCube137_treewood_2_0004"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0004.geometry}
+            material={materials["treewood_2.004"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0004_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0004_1.geometry}
+            material={materials["treewood.004"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0004_2"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0004_2.geometry}
+            material={materials["treesilver.004"]}
+          />
+        </group>
+        <group
+          name="sled1002"
+          position={[3.134, 4.6, 131.898]}
+          rotation={[0.596, 0.675, -0.23]}
+          scale={0.031}
+        >
+          <mesh
+            name="treepCube137_treewood_2_0005"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0005.geometry}
+            material={materials["treewood_2.005"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0005_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0005_1.geometry}
+            material={materials["treewood.005"]}
+          />
+          <mesh
+            name="treepCube137_treewood_2_0005_2"
+            castShadow
+            receiveShadow
+            geometry={nodes.treepCube137_treewood_2_0005_2.geometry}
+            material={materials["treesilver.005"]}
+          />
         </group>
       </group>
     </group>
