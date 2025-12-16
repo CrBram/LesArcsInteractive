@@ -1,14 +1,41 @@
 import React, { useRef, useEffect } from "react";
-import { useGLTF, useAnimations, Box } from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
-import { RigidBody } from "@react-three/rapier";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
   materials: Record<string, THREE.MeshStandardMaterial>;
   animations: THREE.AnimationClip[];
 };
+
+function Sled() {
+  const body = useRef<any>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      body.current?.applyImpulse({ x: -0.18, y: 0, z: 0 }, true);
+    }, 2000);
+  }, []);
+
+  return (
+    <RigidBody
+      ref={body}
+      position={[3.248, 6.186, 126.642]}
+      friction={0.05}
+      linearDamping={0.2}
+      angularDamping={1}
+      enabledRotations={[true, true, true]}
+    >
+      <mesh scale={0.2}>
+        <boxGeometry args={[2, 0.5, 4]} />
+        <meshStandardMaterial color="red" />
+        <CuboidCollider args={[1, 0.25, 2]} />
+      </mesh>
+    </RigidBody>
+  );
+}
 
 export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const group = useRef<THREE.Group>(null);
@@ -94,15 +121,8 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             </group>
           </group>
         </group>
-        <RigidBody>
-          <Box position={[3.248, 35.186, 126.642]} scale={1}>
-            <mesh>
-              <boxGeometry />
-              <meshStandardMaterial color="red" />
-            </mesh>
-          </Box>
-        </RigidBody>
-        <RigidBody type="fixed" colliders="trimesh">
+        <Sled />
+        <RigidBody type="fixed" colliders="trimesh" friction={1}>
           <mesh
             name="MountainLarge"
             castShadow
@@ -113,7 +133,6 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             scale={[5.821, 7.276, 7.69]}
           />
         </RigidBody>
-
         <group
           name="FullTree138"
           position={[-1.417, 2.117, 126.063]}
