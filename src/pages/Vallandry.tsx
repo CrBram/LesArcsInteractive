@@ -1,8 +1,8 @@
 import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
-import { Home, CableCar, Store } from "lucide-react";
-import Arc2000Scene from "@/components/Arc2000Scene";
+import { Home, CableCar, Store, Bus } from "lucide-react";
+import VallandryScene from "@/components/VallandryScene";
 import Loading from "@/components/Loading";
 import Layout from "@/components/ui/Layout";
 import { CameraNavigationProvider } from "@/contexts/CameraNavigationContext";
@@ -31,7 +31,7 @@ function ProgressTracker({
   return null;
 }
 
-function Arc2000Page() {
+function VallandryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -48,29 +48,37 @@ function Arc2000Page() {
     fov: 45,
     near: 0.1,
     far: 400,
-    position: [-12.5, 1, 0],
+    position: [-12, 1, 211.0] as [number, number, number],
+    rotation: [0, Math.PI / 0.65, 0],
   };
 
   const infoButtons = [
     {
-      position: [-12.5, 1, 0] as [number, number, number],
+      position: [-12, 1, 211.0] as [number, number, number],
       icon: Home,
       title: "Home",
       restoreInitial: true,
     },
     {
-      position: [-2, -1.0, -1] as [number, number, number],
+      position: [-0.5, -1, 209] as [number, number, number],
       icon: Store,
       title: "Ski Shop",
       description:
         "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
     },
     {
-      position: [10, -1.0, -1] as [number, number, number],
+      position: [2, -1, 211.0] as [number, number, number],
+      icon: Bus,
+      title: "Bus Stop",
+      description:
+        "The bus stop is located in the center of Vallandry. The bus stop goes around Les Arcs and stops at the ski shops and the ski lodge.",
+    },
+    {
+      position: [7.5, -1, 208.0] as [number, number, number],
       icon: CableCar,
       title: "Ski Lodge",
       description:
-        "This is the main ski lodge of Arc 2000. This contains a restaurant, bar, and a gift shop. The lift going up to the Aiguilles Rouges starts here.",
+        "This is the main ski lodge of Vallandry. This contains a restaurant, bar, and a gift shop.",
     },
   ];
 
@@ -83,7 +91,7 @@ function Arc2000Page() {
             isTransitioning={isTransitioning}
           />
         )}
-        <BackButton label="Arc 2000" />
+        <BackButton label="Vallandry" />
         <InfoButtons items={infoButtons} />
         <Canvas
           camera={cameraSettings as any}
@@ -97,7 +105,7 @@ function Arc2000Page() {
               onProgress={setLoadingProgress}
               onComplete={handleLoadingComplete}
             />
-            <Arc2000Scene />
+            <VallandryScene />
           </Suspense>
         </Canvas>
       </Layout>
@@ -105,4 +113,4 @@ function Arc2000Page() {
   );
 }
 
-export default Arc2000Page;
+export default VallandryPage;

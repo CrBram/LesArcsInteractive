@@ -272,7 +272,7 @@ const MainScene = ({
                 className="w-6 h-6"
               />
             }
-            onClick={() => navigate("/arc-2000")}
+            onClick={() => navigate("/vallandry")}
           />
         </>
       )}
