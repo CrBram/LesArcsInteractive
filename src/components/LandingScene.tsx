@@ -26,12 +26,10 @@ const LandingScene = () => {
   const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
 
   useEffect(() => {
-    // Set initial dark background to prevent flash
-    scene.background = new THREE.Color("#111024");
+    scene.background = new THREE.Color("#A4A2C7");
     camera.position.set(...INITIAL_CAMERA_POSITION);
     camera.lookAt(...INITIAL_TARGET);
 
-    // Update to actual background color after a short delay
     const timer = setTimeout(() => {
       scene.background = new THREE.Color(backgroundColor);
     }, 100);
