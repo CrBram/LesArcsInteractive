@@ -51,7 +51,7 @@ const Arc1800Scene = () => {
       <fogExp2 attach="fog" args={[backgroundColor, 0.015]} />
       <Lights />
       <Arc1800 />
-      <Snow centerX={0} centerY={0} centerZ={0} />
+      <Snow centerX={3.8} centerY={0} centerZ={98} />
       <MouseLook />
       <SnowfallAmbient />
       <TownAmbience />

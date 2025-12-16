@@ -51,7 +51,7 @@ const VallandryScene = () => {
       <fogExp2 attach="fog" args={[backgroundColor, 0.015]} />
       <Lights />
       <Vallandry />
-      <Snow centerX={0} centerY={0} centerZ={0} />
+      <Snow centerX={-12} centerY={0} centerZ={211} />
       <MouseLook />
       <SnowfallAmbient />
       <TownAmbience />
