@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
@@ -9,12 +10,45 @@ type GLTFResult = GLTF & {
   animations: THREE.AnimationClip[];
 };
 
+function Sled() {
+  const body = useRef<any>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      body.current?.applyImpulse({ x: -0.18, y: 0, z: 0 }, true);
+    }, 2000);
+  }, []);
+
+  return (
+    <RigidBody
+      ref={body}
+      position={[3.248, 6.186, 126.642]}
+      friction={0.05}
+      linearDamping={0.2}
+      angularDamping={1}
+      enabledRotations={[false, false, false]}
+    >
+      <mesh scale={0.2}>
+        <boxGeometry args={[2, 0.5, 4]} />
+        <meshStandardMaterial color="red" />
+        <CuboidCollider args={[1, 0.25, 2]} />
+      </mesh>
+    </RigidBody>
+  );
+}
+
 export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const group = useRef<THREE.Group>(null);
+  const tree1 = useRef<any>(null);
   const { nodes, materials, animations } = useGLTF(
     "/models/LesArcs.glb"
   ) as unknown as GLTFResult;
   const { actions } = useAnimations(animations, group);
+
+  const dropTree = () => {
+    tree1.current.setBodyType("dynamic", true);
+    tree1.current?.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
+  };
 
   useEffect(() => {
     for (const action of Object.values(actions)) {
@@ -93,46 +127,58 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             </group>
           </group>
         </group>
-        <mesh
-          name="MountainLarge"
-          castShadow
-          receiveShadow
-          geometry={nodes.MountainLarge.geometry}
-          material={materials["Rock.006"]}
-          position={[1.53, 1.875, 129.817]}
-          scale={[5.821, 7.276, 7.69]}
-        />
-        <group
-          name="FullTree138"
-          position={[-1.417, 2.117, 126.063]}
-          rotation={[-0.02, 0.002, 0.05]}
-          scale={0.086}
+        <Sled />
+        <RigidBody type="fixed" colliders="trimesh" friction={1}>
+          <mesh
+            name="MountainLarge"
+            castShadow
+            receiveShadow
+            geometry={nodes.MountainLarge.geometry}
+            material={materials["Rock.006"]}
+            position={[1.53, 1.875, 129.817]}
+            scale={[5.821, 7.276, 7.69]}
+          />
+        </RigidBody>
+        <RigidBody
+          ref={tree1}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder100"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder100.geometry}
-            material={materials["TrunkBrown.011"]}
-          />
-          <mesh
-            name="Cylinder100_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder100_1.geometry}
-            material={materials["LeafGreen.010"]}
-          />
-          <mesh
-            name="SnowBall019"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall019.geometry}
-            material={materials["Snow.005"]}
-            position={[-0.019, -0.661, -0.017]}
-            rotation={[0.019, -0.003, -0.05]}
-            scale={11.694}
-          />
-        </group>
+          <group
+            name="FullTree138"
+            position={[-1.417, 2.117, 126.063]}
+            rotation={[-0.02, 0.002, 0.05]}
+            scale={0.086}
+            onClick={dropTree}
+          >
+            <mesh
+              name="Cylinder100"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder100.geometry}
+              material={materials["TrunkBrown.011"]}
+            />
+            <mesh
+              name="Cylinder100_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder100_1.geometry}
+              material={materials["LeafGreen.010"]}
+            />
+            <mesh
+              name="SnowBall019"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall019.geometry}
+              material={materials["Snow.005"]}
+              position={[-0.019, -0.661, -0.017]}
+              rotation={[0.019, -0.003, -0.05]}
+              scale={11.694}
+            />
+          </group>
+        </RigidBody>
         <group
           name="FullTree139"
           position={[-1.694, 2.005, 125.82]}
@@ -660,15 +706,17 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             scale={[14.33, 16.912, 14.464]}
           />
         </group>
-        <mesh
-          name="Plane001"
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane001.geometry}
-          material={materials["Ground.001"]}
-          position={[1.525, 4.306, 129.818]}
-          scale={-39.205}
-        />
+        <RigidBody type="fixed" colliders="trimesh" friction={1}>
+          <mesh
+            name="Plane001"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane001.geometry}
+            material={materials["Ground.001"]}
+            position={[1.525, 4.306, 129.818]}
+            scale={-39.205}
+          />
+        </RigidBody>
         <mesh
           name="Mountains_Backup006"
           castShadow

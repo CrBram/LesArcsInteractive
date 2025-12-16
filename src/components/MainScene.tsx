@@ -210,7 +210,6 @@ const MainScene = ({
         distance={5}
         decay={2}
       />
-
       <LesArcs />
       <Snow centerX={0} centerY={0} centerZ={127} />
       {showInfoPoints && (
