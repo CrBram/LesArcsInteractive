@@ -30,7 +30,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   };
 
   const handlePointerEnter = () => {
-    document.body.style.cursor = "pointer";
+    document.body.style.cursor = "url('/images/axe_icon.svg') 12 12, pointer";
   };
 
   const handlePointerLeave = () => {
