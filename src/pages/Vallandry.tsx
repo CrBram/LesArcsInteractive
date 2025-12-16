@@ -64,7 +64,7 @@ function VallandryPage() {
       icon: Store,
       title: "Ski Shop",
       description:
-        "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
+        "There is one central ski shop in Vallandry. It is located in the center of the village. It contains a wide range of ski equipment and clothing, as well as the ability to rent ski equipment.",
     },
     {
       position: [2, -1, 211.0] as [number, number, number],
@@ -78,7 +78,7 @@ function VallandryPage() {
       icon: CableCar,
       title: "Ski Lodge",
       description:
-        "This is the main ski lodge of Vallandry. This contains a restaurant, bar, and a gift shop.",
+        "This is the main ski lodge of Vallandry. It is located right at the foot of the cable car. This cozy lodge is the perfect place to relax after a day on the slopes.",
     },
   ];
 

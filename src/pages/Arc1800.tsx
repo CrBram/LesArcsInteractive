@@ -64,14 +64,14 @@ function Arc1800Page() {
       icon: Store,
       title: "Ski Shop",
       description:
-        "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
+        "There are two ski shops in Arc 1800. They are located in the center of the village and at the foot of the cable car. You can rent ski equipment at both shops.",
     },
     {
       position: [20.8, -1, 102.5] as [number, number, number],
       icon: CableCar,
       title: "Ski Lodge",
       description:
-        "This is the main ski lodge of Arc 1800. This contains a restaurant, bar, and a gift shop.",
+        "The ski lodge is located at the foot of the cable car. It contains a restaurant and a bar, it is also the main party spot on the mountain.",
     },
   ];
 

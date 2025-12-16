@@ -64,14 +64,14 @@ function Arc1600Page() {
       icon: Store,
       title: "Ski Shop",
       description:
-        "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
+        "There is one central ski shop in Arc 1600. It is located in the center of the village. It contains a wide range of ski equipment and clothing, as well as the ability to rent ski equipment.",
     },
     {
       position: [5, -1, 316.0] as [number, number, number],
       icon: CableCar,
       title: "Ski Lodge",
       description:
-        "This is the main ski lodge of Arc 1600. This contains a restaurant, bar, and a gift shop.",
+        "This is the main ski lodge of Arc 1600. It is located right at the foot of the cable car.",
     },
   ];
 
