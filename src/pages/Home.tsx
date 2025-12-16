@@ -100,7 +100,7 @@ function Home() {
             onProgress={setLoadingProgress}
             onComplete={handleLoadingComplete}
           />
-          <Physics debug>
+          <Physics>
             <MainScene
               onAiguillesRougesClick={handleAiguillesRougesClick}
               onResetReady={handleResetReady}
