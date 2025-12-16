@@ -54,20 +54,20 @@ function Arc1800Page() {
 
   const infoButtons = [
     {
-      position: [12.475, 1, 102.548] as [number, number, number],
+      position: [3.8, 1, 98.0] as [number, number, number],
       icon: Home,
       title: "Home",
       restoreInitial: true,
     },
     {
-      position: [16.467, 1.34, 93.785] as [number, number, number],
+      position: [13.0, -1.0, 96.0] as [number, number, number],
       icon: Store,
       title: "Ski Shop",
       description:
         "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
     },
     {
-      position: [20.146, 1.34, 103.219] as [number, number, number],
+      position: [20.8, -1, 102.5] as [number, number, number],
       icon: CableCar,
       title: "Ski Lodge",
       description:
