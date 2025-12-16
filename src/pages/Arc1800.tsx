@@ -1,0 +1,109 @@
+import { Suspense, useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { useProgress } from "@react-three/drei";
+import { Home, CableCar, Store } from "lucide-react";
+import Arc1800Scene from "@/components/Arc1800Scene";
+import Loading from "@/components/Loading";
+import Layout from "@/components/ui/Layout";
+import { CameraNavigationProvider } from "@/contexts/CameraNavigationContext";
+import { InfoButtons } from "@/components/InfoButtons";
+import { BackButton } from "@/components/ui/BackButton";
+import { useSound } from "@/contexts/SoundContext";
+
+function ProgressTracker({
+  onProgress,
+  onComplete,
+}: {
+  onProgress: (progress: number) => void;
+  onComplete: () => void;
+}) {
+  const { progress, active } = useProgress();
+
+  useEffect(() => {
+    onProgress(progress);
+    if (!active && progress === 100) {
+      setTimeout(() => {
+        onComplete();
+      }, 300);
+    }
+  }, [progress, active, onProgress, onComplete]);
+
+  return null;
+}
+
+function Arc1800Page() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const { startAudio } = useSound();
+
+  const handleLoadingComplete = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  };
+
+  const cameraSettings = {
+    fov: 45,
+    near: 0.1,
+    far: 400,
+    position: [3.8, 1, 98.0] as [number, number, number],
+    rotation: [0, Math.PI / 0.65, 0],
+  };
+
+  const infoButtons = [
+    {
+      position: [12.475, 1, 102.548] as [number, number, number],
+      icon: Home,
+      title: "Home",
+      restoreInitial: true,
+    },
+    {
+      position: [16.467, 1.34, 93.785] as [number, number, number],
+      icon: Store,
+      title: "Ski Shop",
+      description:
+        "There are multiple ski shops in the area including: decathlon, alpin center, and sport 2000.",
+    },
+    {
+      position: [20.146, 1.34, 103.219] as [number, number, number],
+      icon: CableCar,
+      title: "Ski Lodge",
+      description:
+        "This is the main ski lodge of Arc 1800. This contains a restaurant, bar, and a gift shop.",
+    },
+  ];
+
+  return (
+    <CameraNavigationProvider>
+      <Layout>
+        {isLoading && (
+          <Loading
+            progress={loadingProgress}
+            isTransitioning={isTransitioning}
+          />
+        )}
+        <BackButton label="Arc 1800" />
+        <InfoButtons items={infoButtons} />
+        <Canvas
+          camera={cameraSettings as any}
+          shadows
+          onPointerMissed={() => {
+            startAudio();
+          }}
+        >
+          <Suspense fallback={null}>
+            <ProgressTracker
+              onProgress={setLoadingProgress}
+              onComplete={handleLoadingComplete}
+            />
+            <Arc1800Scene />
+          </Suspense>
+        </Canvas>
+      </Layout>
+    </CameraNavigationProvider>
+  );
+}
+
+export default Arc1800Page;

@@ -259,7 +259,7 @@ const MainScene = ({
                 className="w-6 h-6"
               />
             }
-            onClick={() => navigate("/arc-2000")}
+            onClick={() => navigate("/arc-1800")}
           />
           <InfoPoint
             position={[-2.165, 1.945, 133.833]}

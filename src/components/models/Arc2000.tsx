@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei";
 import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 
 export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
-  const { nodes, materials } = useGLTF("/models/SkiTown.glb") as any;
+  const { nodes, materials } = useGLTF("/models/Arc2000.glb") as any;
   const { preset } = useEnvironmentPreset();
   const isNight = preset === "night";
   return (
@@ -2041,4 +2041,4 @@ export function Arc2000(props: React.ComponentPropsWithoutRef<"group">) {
   );
 }
 
-useGLTF.preload("/models/SkiTown.glb");
+useGLTF.preload("/models/Arc2000.glb");
