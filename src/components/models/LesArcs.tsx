@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, Box } from "@react-three/drei";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
+import { RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
@@ -93,15 +94,26 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             </group>
           </group>
         </group>
-        <mesh
-          name="MountainLarge"
-          castShadow
-          receiveShadow
-          geometry={nodes.MountainLarge.geometry}
-          material={materials["Rock.006"]}
-          position={[1.53, 1.875, 129.817]}
-          scale={[5.821, 7.276, 7.69]}
-        />
+        <RigidBody>
+          <Box position={[3.248, 35.186, 126.642]} scale={1}>
+            <mesh>
+              <boxGeometry />
+              <meshStandardMaterial color="red" />
+            </mesh>
+          </Box>
+        </RigidBody>
+        <RigidBody type="fixed" colliders="trimesh">
+          <mesh
+            name="MountainLarge"
+            castShadow
+            receiveShadow
+            geometry={nodes.MountainLarge.geometry}
+            material={materials["Rock.006"]}
+            position={[1.53, 1.875, 129.817]}
+            scale={[5.821, 7.276, 7.69]}
+          />
+        </RigidBody>
+
         <group
           name="FullTree138"
           position={[-1.417, 2.117, 126.063]}

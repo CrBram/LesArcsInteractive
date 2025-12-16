@@ -8,6 +8,7 @@ import { BackButton } from "@/components/ui/BackButton";
 import { InformationCard } from "@/components/InformationCard";
 import { MountainSnow } from "lucide-react";
 import { useSound } from "@/contexts/SoundContext";
+import { Physics } from "@react-three/rapier";
 
 const cameraSettings = {
   fov: 45,
@@ -99,12 +100,14 @@ function Home() {
             onProgress={setLoadingProgress}
             onComplete={handleLoadingComplete}
           />
-          <MainScene
-            onAiguillesRougesClick={handleAiguillesRougesClick}
-            onResetReady={handleResetReady}
-            showInfoPoints={showInfoPoints}
-            enableAzimuthConstraints={!showAiguillesRougesButton}
-          />
+          <Physics debug>
+            <MainScene
+              onAiguillesRougesClick={handleAiguillesRougesClick}
+              onResetReady={handleResetReady}
+              showInfoPoints={showInfoPoints}
+              enableAzimuthConstraints={!showAiguillesRougesButton}
+            />
+          </Physics>
         </Suspense>
       </Canvas>
     </Layout>
