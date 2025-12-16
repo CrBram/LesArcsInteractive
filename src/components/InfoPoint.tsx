@@ -12,18 +12,20 @@ interface InfoPointProps {
   position: [number, number, number];
   targetPosition: [number, number, number];
   title: string;
-  description?: string;
   icon?: ReactNode;
   onClick?: () => void;
+  onHoverEnter?: () => void;
+  onHoverLeave?: () => void;
 }
 
 export function InfoPoint({
   position,
   targetPosition,
   title,
-  description,
   icon,
   onClick,
+  onHoverEnter,
+  onHoverLeave,
 }: InfoPointProps) {
   const [hovered, setHovered] = useState(false);
   const { camera, controls } = useThree();
@@ -216,8 +218,18 @@ export function InfoPoint({
       <Html position={targetPosition} center distanceFactor={14}>
         <div
           className="info-point-container"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          onMouseEnter={() => {
+            setHovered(true);
+            if (onHoverEnter) {
+              onHoverEnter();
+            }
+          }}
+          onMouseLeave={() => {
+            setHovered(false);
+            if (onHoverLeave) {
+              onHoverLeave();
+            }
+          }}
           onClick={handleClick}
           style={{ cursor: "pointer" }}
         >
@@ -250,11 +262,6 @@ export function InfoPoint({
                 <p className="text-black text-base font-medium whitespace-nowrap">
                   {title}
                 </p>
-                {description && (
-                  <p className="text-center italic text-black text-sm whitespace-nowrap -mt-1">
-                    {description}
-                  </p>
-                )}
               </div>
             </div>
           </div>

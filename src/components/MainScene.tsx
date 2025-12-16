@@ -1,6 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect } from "react";
+import type React from "react";
 import { Snow } from "./scene/Snow";
 import { LesArcs } from "./models/LesArcs";
 import Lights from "./scene/Lights";
@@ -9,6 +10,7 @@ import WhooshGust from "./scene/WhooshGust";
 import MouseClickSound from "./scene/MouseClickSound";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow } from "lucide-react";
+import { CabinIcon } from "./icons/CabinIcon";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -21,6 +23,13 @@ interface MainSceneProps {
   onResetReady?: (reset: () => void) => void;
   showInfoPoints?: boolean;
   enableAzimuthConstraints?: boolean;
+  onInfoPointHover?: (
+    data: {
+      title: string;
+      description: string;
+      icon?: React.ComponentType<{ className?: string }>;
+    } | null
+  ) => void;
 }
 
 const INITIAL_CAMERA_POSITION: [number, number, number] = [
@@ -35,6 +44,7 @@ const MainScene = ({
   onResetReady,
   showInfoPoints = true,
   enableAzimuthConstraints = true,
+  onInfoPointHover,
 }: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
@@ -146,6 +156,52 @@ const MainScene = ({
     };
   }, [gl, startAudio]);
 
+  const infoPoints = [
+    {
+      position: [3.238, 6.65, 129.805] as [number, number, number],
+      targetPosition: [3.238, 7.5, 132] as [number, number, number],
+      title: "Aiguilles Rouges",
+      iconComponent: MountainSnow,
+      onClick: onAiguillesRougesClick,
+    },
+    {
+      position: [2.4, 4.65, 125.95] as [number, number, number],
+      targetPosition: [2.454, 5.4, 124.5] as [number, number, number],
+      title: "ARC 2000",
+      description:
+        "Arc 2000 is the highest village in Les Arcs, located at an altitude of 2000 meters. It's a modern, purpose-built resort with excellent ski-in/ski-out access and is the starting point for the cable car to Aiguilles Rouges.",
+      iconComponent: CabinIcon,
+      onClick: () => navigate("/arc-2000"),
+    },
+    {
+      position: [-1.559, 2.016, 126.75] as [number, number, number],
+      targetPosition: [-1.505, 2.766, 126.3] as [number, number, number],
+      title: "ARC 1600",
+      description:
+        "Arc 1600 is the original village of Les Arcs, built in the 1960s. It's a charming, traditional-style resort with a cozy atmosphere, located at 1600 meters altitude. The village offers a mix of accommodation, restaurants, and shops.",
+      iconComponent: CabinIcon,
+      onClick: () => navigate("/arc-1600"),
+    },
+    {
+      position: [-1.485, 2.745, 129.501] as [number, number, number],
+      targetPosition: [-1.3, 3.795, 129.051] as [number, number, number],
+      title: "ARC 1800",
+      description:
+        "Arc 1800 is one of the main villages in Les Arcs, situated at 1800 meters. It's a vibrant resort with a lively après-ski scene, numerous restaurants, bars, and shops. The village is well-connected to the ski area and offers great access to the slopes.",
+      iconComponent: CabinIcon,
+      onClick: () => navigate("/arc-1800"),
+    },
+    {
+      position: [-2.165, 1.945, 133.833] as [number, number, number],
+      targetPosition: [-2.111, 2.595, 134.383] as [number, number, number],
+      title: "Vallandry 1600",
+      description:
+        "Vallandry is a charming village at 1600 meters altitude, part of the Les Arcs ski area. It offers a more relaxed atmosphere compared to the main Arc villages, with traditional architecture and easy access to the slopes. The village is perfect for families and those seeking a quieter mountain experience.",
+      iconComponent: CabinIcon,
+      onClick: () => navigate("/vallandry"),
+    },
+  ];
+
   return (
     <>
       <fogExp2 attach="fog" args={[backgroundColor, 0.03]} />
@@ -214,65 +270,37 @@ const MainScene = ({
       <Snow centerX={0} centerY={0} centerZ={127} />
       {showInfoPoints && (
         <>
-          <InfoPoint
-            position={[3.238, 6.65, 129.805]}
-            targetPosition={[3.238, 7.5, 132]}
-            title="Aiguilles Rouges"
-            icon={<MountainSnow />}
-            onClick={onAiguillesRougesClick}
-          />
-          <InfoPoint
-            position={[2.4, 4.65, 125.95]}
-            targetPosition={[2.454, 5.4, 124.5]}
-            title="ARC 2000"
-            icon={
-              <img
-                src="/images/cabin_icon.svg"
-                alt="Cabin"
-                className="w-6 h-6"
+          {infoPoints.map((point, index) => {
+            const IconComponent = point.iconComponent;
+            return (
+              <InfoPoint
+                key={index}
+                position={point.position}
+                targetPosition={point.targetPosition}
+                title={point.title}
+                icon={<IconComponent className="w-6 h-6" />}
+                onClick={point.onClick}
+                onHoverEnter={
+                  point.description && onInfoPointHover
+                    ? () => {
+                        onInfoPointHover({
+                          title: point.title,
+                          description: point.description!,
+                          icon: point.iconComponent,
+                        });
+                      }
+                    : undefined
+                }
+                onHoverLeave={
+                  point.description && onInfoPointHover
+                    ? () => {
+                        onInfoPointHover(null);
+                      }
+                    : undefined
+                }
               />
-            }
-            onClick={() => navigate("/arc-2000")}
-          />
-          <InfoPoint
-            position={[-1.559, 2.016, 126.75]}
-            targetPosition={[-1.505, 2.766, 126.3]}
-            title="ARC 1600"
-            icon={
-              <img
-                src="/images/cabin_icon.svg"
-                alt="Cabin"
-                className="w-6 h-6"
-              />
-            }
-            onClick={() => navigate("/arc-1600")}
-          />
-          <InfoPoint
-            position={[-1.485, 2.745, 129.501]}
-            targetPosition={[-1.3, 3.795, 129.051]}
-            title="ARC 1800"
-            icon={
-              <img
-                src="/images/cabin_icon.svg"
-                alt="Cabin"
-                className="w-6 h-6"
-              />
-            }
-            onClick={() => navigate("/arc-1800")}
-          />
-          <InfoPoint
-            position={[-2.165, 1.945, 133.833]}
-            targetPosition={[-2.111, 2.595, 134.383]}
-            title="Vallandry 1600"
-            icon={
-              <img
-                src="/images/cabin_icon.svg"
-                alt="Cabin"
-                className="w-6 h-6"
-              />
-            }
-            onClick={() => navigate("/vallandry")}
-          />
+            );
+          })}
         </>
       )}
     </>

@@ -1,4 +1,5 @@
 import { Suspense, useState, useEffect, useRef } from "react";
+import type React from "react";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import MainScene from "@/components/MainScene";
@@ -45,6 +46,11 @@ function Home() {
   const [showAiguillesRougesButton, setShowAiguillesRougesButton] =
     useState(false);
   const [showInfoPoints, setShowInfoPoints] = useState(true);
+  const [hoveredInfoPoint, setHoveredInfoPoint] = useState<{
+    title: string;
+    description: string;
+    icon?: React.ComponentType<{ className?: string }>;
+  } | null>(null);
   const resetViewRef = useRef<(() => void) | null>(null);
   const { startAudio } = useSound();
 
@@ -58,6 +64,7 @@ function Home() {
   const handleAiguillesRougesClick = () => {
     setShowAiguillesRougesButton(true);
     setShowInfoPoints(false);
+    setHoveredInfoPoint(null); // Clear hover state when navigating to Aiguilles Rouges
   };
 
   const handleResetReady = (reset: () => void) => {
@@ -88,6 +95,17 @@ function Home() {
           isVisible={showAiguillesRougesButton}
         />
       )}
+      {hoveredInfoPoint &&
+        hoveredInfoPoint.description &&
+        showInfoPoints &&
+        hoveredInfoPoint.icon && (
+          <InformationCard
+            icon={hoveredInfoPoint.icon as any}
+            title={hoveredInfoPoint.title}
+            description={hoveredInfoPoint.description}
+            isVisible={!!hoveredInfoPoint}
+          />
+        )}
       <Canvas
         camera={cameraSettings as any}
         shadows
@@ -106,6 +124,9 @@ function Home() {
               onResetReady={handleResetReady}
               showInfoPoints={showInfoPoints}
               enableAzimuthConstraints={!showAiguillesRougesButton}
+              onInfoPointHover={(data) => {
+                setHoveredInfoPoint(data);
+              }}
             />
           </Physics>
         </Suspense>
