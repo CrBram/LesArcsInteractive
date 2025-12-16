@@ -12,7 +12,7 @@ type GLTFResult = GLTF & {
 
 export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const group = useRef<THREE.Group>(null);
-  const tree1 = useRef<any>(null);
+  const treeRefs = useRef<Record<string, any>>({});
   const sled1 = useRef<any>(null);
   const sled2 = useRef<any>(null);
   const sled3 = useRef<any>(null);
@@ -21,9 +21,20 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   ) as unknown as GLTFResult;
   const { actions } = useAnimations(animations, group);
 
-  const dropTree = () => {
-    tree1.current.setBodyType("dynamic", true);
-    tree1.current?.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
+  const dropTree = (treeId: string) => {
+    const treeRef = treeRefs.current[treeId];
+    if (treeRef) {
+      treeRef.setBodyType("dynamic", true);
+      treeRef.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
+    }
+  };
+
+  const handlePointerEnter = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const handlePointerLeave = () => {
+    document.body.style.cursor = "default";
   };
 
   const moveSled1 = () => {
@@ -52,44 +63,6 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group
-          name="Sketchfab_model"
-          position={[3.779, 6.177, 128.905]}
-          rotation={[-1.79, -0.013, -2.802]}
-          scale={7.641}
-        >
-          <group name="root010">
-            <group name="GLTF_SceneRootNode010" rotation={[Math.PI / 2, 0, 0]}>
-              <group name="Root_40">
-                <group name="Rig_39" scale={0.02}>
-                  <group name="GLTF_created_0">
-                    <skinnedMesh
-                      name="Object_11"
-                      geometry={nodes.Object_11.geometry}
-                      material={materials["Material.013"]}
-                      skeleton={nodes.Object_11.skeleton}
-                    />
-                    <skinnedMesh
-                      name="Object_8"
-                      geometry={nodes.Object_8.geometry}
-                      material={materials["Material.011"]}
-                      skeleton={nodes.Object_8.skeleton}
-                    />
-                    <skinnedMesh
-                      name="Object_9"
-                      geometry={nodes.Object_9.geometry}
-                      material={materials["Material.012"]}
-                      skeleton={nodes.Object_9.skeleton}
-                    />
-                    <group name="Player001_38" />
-                    <group name="Player_37" />
-                    <primitive object={nodes.GLTF_created_0_rootJoint} />
-                  </group>
-                </group>
-              </group>
-            </group>
-          </group>
-        </group>
         <mesh
           name="chimney_smoke1"
           castShadow
@@ -178,7 +151,9 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           />
         </RigidBody>
         <RigidBody
-          ref={tree1}
+          ref={(ref) => {
+            treeRefs.current.tree1 = ref;
+          }}
           type="kinematicPosition"
           friction={0.05}
           linearDamping={0.2}
@@ -189,7 +164,9 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             position={[-1.417, 2.117, 126.063]}
             rotation={[-0.02, 0.002, 0.05]}
             scale={0.086}
-            onClick={dropTree}
+            onClick={() => dropTree("tree1")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
           >
             <mesh
               name="Cylinder100"
@@ -217,440 +194,622 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             />
           </group>
         </RigidBody>
-        <group
-          name="FullTree139"
-          position={[-1.694, 2.005, 125.82]}
-          rotation={[-0.02, 0.002, 0.05]}
-          scale={[0.085, 0.061, 0.086]}
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree2 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder101"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder101.geometry}
-            material={materials["TrunkBrown.012"]}
-          />
-          <mesh
-            name="Cylinder101_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder101_1.geometry}
-            material={materials["LeafGreen.011"]}
-          />
-          <mesh
-            name="SnowBall020"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall020.geometry}
-            material={materials["Snow.006"]}
-            position={[-0.072, -0.863, -0.017]}
-            rotation={[0.021, -0.003, -0.053]}
-            scale={[11.711, 16.4, 11.697]}
-          />
-        </group>
-        <group
-          name="FullTree140"
-          position={[-2.035, 2.031, 126.025]}
-          rotation={[-0.02, -0.001, 0.158]}
-          scale={[0.085, 0.076, 0.086]}
+          <group
+            name="FullTree139"
+            position={[-1.694, 2.005, 125.82]}
+            rotation={[-0.02, 0.002, 0.05]}
+            scale={[0.085, 0.061, 0.086]}
+            onClick={() => dropTree("tree2")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder101"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder101.geometry}
+              material={materials["TrunkBrown.012"]}
+            />
+            <mesh
+              name="Cylinder101_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder101_1.geometry}
+              material={materials["LeafGreen.011"]}
+            />
+            <mesh
+              name="SnowBall020"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall020.geometry}
+              material={materials["Snow.006"]}
+              position={[-0.072, -0.863, -0.017]}
+              rotation={[0.021, -0.003, -0.053]}
+              scale={[11.711, 16.4, 11.697]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree3 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder104"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder104.geometry}
-            material={materials["TrunkBrown.013"]}
-          />
-          <mesh
-            name="Cylinder104_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder104_1.geometry}
-            material={materials["LeafGreen.012"]}
-          />
-          <mesh
-            name="SnowBall021"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall021.geometry}
-            material={materials["Snow.007"]}
-            position={[0.036, -0.793, -0.041]}
-            rotation={[0.02, -0.003, -0.159]}
-            scale={[11.733, 13.041, 11.695]}
-          />
-        </group>
-        <group
-          name="FullTree141"
-          position={[-0.306, 2.11, 125.365]}
-          rotation={[-0.197, 0.002, 0.05]}
-          scale={0.086}
+          <group
+            name="FullTree140"
+            position={[-2.035, 2.031, 126.025]}
+            rotation={[-0.02, -0.001, 0.158]}
+            scale={[0.085, 0.076, 0.086]}
+            onClick={() => dropTree("tree3")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder104"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder104.geometry}
+              material={materials["TrunkBrown.013"]}
+            />
+            <mesh
+              name="Cylinder104_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder104_1.geometry}
+              material={materials["LeafGreen.012"]}
+            />
+            <mesh
+              name="SnowBall021"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall021.geometry}
+              material={materials["Snow.007"]}
+              position={[0.036, -0.793, -0.041]}
+              rotation={[0.02, -0.003, -0.159]}
+              scale={[11.733, 13.041, 11.695]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree4 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder105"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder105.geometry}
-            material={materials["TrunkBrown.014"]}
-          />
-          <mesh
-            name="Cylinder105_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder105_1.geometry}
-            material={materials["LeafGreen.013"]}
-          />
-          <mesh
-            name="SnowBall022"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall022.geometry}
-            material={materials["Snow.020"]}
-            position={[-0.027, -0.598, 0.372]}
-            rotation={[0.197, -0.011, -0.049]}
-            scale={11.694}
-          />
-        </group>
-        <group
-          name="FullTree142"
-          position={[-1.417, 3.076, 130.73]}
-          rotation={[-0.02, 0.002, 0.05]}
-          scale={0.086}
+          <group
+            name="FullTree141"
+            position={[-0.306, 2.11, 125.365]}
+            rotation={[-0.197, 0.002, 0.05]}
+            scale={0.086}
+            onClick={() => dropTree("tree4")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder105"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder105.geometry}
+              material={materials["TrunkBrown.014"]}
+            />
+            <mesh
+              name="Cylinder105_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder105_1.geometry}
+              material={materials["LeafGreen.013"]}
+            />
+            <mesh
+              name="SnowBall022"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall022.geometry}
+              material={materials["Snow.020"]}
+              position={[-0.027, -0.598, 0.372]}
+              rotation={[0.197, -0.011, -0.049]}
+              scale={11.694}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree5 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder106"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder106.geometry}
-            material={materials["TrunkBrown.015"]}
-          />
-          <mesh
-            name="Cylinder106_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder106_1.geometry}
-            material={materials["LeafGreen.014"]}
-          />
-          <mesh
-            name="SnowBall023"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall023.geometry}
-            material={materials["Snow.021"]}
-            position={[-0.03, -0.79, 0.003]}
-            rotation={[0.019, -0.003, -0.05]}
-            scale={11.694}
-          />
-        </group>
-        <group
-          name="FullTree143"
-          position={[-1.015, 3.076, 130.393]}
-          rotation={[-0.02, 0.002, 0.05]}
-          scale={0.086}
+          <group
+            name="FullTree142"
+            position={[-1.417, 3.076, 130.73]}
+            rotation={[-0.02, 0.002, 0.05]}
+            scale={0.086}
+            onClick={() => dropTree("tree5")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder106"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder106.geometry}
+              material={materials["TrunkBrown.015"]}
+            />
+            <mesh
+              name="Cylinder106_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder106_1.geometry}
+              material={materials["LeafGreen.014"]}
+            />
+            <mesh
+              name="SnowBall023"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall023.geometry}
+              material={materials["Snow.021"]}
+              position={[-0.03, -0.79, 0.003]}
+              rotation={[0.019, -0.003, -0.05]}
+              scale={11.694}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree6 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder108"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder108.geometry}
-            material={materials["TrunkBrown.016"]}
-          />
-          <mesh
-            name="Cylinder108_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder108_1.geometry}
-            material={materials["LeafGreen.015"]}
-          />
-          <mesh
-            name="SnowBall024"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall024.geometry}
-            material={materials["Snow.022"]}
-            position={[-0.021, -0.749, -0.005]}
-            rotation={[0.019, -0.003, -0.05]}
-            scale={11.694}
-          />
-        </group>
-        <group
-          name="FullTree144"
-          position={[-0.997, 3.047, 129.018]}
-          rotation={[0.033, 0.002, 0.05]}
-          scale={0.086}
+          <group
+            name="FullTree143"
+            position={[-1.015, 3.076, 130.393]}
+            rotation={[-0.02, 0.002, 0.05]}
+            scale={0.086}
+            onClick={() => dropTree("tree6")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder108"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder108.geometry}
+              material={materials["TrunkBrown.016"]}
+            />
+            <mesh
+              name="Cylinder108_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder108_1.geometry}
+              material={materials["LeafGreen.015"]}
+            />
+            <mesh
+              name="SnowBall024"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall024.geometry}
+              material={materials["Snow.022"]}
+              position={[-0.021, -0.749, -0.005]}
+              rotation={[0.019, -0.003, -0.05]}
+              scale={11.694}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree7 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder112"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder112.geometry}
-            material={materials["TrunkBrown.017"]}
-          />
-          <mesh
-            name="Cylinder112_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder112_1.geometry}
-            material={materials["LeafGreen.016"]}
-          />
-          <mesh
-            name="SnowBall025"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall025.geometry}
-            material={materials["Snow.023"]}
-            position={[-0.018, -0.743, -0.039]}
-            rotation={[-0.033, 0, -0.05]}
-            scale={11.694}
-          />
-        </group>
-        <group
-          name="FullTree145"
-          position={[-1.654, 1.868, 133.503]}
-          rotation={[-0.02, 0.002, 0.05]}
-          scale={[0.085, 0.067, 0.086]}
+          <group
+            name="FullTree144"
+            position={[-0.997, 3.047, 129.018]}
+            rotation={[0.033, 0.002, 0.05]}
+            scale={0.086}
+            onClick={() => dropTree("tree7")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder112"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder112.geometry}
+              material={materials["TrunkBrown.017"]}
+            />
+            <mesh
+              name="Cylinder112_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder112_1.geometry}
+              material={materials["LeafGreen.016"]}
+            />
+            <mesh
+              name="SnowBall025"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall025.geometry}
+              material={materials["Snow.023"]}
+              position={[-0.018, -0.743, -0.039]}
+              rotation={[-0.033, 0, -0.05]}
+              scale={11.694}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree8 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder113"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder113.geometry}
-            material={materials["TrunkBrown.018"]}
-          />
-          <mesh
-            name="Cylinder113_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder113_1.geometry}
-            material={materials["LeafGreen.017"]}
-          />
-          <mesh
-            name="SnowBall026"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall026.geometry}
-            material={materials["Snow.024"]}
-            position={[-0.003, -0.738, -0.014]}
-            rotation={[0.02, -0.003, -0.051]}
-            scale={[11.709, 14.865, 11.696]}
-          />
-        </group>
-        <group
-          name="FullTree146"
-          position={[1.401, 4.387, 130.151]}
-          rotation={[0.033, 0.002, 0.05]}
-          scale={[0.085, 0.072, 0.085]}
+          <group
+            name="FullTree145"
+            position={[-1.654, 1.868, 133.503]}
+            rotation={[-0.02, 0.002, 0.05]}
+            scale={[0.085, 0.067, 0.086]}
+            onClick={() => dropTree("tree8")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder113"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder113.geometry}
+              material={materials["TrunkBrown.018"]}
+            />
+            <mesh
+              name="Cylinder113_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder113_1.geometry}
+              material={materials["LeafGreen.017"]}
+            />
+            <mesh
+              name="SnowBall026"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall026.geometry}
+              material={materials["Snow.024"]}
+              position={[-0.003, -0.738, -0.014]}
+              rotation={[0.02, -0.003, -0.051]}
+              scale={[11.709, 14.865, 11.696]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree9 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder114"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder114.geometry}
-            material={materials["TrunkBrown.019"]}
-          />
-          <mesh
-            name="Cylinder114_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder114_1.geometry}
-            material={materials["LeafGreen.018"]}
-          />
-          <mesh
-            name="SnowBall027"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall027.geometry}
-            material={materials["Snow.025"]}
-            position={[-0.011, -1.019, -0.028]}
-            rotation={[-0.034, 0, -0.051]}
-            scale={[11.705, 13.914, 11.699]}
-          />
-        </group>
-        <group
-          name="FullTree147"
-          position={[0.736, 4.003, 131.027]}
-          rotation={[0.033, 0, 0.004]}
-          scale={[0.085, 0.072, 0.085]}
+          <group
+            name="FullTree146"
+            position={[1.401, 4.387, 130.151]}
+            rotation={[0.033, 0.002, 0.05]}
+            scale={[0.085, 0.072, 0.085]}
+            onClick={() => dropTree("tree9")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder114"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder114.geometry}
+              material={materials["TrunkBrown.019"]}
+            />
+            <mesh
+              name="Cylinder114_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder114_1.geometry}
+              material={materials["LeafGreen.018"]}
+            />
+            <mesh
+              name="SnowBall027"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall027.geometry}
+              material={materials["Snow.025"]}
+              position={[-0.011, -1.019, -0.028]}
+              rotation={[-0.034, 0, -0.051]}
+              scale={[11.705, 13.914, 11.699]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree10 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder115"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder115.geometry}
-            material={materials["TrunkBrown.020"]}
-          />
-          <mesh
-            name="Cylinder115_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder115_1.geometry}
-            material={materials["LeafGreen.019"]}
-          />
-          <mesh
-            name="SnowBall028"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall028.geometry}
-            material={materials["Snow.026"]}
-            position={[0.004, -0.978, -0.039]}
-            rotation={[-0.034, 0, -0.004]}
-            scale={[11.699, 13.919, 11.699]}
-          />
-        </group>
-        <group
-          name="FullTree148"
-          position={[1.293, 4.017, 131.027]}
-          rotation={[0.033, 0.005, 0.148]}
-          scale={[0.085, 0.072, 0.085]}
+          <group
+            name="FullTree147"
+            position={[0.736, 4.003, 131.027]}
+            rotation={[0.033, 0, 0.004]}
+            scale={[0.085, 0.072, 0.085]}
+            onClick={() => dropTree("tree10")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder115"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder115.geometry}
+              material={materials["TrunkBrown.020"]}
+            />
+            <mesh
+              name="Cylinder115_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder115_1.geometry}
+              material={materials["LeafGreen.019"]}
+            />
+            <mesh
+              name="SnowBall028"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall028.geometry}
+              material={materials["Snow.026"]}
+              position={[0.004, -0.978, -0.039]}
+              rotation={[-0.034, 0, -0.004]}
+              scale={[11.699, 13.919, 11.699]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree11 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder116"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder116.geometry}
-            material={materials["TrunkBrown.021"]}
-          />
-          <mesh
-            name="Cylinder116_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder116_1.geometry}
-            material={materials["LeafGreen.020"]}
-          />
-          <mesh
-            name="SnowBall029"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall029.geometry}
-            material={materials["Snow.027"]}
-            position={[-0.03, -1.169, -0.023]}
-            rotation={[-0.034, 0, -0.15]}
-            scale={[11.752, 13.875, 11.699]}
-          />
-        </group>
-        <group
-          name="FullTree149"
-          position={[1.305, 3.84, 130.707]}
-          rotation={[0.033, 0.005, 0.148]}
-          scale={[0.085, 0.053, 0.085]}
+          <group
+            name="FullTree148"
+            position={[1.293, 4.017, 131.027]}
+            rotation={[0.033, 0.005, 0.148]}
+            scale={[0.085, 0.072, 0.085]}
+            onClick={() => dropTree("tree11")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder116"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder116.geometry}
+              material={materials["TrunkBrown.021"]}
+            />
+            <mesh
+              name="Cylinder116_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder116_1.geometry}
+              material={materials["LeafGreen.020"]}
+            />
+            <mesh
+              name="SnowBall029"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall029.geometry}
+              material={materials["Snow.027"]}
+              position={[-0.03, -1.169, -0.023]}
+              rotation={[-0.034, 0, -0.15]}
+              scale={[11.752, 13.875, 11.699]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree12 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder117"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder117.geometry}
-            material={materials["TrunkBrown.022"]}
-          />
-          <mesh
-            name="Cylinder117_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder117_1.geometry}
-            material={materials["LeafGreen.021"]}
-          />
-          <mesh
-            name="SnowBall030"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall030.geometry}
-            material={materials["Snow.028"]}
-            position={[-0.013, -1.356, -0.02]}
-            rotation={[-0.038, 0.001, -0.164]}
-            scale={[11.964, 18.853, 11.71]}
-          />
-        </group>
-        <group
-          name="FullTree150"
-          position={[1.401, 4.219, 132.316]}
-          rotation={[0.033, 0.002, 0.05]}
-          scale={[0.085, 0.072, 0.085]}
+          <group
+            name="FullTree149"
+            position={[1.305, 3.84, 130.707]}
+            rotation={[0.033, 0.005, 0.148]}
+            scale={[0.085, 0.053, 0.085]}
+            onClick={() => dropTree("tree12")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder117"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder117.geometry}
+              material={materials["TrunkBrown.022"]}
+            />
+            <mesh
+              name="Cylinder117_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder117_1.geometry}
+              material={materials["LeafGreen.021"]}
+            />
+            <mesh
+              name="SnowBall030"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall030.geometry}
+              material={materials["Snow.028"]}
+              position={[-0.013, -1.356, -0.02]}
+              rotation={[-0.038, 0.001, -0.164]}
+              scale={[11.964, 18.853, 11.71]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree13 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder118"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder118.geometry}
-            material={materials["TrunkBrown.023"]}
-          />
-          <mesh
-            name="Cylinder118_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder118_1.geometry}
-            material={materials["LeafGreen.022"]}
-          />
-          <mesh
-            name="SnowBall031"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall031.geometry}
-            material={materials["Snow.029"]}
-            position={[-0.017, -0.94, 0.013]}
-            rotation={[-0.034, 0, -0.051]}
-            scale={[11.705, 13.914, 11.699]}
-          />
-        </group>
-        <group
-          name="FullTree151"
-          position={[2.621, 4.374, 127.341]}
-          rotation={[0.033, 0.002, 0.05]}
-          scale={[0.085, 0.056, 0.085]}
+          <group
+            name="FullTree150"
+            position={[1.401, 4.219, 132.316]}
+            rotation={[0.033, 0.002, 0.05]}
+            scale={[0.085, 0.072, 0.085]}
+            onClick={() => dropTree("tree13")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder118"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder118.geometry}
+              material={materials["TrunkBrown.023"]}
+            />
+            <mesh
+              name="Cylinder118_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder118_1.geometry}
+              material={materials["LeafGreen.022"]}
+            />
+            <mesh
+              name="SnowBall031"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall031.geometry}
+              material={materials["Snow.029"]}
+              position={[-0.017, -0.94, 0.013]}
+              rotation={[-0.034, 0, -0.051]}
+              scale={[11.705, 13.914, 11.699]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree14 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder119"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder119.geometry}
-            material={materials["TrunkBrown.024"]}
-          />
-          <mesh
-            name="Cylinder119_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder119_1.geometry}
-            material={materials["LeafGreen.023"]}
-          />
-          <mesh
-            name="SnowBall033"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall033.geometry}
-            material={materials["Snow.031"]}
-            position={[-0.011, -1.407, -0.069]}
-            rotation={[-0.036, 0, -0.054]}
-            scale={[11.721, 17.771, 11.706]}
-          />
-        </group>
-        <group
-          name="FullTree152"
-          position={[2.151, 4.331, 127.109]}
-          rotation={[0.033, 0.002, 0.05]}
-          scale={[0.07, 0.046, 0.07]}
+          <group
+            name="FullTree151"
+            position={[2.621, 4.374, 127.341]}
+            rotation={[0.033, 0.002, 0.05]}
+            scale={[0.085, 0.056, 0.085]}
+            onClick={() => dropTree("tree14")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder119"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder119.geometry}
+              material={materials["TrunkBrown.024"]}
+            />
+            <mesh
+              name="Cylinder119_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder119_1.geometry}
+              material={materials["LeafGreen.023"]}
+            />
+            <mesh
+              name="SnowBall033"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall033.geometry}
+              material={materials["Snow.031"]}
+              position={[-0.011, -1.407, -0.069]}
+              rotation={[-0.036, 0, -0.054]}
+              scale={[11.721, 17.771, 11.706]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={(ref) => {
+            treeRefs.current.tree15 = ref;
+          }}
+          type="kinematicPosition"
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
         >
-          <mesh
-            name="Cylinder120"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder120.geometry}
-            material={materials["TrunkBrown.025"]}
-          />
-          <mesh
-            name="Cylinder120_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder120_1.geometry}
-            material={materials["LeafGreen.024"]}
-          />
-          <mesh
-            name="SnowBall034"
-            castShadow
-            receiveShadow
-            geometry={nodes.SnowBall034.geometry}
-            material={materials["Snow.032"]}
-            position={[-0.038, -1.141, -0.05]}
-            rotation={[-0.036, 0, -0.054]}
-            scale={[14.322, 21.715, 14.304]}
-          />
-        </group>
+          <group
+            name="FullTree152"
+            position={[2.151, 4.331, 127.109]}
+            rotation={[0.033, 0.002, 0.05]}
+            scale={[0.07, 0.046, 0.07]}
+            onClick={() => dropTree("tree15")}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+          >
+            <mesh
+              name="Cylinder120"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder120.geometry}
+              material={materials["TrunkBrown.025"]}
+            />
+            <mesh
+              name="Cylinder120_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cylinder120_1.geometry}
+              material={materials["LeafGreen.024"]}
+            />
+            <mesh
+              name="SnowBall034"
+              castShadow
+              receiveShadow
+              geometry={nodes.SnowBall034.geometry}
+              material={materials["Snow.032"]}
+              position={[-0.038, -1.141, -0.05]}
+              rotation={[-0.036, 0, -0.054]}
+              scale={[14.322, 21.715, 14.304]}
+            />
+          </group>
+        </RigidBody>
         <group
           name="FullTree153"
           position={[1.185, 4.016, 127.365]}
@@ -4414,6 +4573,8 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             rotation={[-0.021, 0.121, 0.17]}
             scale={0.031}
             onClick={moveSled1}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
           >
             <mesh
               name="treepCube137_treewood_2_0003"
@@ -4452,6 +4613,8 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             rotation={[-0.627, 1.372, 0.591]}
             scale={0.031}
             onClick={moveSled2}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
           >
             <mesh
               name="treepCube137_treewood_2_0004"
@@ -4490,6 +4653,8 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             rotation={[0.596, 0.675, -0.23]}
             scale={0.031}
             onClick={moveSled3}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
           >
             <mesh
               name="treepCube137_treewood_2_0005"
