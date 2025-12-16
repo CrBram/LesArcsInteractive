@@ -16,7 +16,7 @@ export function BackButton({ label, onClick }: BackButtonProps) {
       onClick();
     } else {
       setTimeout(() => {
-        navigate("/");
+        navigate("/les-arcs");
       }, 200);
     }
   };

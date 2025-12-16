@@ -28,7 +28,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
   const audioInstancesRef = useRef<
     Map<Audio, { hasStartedRef: { current: boolean } }>
   >(new Map());
-  const hasSetUpGlobalHandlerRef = useRef(false);
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev);
@@ -60,7 +59,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
 
   const startAudio = useCallback(() => {
     if (isAudioInitialized) return;
-    
+
     setIsAudioInitialized(true);
     sessionStorage.setItem("audioStartRequested", "true");
 
@@ -83,28 +82,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       }
     });
   }, [soundEnabled, isAudioInitialized]);
-
-  // Set up global click handler for first user interaction
-  useEffect(() => {
-    if (hasSetUpGlobalHandlerRef.current) return;
-    hasSetUpGlobalHandlerRef.current = true;
-
-    const handleFirstInteraction = () => {
-      startAudio();
-    };
-
-    window.addEventListener("click", handleFirstInteraction, { once: true });
-    window.addEventListener("touchstart", handleFirstInteraction, {
-      once: true,
-    });
-    window.addEventListener("keydown", handleFirstInteraction, { once: true });
-
-    return () => {
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
-    };
-  }, [startAudio]);
 
   return (
     <SoundContext.Provider

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Landing from "./pages/Landing";
-import Home from "./pages/Home";
+import LesArcs from "./pages/LesArcs";
 import Arc2000Page from "./pages/Arc2000";
 import Arc1800Page from "./pages/Arc1800";
 import Arc1600Page from "./pages/Arc1600";
@@ -18,7 +18,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/les-arcs" element={<LesArcs />} />
             <Route path="/arc-2000" element={<Arc2000Page />} />
             <Route path="/arc-1800" element={<Arc1800Page />} />
             <Route path="/arc-1600" element={<Arc1600Page />} />

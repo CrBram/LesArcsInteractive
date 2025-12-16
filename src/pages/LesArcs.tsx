@@ -8,7 +8,6 @@ import Layout from "@/components/ui/Layout";
 import { BackButton } from "@/components/ui/BackButton";
 import { InformationCard } from "@/components/InformationCard";
 import { MountainSnow } from "lucide-react";
-import { useSound } from "@/contexts/SoundContext";
 import { Physics } from "@react-three/rapier";
 
 const cameraSettings = {
@@ -39,7 +38,7 @@ function ProgressTracker({
   return null;
 }
 
-function Home() {
+function LesArcs() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -52,7 +51,6 @@ function Home() {
     icon?: React.ComponentType<{ className?: string }>;
   } | null>(null);
   const resetViewRef = useRef<(() => void) | null>(null);
-  const { startAudio } = useSound();
 
   const handleLoadingComplete = () => {
     setIsTransitioning(true);
@@ -64,7 +62,7 @@ function Home() {
   const handleAiguillesRougesClick = () => {
     setShowAiguillesRougesButton(true);
     setShowInfoPoints(false);
-    setHoveredInfoPoint(null); // Clear hover state when navigating to Aiguilles Rouges
+    setHoveredInfoPoint(null);
   };
 
   const handleResetReady = (reset: () => void) => {
@@ -106,13 +104,7 @@ function Home() {
             isVisible={!!hoveredInfoPoint}
           />
         )}
-      <Canvas
-        camera={cameraSettings as any}
-        shadows
-        onPointerMissed={() => {
-          startAudio();
-        }}
-      >
+      <Canvas camera={cameraSettings as any} shadows>
         <Suspense fallback={null}>
           <ProgressTracker
             onProgress={setLoadingProgress}
@@ -135,4 +127,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default LesArcs;

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
 import LandingScene from "@/components/LandingScene";
+import { useSound } from "@/contexts/SoundContext";
 
 const cameraSettings = {
   fov: 45,
@@ -12,9 +13,11 @@ const cameraSettings = {
 
 function Landing() {
   const navigate = useNavigate();
+  const { startAudio } = useSound();
 
   const handleStartExploring = () => {
-    navigate("/home");
+    startAudio();
+    navigate("/les-arcs");
   };
 
   return (

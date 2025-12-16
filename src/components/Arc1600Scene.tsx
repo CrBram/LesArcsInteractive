@@ -9,7 +9,6 @@ import { CameraNavigator } from "./CameraNavigator";
 import TownAmbience from "./scene/TownAmbience";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
 import MouseClickSound from "./scene/MouseClickSound";
-import { useSound } from "@/contexts/SoundContext";
 import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 import {
   Bloom,
@@ -19,8 +18,7 @@ import {
 import { ToneMappingMode } from "postprocessing";
 
 const Arc1600Scene = () => {
-  const { gl, scene } = useThree();
-  const { startAudio } = useSound();
+  const { scene } = useThree();
   const { preset } = useEnvironmentPreset();
 
   const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
@@ -28,19 +26,6 @@ const Arc1600Scene = () => {
   useEffect(() => {
     scene.background = new THREE.Color(backgroundColor);
   }, [scene, backgroundColor]);
-
-  useEffect(() => {
-    const canvas = gl.domElement;
-    const handleClick = () => {
-      startAudio();
-    };
-
-    canvas.addEventListener("click", handleClick);
-
-    return () => {
-      canvas.removeEventListener("click", handleClick);
-    };
-  }, [gl, startAudio]);
 
   return (
     <>

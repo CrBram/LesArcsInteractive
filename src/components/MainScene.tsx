@@ -15,7 +15,6 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { useSound } from "@/contexts/SoundContext";
 import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 
 interface MainSceneProps {
@@ -48,9 +47,8 @@ const MainScene = ({
 }: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
-  const { camera, gl, scene } = useThree();
+  const { camera, scene } = useThree();
   const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
-  const { startAudio } = useSound();
   const { preset } = useEnvironmentPreset();
 
   const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
@@ -142,19 +140,6 @@ const MainScene = ({
       onResetReady(resetView);
     }
   }, [onResetReady]);
-
-  useEffect(() => {
-    const canvas = gl.domElement;
-    const handleClick = () => {
-      startAudio();
-    };
-
-    canvas.addEventListener("click", handleClick);
-
-    return () => {
-      canvas.removeEventListener("click", handleClick);
-    };
-  }, [gl, startAudio]);
 
   const infoPoints = [
     {

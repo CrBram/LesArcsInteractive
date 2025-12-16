@@ -8,7 +8,6 @@ import Layout from "@/components/ui/Layout";
 import { CameraNavigationProvider } from "@/contexts/CameraNavigationContext";
 import { InfoButtons } from "@/components/InfoButtons";
 import { BackButton } from "@/components/ui/BackButton";
-import { useSound } from "@/contexts/SoundContext";
 
 function ProgressTracker({
   onProgress,
@@ -35,7 +34,6 @@ function Arc2000Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const { startAudio } = useSound();
 
   const handleLoadingComplete = () => {
     setIsTransitioning(true);
@@ -85,13 +83,7 @@ function Arc2000Page() {
         )}
         <BackButton label="Arc 2000" />
         <InfoButtons items={infoButtons} />
-        <Canvas
-          camera={cameraSettings as any}
-          shadows
-          onPointerMissed={() => {
-            startAudio();
-          }}
-        >
+        <Canvas camera={cameraSettings as any} shadows>
           <Suspense fallback={null}>
             <ProgressTracker
               onProgress={setLoadingProgress}
