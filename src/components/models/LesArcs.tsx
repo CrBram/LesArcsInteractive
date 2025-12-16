@@ -47,7 +47,7 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
 
   const dropTree = () => {
     tree1.current.setBodyType("dynamic", true);
-    tree1.current?.applyImpulse({ x: 0.15, y: 0, z: -0.15 }, true);
+    tree1.current?.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
   };
 
   useEffect(() => {
