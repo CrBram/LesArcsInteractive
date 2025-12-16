@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
@@ -10,36 +10,12 @@ type GLTFResult = GLTF & {
   animations: THREE.AnimationClip[];
 };
 
-function Sled() {
-  const body = useRef<any>(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      body.current?.applyImpulse({ x: -0.18, y: 0, z: 0 }, true);
-    }, 2000);
-  }, []);
-
-  return (
-    <RigidBody
-      ref={body}
-      position={[3.248, 6.186, 126.642]}
-      friction={0.05}
-      linearDamping={0.2}
-      angularDamping={1}
-      enabledRotations={[false, false, false]}
-    >
-      <mesh scale={0.2}>
-        <boxGeometry args={[2, 0.5, 4]} />
-        <meshStandardMaterial color="red" />
-        <CuboidCollider args={[1, 0.25, 2]} />
-      </mesh>
-    </RigidBody>
-  );
-}
-
 export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const group = useRef<THREE.Group>(null);
   const tree1 = useRef<any>(null);
+  const sled1 = useRef<any>(null);
+  const sled2 = useRef<any>(null);
+  const sled3 = useRef<any>(null);
   const { nodes, materials, animations } = useGLTF(
     "/models/LesArcs.glb"
   ) as unknown as GLTFResult;
@@ -48,6 +24,21 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const dropTree = () => {
     tree1.current.setBodyType("dynamic", true);
     tree1.current?.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
+  };
+
+  const moveSled1 = () => {
+    sled1.current.setBodyType("dynamic", true);
+    sled1.current?.applyImpulse({ x: -0.002, y: 0, z: 0 }, true);
+  };
+
+  const moveSled2 = () => {
+    sled2.current.setBodyType("dynamic", true);
+    sled2.current?.applyImpulse({ x: 0, y: 0, z: 0.004 }, true);
+  };
+
+  const moveSled3 = () => {
+    sled3.current.setBodyType("dynamic", true);
+    sled3.current?.applyImpulse({ x: -0.004, y: 0, z: 0 }, true);
   };
 
   useEffect(() => {
@@ -175,7 +166,6 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
             </group>
           </group>
         </group>
-        <Sled />
         <RigidBody type="fixed" colliders="trimesh" friction={1}>
           <mesh
             name="MountainLarge"
@@ -4410,90 +4400,120 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
           rotation={[0, -0.732, 0]}
           scale={0.026}
         />
-        <group
-          name="sled1"
+        <RigidBody
+          ref={sled1}
+          type="kinematicPosition"
           position={[1.579, 4.036, 126.746]}
-          rotation={[-0.021, 0.121, 0.17]}
-          scale={0.031}
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
+          enabledRotations={[true, true, true]}
         >
-          <mesh
-            name="treepCube137_treewood_2_0003"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0003.geometry}
-            material={materials["treewood_2.003"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0003_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0003_1.geometry}
-            material={materials["treewood.003"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0003_2"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0003_2.geometry}
-            material={materials["treesilver.003"]}
-          />
-        </group>
-        <group
-          name="sled1001"
+          <group
+            name="sled1"
+            rotation={[-0.021, 0.121, 0.17]}
+            scale={0.031}
+            onClick={moveSled1}
+          >
+            <mesh
+              name="treepCube137_treewood_2_0003"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0003.geometry}
+              material={materials["treewood_2.003"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0003_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0003_1.geometry}
+              material={materials["treewood.003"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0003_2"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0003_2.geometry}
+              material={materials["treesilver.003"]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={sled2}
+          type="kinematicPosition"
           position={[-1.739, 2.684, 130.921]}
-          rotation={[-0.627, 1.372, 0.591]}
-          scale={0.031}
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
+          enabledRotations={[true, true, true]}
         >
-          <mesh
-            name="treepCube137_treewood_2_0004"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0004.geometry}
-            material={materials["treewood_2.004"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0004_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0004_1.geometry}
-            material={materials["treewood.004"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0004_2"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0004_2.geometry}
-            material={materials["treesilver.004"]}
-          />
-        </group>
-        <group
-          name="sled1002"
+          <group
+            name="sled1001"
+            rotation={[-0.627, 1.372, 0.591]}
+            scale={0.031}
+            onClick={moveSled2}
+          >
+            <mesh
+              name="treepCube137_treewood_2_0004"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0004.geometry}
+              material={materials["treewood_2.004"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0004_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0004_1.geometry}
+              material={materials["treewood.004"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0004_2"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0004_2.geometry}
+              material={materials["treesilver.004"]}
+            />
+          </group>
+        </RigidBody>
+        <RigidBody
+          ref={sled3}
+          type="kinematicPosition"
           position={[3.134, 4.6, 131.898]}
-          rotation={[0.596, 0.675, -0.23]}
-          scale={0.031}
+          friction={0.05}
+          linearDamping={0.2}
+          angularDamping={1}
+          enabledRotations={[true, true, true]}
         >
-          <mesh
-            name="treepCube137_treewood_2_0005"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0005.geometry}
-            material={materials["treewood_2.005"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0005_1"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0005_1.geometry}
-            material={materials["treewood.005"]}
-          />
-          <mesh
-            name="treepCube137_treewood_2_0005_2"
-            castShadow
-            receiveShadow
-            geometry={nodes.treepCube137_treewood_2_0005_2.geometry}
-            material={materials["treesilver.005"]}
-          />
-        </group>
+          <group
+            name="sled1003"
+            rotation={[0.596, 0.675, -0.23]}
+            scale={0.031}
+            onClick={moveSled3}
+          >
+            <mesh
+              name="treepCube137_treewood_2_0005"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0005.geometry}
+              material={materials["treewood_2.005"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0005_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0005_1.geometry}
+              material={materials["treewood.005"]}
+            />
+            <mesh
+              name="treepCube137_treewood_2_0005_2"
+              castShadow
+              receiveShadow
+              geometry={nodes.treepCube137_treewood_2_0005_2.geometry}
+              material={materials["treesilver.005"]}
+            />
+          </group>
+        </RigidBody>
       </group>
     </group>
   );
