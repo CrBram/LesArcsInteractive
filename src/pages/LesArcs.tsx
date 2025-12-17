@@ -52,6 +52,7 @@ function LesArcs() {
     icon?: React.ComponentType<{ className?: string }>;
   } | null>(null);
   const resetViewRef = useRef<(() => void) | null>(null);
+  const stopAiguillesRougesAudioRef = useRef<(() => void) | null>(null);
 
   const cameraSettings = {
     fov: 45,
@@ -83,9 +84,16 @@ function LesArcs() {
     resetViewRef.current = reset;
   };
 
+  const handleStopAiguillesRougesAudioReady = (stopAudio: () => void) => {
+    stopAiguillesRougesAudioRef.current = stopAudio;
+  };
+
   const handleBackButtonClick = () => {
     setShowAiguillesRougesButton(false);
     setShowInfoPoints(true);
+    if (stopAiguillesRougesAudioRef.current) {
+      stopAiguillesRougesAudioRef.current();
+    }
     if (resetViewRef.current) {
       resetViewRef.current();
     }
@@ -128,6 +136,9 @@ function LesArcs() {
             <MainScene
               onAiguillesRougesClick={handleAiguillesRougesClick}
               onResetReady={handleResetReady}
+              onStopAiguillesRougesAudioReady={
+                handleStopAiguillesRougesAudioReady
+              }
               showInfoPoints={showInfoPoints}
               enableAzimuthConstraints={!showAiguillesRougesButton}
               shouldFlyIn={!isLoading && fromLanding}

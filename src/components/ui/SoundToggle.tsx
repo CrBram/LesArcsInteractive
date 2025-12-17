@@ -5,7 +5,7 @@ export default function SoundToggle() {
   const { soundEnabled, toggleSound } = useSound();
 
   return (
-    <div className="absolute right-4 sm:right-8 md:right-12 bottom-4 sm:bottom-8 md:bottom-12 z-40">
+    <div className="absolute right-14 sm:right-18 md:right-22 bottom-4 sm:bottom-8 md:bottom-12 z-40">
       <button
         type="button"
         onClick={toggleSound}

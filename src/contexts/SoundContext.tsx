@@ -11,6 +11,8 @@ import type { Audio } from "three";
 interface SoundContextType {
   soundEnabled: boolean;
   toggleSound: () => void;
+  voiceoverEnabled: boolean;
+  toggleVoiceover: () => void;
   startAudio: () => void;
   registerAudio: (
     audio: Audio,
@@ -23,6 +25,7 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export function SoundProvider({ children }: { children: ReactNode }) {
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [voiceoverEnabled, setVoiceoverEnabled] = useState(true);
   const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const audioInstancesRef = useRef<
     Map<Audio, { hasStartedRef: { current: boolean } }>
@@ -30,6 +33,10 @@ export function SoundProvider({ children }: { children: ReactNode }) {
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev);
+  };
+
+  const toggleVoiceover = () => {
+    setVoiceoverEnabled((prev) => !prev);
   };
 
   const registerAudio = useCallback(
@@ -86,6 +93,8 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       value={{
         soundEnabled,
         toggleSound,
+        voiceoverEnabled,
+        toggleVoiceover,
         startAudio,
         registerAudio,
         isAudioInitialized,

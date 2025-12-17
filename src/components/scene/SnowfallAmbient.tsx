@@ -12,7 +12,6 @@ const SnowfallAmbient = () => {
   const hasStartedRef = useRef(false);
   const audioBuffer = useLoader(AudioLoader, "/sound/snowfall_ambient.mp3");
 
-  // Only create AudioListener after user interaction (when isAudioInitialized is true)
   useEffect(() => {
     if (!isAudioInitialized || !audioBuffer) return;
 

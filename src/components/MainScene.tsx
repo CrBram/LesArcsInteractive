@@ -8,6 +8,8 @@ import Lights from "./scene/Lights";
 import SnowfallAmbient from "./scene/SnowfallAmbient";
 import WhooshGust from "./scene/WhooshGust";
 import MouseClickSound from "./scene/MouseClickSound";
+import NarratorAudio from "./scene/NarratorAudio";
+import type { NarratorAudioRef } from "./scene/NarratorAudio";
 import { InfoPoint } from "./InfoPoint";
 import { MountainSnow } from "lucide-react";
 import { CabinIcon } from "./icons/CabinIcon";
@@ -20,6 +22,7 @@ import { useEnvironmentPreset } from "@/contexts/EnvironmentPresetContext";
 interface MainSceneProps {
   onAiguillesRougesClick?: () => void;
   onResetReady?: (reset: () => void) => void;
+  onStopAiguillesRougesAudioReady?: (stopAudio: () => void) => void;
   showInfoPoints?: boolean;
   enableAzimuthConstraints?: boolean;
   shouldFlyIn?: boolean;
@@ -42,6 +45,7 @@ const INITIAL_TARGET: [number, number, number] = [
 const MainScene = ({
   onAiguillesRougesClick,
   onResetReady,
+  onStopAiguillesRougesAudioReady,
   showInfoPoints = true,
   enableAzimuthConstraints = true,
   shouldFlyIn = false,
@@ -53,6 +57,8 @@ const MainScene = ({
   const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
   const flyInAnimationRef = useRef<gsap.core.Timeline | null>(null);
   const hasFlownInRef = useRef(false);
+  const narratorAudioRef = useRef<NarratorAudioRef>(null);
+  const aiguillesRougesAudioRef = useRef<NarratorAudioRef>(null);
   const { preset } = useEnvironmentPreset();
   const spotlight1Ref = useRef<THREE.SpotLight>(null);
   const spotlight1TargetRef = useRef<THREE.Object3D>(null);
@@ -152,6 +158,17 @@ const MainScene = ({
   }, [onResetReady]);
 
   useEffect(() => {
+    if (onStopAiguillesRougesAudioReady) {
+      const stopAudio = () => {
+        if (aiguillesRougesAudioRef.current) {
+          aiguillesRougesAudioRef.current.stop();
+        }
+      };
+      onStopAiguillesRougesAudioReady(stopAudio);
+    }
+  }, [onStopAiguillesRougesAudioReady]);
+
+  useEffect(() => {
     if (!shouldFlyIn || hasFlownInRef.current) return;
 
     const timeoutId = setTimeout(() => {
@@ -182,6 +199,10 @@ const MainScene = ({
 
       if (flyInAnimationRef.current) {
         flyInAnimationRef.current.kill();
+      }
+
+      if (narratorAudioRef.current) {
+        narratorAudioRef.current.play();
       }
 
       const timeline = gsap.timeline({
@@ -238,13 +259,22 @@ const MainScene = ({
     }
   }, [preset]);
 
+  const handleAiguillesRougesClick = () => {
+    if (aiguillesRougesAudioRef.current) {
+      aiguillesRougesAudioRef.current.play();
+    }
+    if (onAiguillesRougesClick) {
+      onAiguillesRougesClick();
+    }
+  };
+
   const infoPoints = [
     {
       position: [3.238, 6.65, 129.805] as [number, number, number],
       targetPosition: [3.238, 7.5, 132] as [number, number, number],
       title: "Aiguilles Rouges",
       iconComponent: MountainSnow,
-      onClick: onAiguillesRougesClick,
+      onClick: handleAiguillesRougesClick,
     },
     {
       position: [2.4, 4.65, 125.95] as [number, number, number],
@@ -316,6 +346,14 @@ const MainScene = ({
       <SnowfallAmbient />
       <WhooshGust />
       <MouseClickSound />
+      <NarratorAudio
+        ref={narratorAudioRef}
+        path="/sound/narrations/les-arcs_welcome.mp3"
+      />
+      <NarratorAudio
+        ref={aiguillesRougesAudioRef}
+        path="/sound/narrations/aguilles_rouge_info.mp3"
+      />
       {preset === "night" && (
         <>
           <spotLight
