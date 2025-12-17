@@ -101,6 +101,7 @@ export function InfoButtons({ items, villageName }: InfoButtonsProps) {
         infoIndex++;
         const audioPath = `/sound/narrations/${villageName}_info${infoIndex}.mp3`;
         const audio = new Audio(audioPath);
+        audio.volume = 0.5;
         audioRefsRef.current.set(index, audio);
       }
     });

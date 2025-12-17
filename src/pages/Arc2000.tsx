@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import { Home, CableCar, Store } from "lucide-react";
@@ -8,6 +8,7 @@ import Layout from "@/components/ui/Layout";
 import { CameraNavigationProvider } from "@/contexts/CameraNavigationContext";
 import { InfoButtons } from "@/components/InfoButtons";
 import { BackButton } from "@/components/ui/BackButton";
+import { useSound } from "@/contexts/SoundContext";
 
 function ProgressTracker({
   onProgress,
@@ -34,6 +35,9 @@ function Arc2000Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { voiceoverEnabled, soundEnabled } = useSound();
+  const welcomeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const hasPlayedWelcomeRef = useRef(false);
 
   const handleLoadingComplete = () => {
     setIsTransitioning(true);
@@ -41,6 +45,32 @@ function Arc2000Page() {
       setIsLoading(false);
     }, 500);
   };
+
+  useEffect(() => {
+    if (isLoading || hasPlayedWelcomeRef.current) return;
+
+    if (!welcomeAudioRef.current) {
+      welcomeAudioRef.current = new Audio(
+        "/sound/narrations/arc2000_welcome.mp3"
+      );
+      welcomeAudioRef.current.volume = 0.5;
+    }
+
+    if (voiceoverEnabled && soundEnabled) {
+      welcomeAudioRef.current.currentTime = 0;
+      welcomeAudioRef.current.play().catch((error) => {
+        console.warn("Welcome audio playback failed:", error);
+      });
+      hasPlayedWelcomeRef.current = true;
+    }
+
+    return () => {
+      if (welcomeAudioRef.current) {
+        welcomeAudioRef.current.pause();
+        welcomeAudioRef.current.currentTime = 0;
+      }
+    };
+  }, [isLoading, voiceoverEnabled, soundEnabled]);
 
   const cameraSettings = {
     fov: 45,
