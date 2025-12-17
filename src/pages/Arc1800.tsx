@@ -65,7 +65,7 @@ function Arc1800Page() {
         "There are two ski shops in Arc 1800. They are located in the center of the village and at the foot of the cable car. You can rent ski equipment at both shops.",
     },
     {
-      position: [20.8, -1, 102.5] as [number, number, number],
+      position: [18.5, -1, 101.5] as [number, number, number],
       icon: CableCar,
       title: "Ski Lodge",
       description:
