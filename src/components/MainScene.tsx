@@ -54,6 +54,12 @@ const MainScene = ({
   const flyInAnimationRef = useRef<gsap.core.Timeline | null>(null);
   const hasFlownInRef = useRef(false);
   const { preset } = useEnvironmentPreset();
+  const spotlight1Ref = useRef<THREE.SpotLight>(null);
+  const spotlight1TargetRef = useRef<THREE.Object3D>(null);
+  const spotlight2Ref = useRef<THREE.SpotLight>(null);
+  const spotlight2TargetRef = useRef<THREE.Object3D>(null);
+  const spotlight3Ref = useRef<THREE.SpotLight>(null);
+  const spotlight3TargetRef = useRef<THREE.Object3D>(null);
 
   const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
 
@@ -218,6 +224,20 @@ const MainScene = ({
     return () => clearTimeout(timeoutId);
   }, [shouldFlyIn, camera]);
 
+  useEffect(() => {
+    if (preset === "night") {
+      if (spotlight1Ref.current && spotlight1TargetRef.current) {
+        spotlight1Ref.current.target = spotlight1TargetRef.current;
+      }
+      if (spotlight2Ref.current && spotlight2TargetRef.current) {
+        spotlight2Ref.current.target = spotlight2TargetRef.current;
+      }
+      if (spotlight3Ref.current && spotlight3TargetRef.current) {
+        spotlight3Ref.current.target = spotlight3TargetRef.current;
+      }
+    }
+  }, [preset]);
+
   const infoPoints = [
     {
       position: [3.238, 6.65, 129.805] as [number, number, number],
@@ -296,38 +316,58 @@ const MainScene = ({
       <SnowfallAmbient />
       <WhooshGust />
       <MouseClickSound />
-      <pointLight
-        position={[-1.559, 2.016, 126.75]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[-1.485, 2.745, 129.501]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[-2.165, 1.845, 133.833]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
-      <pointLight
-        position={[2.248, 4.186, 126.642]}
-        intensity={1.5}
-        scale={0.2}
-        color="#ffd700"
-        distance={5}
-        decay={2}
-      />
+      {preset === "night" && (
+        <>
+          <spotLight
+            ref={spotlight1Ref}
+            position={[-1.15, 2.016, 126.75]}
+            intensity={10}
+            color="#ffaa44"
+            distance={6}
+            decay={2}
+            angle={0.9}
+            penumbra={0.8}
+          />
+          <object3D
+            ref={spotlight1TargetRef}
+            position={[-2.343, 1.623, 126.083]}
+          />
+          <spotLight
+            ref={spotlight2Ref}
+            position={[-1.2, 2.8, 129.501]}
+            intensity={20}
+            color="#ffaa44"
+            distance={6}
+            decay={2}
+            angle={0.9}
+            penumbra={0.8}
+          />
+          <object3D
+            ref={spotlight2TargetRef}
+            position={[-2.137, 2.685, 130.091]}
+          />
+          <spotLight
+            ref={spotlight3Ref}
+            position={[-1.8, 1.95, 133.5]}
+            intensity={20}
+            color="#ffaa44"
+            distance={6}
+            decay={2}
+            angle={0.6}
+            penumbra={0.8}
+          />
+          <object3D ref={spotlight3TargetRef} position={[-2.4, 1.5, 134.2]} />
+          <spotLight
+            position={[2.56, 4.13, 126.642]}
+            intensity={30}
+            color="#ffaa44"
+            distance={10}
+            decay={2}
+            angle={0.8}
+            penumbra={0.8}
+          />
+        </>
+      )}
       <LesArcs />
       <Snow centerX={0} centerY={0} centerZ={127} />
       {showInfoPoints && (
