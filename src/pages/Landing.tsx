@@ -17,7 +17,7 @@ function Landing() {
 
   const handleStartExploring = () => {
     startAudio();
-    navigate("/les-arcs");
+    navigate("/les-arcs", { state: { fromLanding: true } });
   };
 
   return (

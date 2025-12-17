@@ -22,6 +22,7 @@ interface MainSceneProps {
   onResetReady?: (reset: () => void) => void;
   showInfoPoints?: boolean;
   enableAzimuthConstraints?: boolean;
+  shouldFlyIn?: boolean;
   onInfoPointHover?: (
     data: {
       title: string;
@@ -43,12 +44,15 @@ const MainScene = ({
   onResetReady,
   showInfoPoints = true,
   enableAzimuthConstraints = true,
+  shouldFlyIn = false,
   onInfoPointHover,
 }: MainSceneProps) => {
   const navigate = useNavigate();
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const { camera, scene } = useThree();
   const resetAnimationRef = useRef<gsap.core.Timeline | null>(null);
+  const flyInAnimationRef = useRef<gsap.core.Timeline | null>(null);
+  const hasFlownInRef = useRef(false);
   const { preset } = useEnvironmentPreset();
 
   const backgroundColor = preset === "night" ? "#111024" : "#8785B9";
@@ -140,6 +144,79 @@ const MainScene = ({
       onResetReady(resetView);
     }
   }, [onResetReady]);
+
+  useEffect(() => {
+    if (!shouldFlyIn || hasFlownInRef.current) return;
+
+    const timeoutId = setTimeout(() => {
+      if (!controlsRef.current || hasFlownInRef.current) return;
+
+      hasFlownInRef.current = true;
+      const orbitControls = controlsRef.current as any;
+
+      const startPosition = new THREE.Vector3();
+      camera.getWorldPosition(startPosition);
+
+      orbitControls.target.set(...INITIAL_TARGET);
+      orbitControls.update();
+
+      orbitControls.enabled = false;
+
+      const cameraAnim = {
+        x: startPosition.x,
+        y: startPosition.y,
+        z: startPosition.z,
+      };
+
+      const targetAnim = {
+        x: INITIAL_TARGET[0],
+        y: INITIAL_TARGET[1],
+        z: INITIAL_TARGET[2],
+      };
+
+      if (flyInAnimationRef.current) {
+        flyInAnimationRef.current.kill();
+      }
+
+      const timeline = gsap.timeline({
+        onUpdate: () => {
+          if (!controlsRef.current) return;
+          camera.position.set(cameraAnim.x, cameraAnim.y, cameraAnim.z);
+          orbitControls.target.set(targetAnim.x, targetAnim.y, targetAnim.z);
+          orbitControls.update();
+        },
+        onComplete: () => {
+          if (controlsRef.current) {
+            (controlsRef.current as any).enabled = true;
+          }
+        },
+      });
+
+      timeline.to(cameraAnim, {
+        x: INITIAL_CAMERA_POSITION[0],
+        y: INITIAL_CAMERA_POSITION[1],
+        z: INITIAL_CAMERA_POSITION[2],
+        duration: 3,
+        ease: "power2.out",
+      });
+
+      timeline.to(
+        targetAnim,
+        {
+          x: INITIAL_TARGET[0],
+          y: INITIAL_TARGET[1],
+          z: INITIAL_TARGET[2],
+          duration: 3,
+          ease: "power2.out",
+        },
+        "<"
+      );
+
+      flyInAnimationRef.current = timeline;
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [shouldFlyIn, camera]);
 
   const infoPoints = [
     {

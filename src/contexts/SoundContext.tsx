@@ -4,7 +4,6 @@ import {
   useState,
   useRef,
   useCallback,
-  useEffect,
 } from "react";
 import type { ReactNode } from "react";
 import type { Audio } from "three";
@@ -37,7 +36,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     (audio: Audio, hasStartedRef: { current: boolean }) => {
       audioInstancesRef.current.set(audio, { hasStartedRef });
 
-      // Start audio if it's already initialized (user has clicked) or if sessionStorage indicates it should start
       const shouldStart =
         isAudioInitialized ||
         sessionStorage.getItem("audioStartRequested") === "true";
