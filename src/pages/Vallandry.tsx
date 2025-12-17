@@ -90,7 +90,7 @@ function VallandryPage() {
           />
         )}
         <BackButton label="Vallandry" />
-        <InfoButtons items={infoButtons} />
+        <InfoButtons items={infoButtons} villageName="vallandry" />
         <Canvas camera={cameraSettings as any} shadows>
           <Suspense fallback={null}>
             <ProgressTracker

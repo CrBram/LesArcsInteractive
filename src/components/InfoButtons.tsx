@@ -15,15 +15,18 @@ interface InfoButtonItem {
 
 interface InfoButtonsProps {
   items: InfoButtonItem[];
+  villageName?: string; // e.g., "arc1800", "arc1600", "arc2000", "vallandry"
 }
 
-export function InfoButtons({ items }: InfoButtonsProps) {
+export function InfoButtons({ items, villageName }: InfoButtonsProps) {
   const { navigateTo, activeTarget, currentTarget } = useCameraNavigation();
-  const { startAudio } = useSound();
+  const { startAudio, voiceoverEnabled, soundEnabled } = useSound();
   const [displayedItem, setDisplayedItem] = useState<InfoButtonItem | null>(
     null
   );
   const timeoutRef = useRef<number | null>(null);
+  const audioRefsRef = useRef<Map<number, HTMLAudioElement>>(new Map());
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleClick = (item: InfoButtonItem) => {
     startAudio();
@@ -88,6 +91,83 @@ export function InfoButtons({ items }: InfoButtonsProps) {
     displayedItem === activeItem &&
     displayedItem.description
   );
+
+  useEffect(() => {
+    if (!villageName) return;
+
+    let infoIndex = 0;
+    items.forEach((item, index) => {
+      if (item.description) {
+        infoIndex++;
+        const audioPath = `/sound/narrations/${villageName}_info${infoIndex}.mp3`;
+        const audio = new Audio(audioPath);
+        audioRefsRef.current.set(index, audio);
+      }
+    });
+
+    return () => {
+      audioRefsRef.current.forEach((audio) => {
+        audio.pause();
+        audio.src = "";
+      });
+      audioRefsRef.current.clear();
+    };
+  }, [items, villageName]);
+
+  useEffect(() => {
+    if (!villageName || !isVisible || !displayedItem) {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current.currentTime = 0;
+        currentAudioRef.current = null;
+      }
+      return;
+    }
+
+    const itemIndex = items.findIndex((item) => item === displayedItem);
+    if (itemIndex === -1) return;
+
+    const audio = audioRefsRef.current.get(itemIndex);
+    if (!audio) return;
+
+    if (currentAudioRef.current && currentAudioRef.current !== audio) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+    }
+
+    if (voiceoverEnabled && soundEnabled) {
+      audio.currentTime = 0;
+      audio.play().catch((error) => {
+        console.warn("Narrator audio playback failed:", error);
+      });
+      currentAudioRef.current = audio;
+    }
+  }, [
+    isVisible,
+    displayedItem,
+    items,
+    villageName,
+    voiceoverEnabled,
+    soundEnabled,
+  ]);
+
+  useEffect(() => {
+    if ((!voiceoverEnabled || !soundEnabled) && currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+  }, [voiceoverEnabled, soundEnabled]);
+
+  useEffect(() => {
+    return () => {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current.currentTime = 0;
+        currentAudioRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <>

@@ -83,7 +83,7 @@ function Arc1800Page() {
           />
         )}
         <BackButton label="Arc 1800" />
-        <InfoButtons items={infoButtons} />
+        <InfoButtons items={infoButtons} villageName="arc1800" />
         <Canvas camera={cameraSettings as any} shadows>
           <Suspense fallback={null}>
             <ProgressTracker

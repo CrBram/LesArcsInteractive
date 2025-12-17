@@ -82,7 +82,7 @@ function Arc2000Page() {
           />
         )}
         <BackButton label="Arc 2000" />
-        <InfoButtons items={infoButtons} />
+        <InfoButtons items={infoButtons} villageName="arc2000" />
         <Canvas camera={cameraSettings as any} shadows>
           <Suspense fallback={null}>
             <ProgressTracker
