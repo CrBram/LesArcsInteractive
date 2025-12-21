@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { useThree, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import { AudioLoader, Audio, AudioListener } from "three";
 import type { GLTF } from "three-stdlib";
 import { RigidBody } from "@react-three/rapier";
+import { useSound } from "@/contexts/SoundContext";
 
 type GLTFResult = GLTF & {
   nodes: Record<string, any>;
@@ -16,16 +19,60 @@ export function LesArcs(props: React.ComponentPropsWithoutRef<"group">) {
   const sled1 = useRef<any>(null);
   const sled2 = useRef<any>(null);
   const sled3 = useRef<any>(null);
+  const { camera } = useThree();
+  const { soundEnabled, isAudioInitialized } = useSound();
+  const treeHitAudioRef = useRef<Audio | null>(null);
+  const listenerRef = useRef<AudioListener | null>(null);
+  const audioBuffer = useLoader(AudioLoader, "/sound/tree_hit.mp3");
   const { nodes, materials, animations } = useGLTF(
     "/models/LesArcs.glb"
   ) as unknown as GLTFResult;
   const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    if (!isAudioInitialized || !audioBuffer) return;
+
+    if (!listenerRef.current) {
+      listenerRef.current = new AudioListener();
+      camera.add(listenerRef.current);
+    }
+
+    if (!treeHitAudioRef.current) {
+      treeHitAudioRef.current = new Audio(listenerRef.current);
+      treeHitAudioRef.current.setBuffer(audioBuffer);
+      treeHitAudioRef.current.setLoop(false);
+      treeHitAudioRef.current.setVolume(0.3);
+    }
+
+    return () => {
+      if (treeHitAudioRef.current) {
+        treeHitAudioRef.current.stop();
+        treeHitAudioRef.current.disconnect();
+        treeHitAudioRef.current = null;
+      }
+      if (listenerRef.current) {
+        camera.remove(listenerRef.current);
+        listenerRef.current = null;
+      }
+    };
+  }, [audioBuffer, camera, isAudioInitialized]);
 
   const dropTree = (treeId: string) => {
     const treeRef = treeRefs.current[treeId];
     if (treeRef) {
       treeRef.setBodyType("dynamic", true);
       treeRef.applyImpulse({ x: 0.15, y: 0.1, z: -0.15 }, true);
+
+      if (treeHitAudioRef.current && soundEnabled) {
+        try {
+          if (treeHitAudioRef.current.isPlaying) {
+            treeHitAudioRef.current.stop();
+          }
+          treeHitAudioRef.current.play();
+        } catch (error) {
+          console.warn("Tree hit audio playback failed:", error);
+        }
+      }
     }
   };
 
