@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useCameraNavigation } from "@/contexts/CameraNavigationContext";
 import { useSound } from "@/contexts/SoundContext";
 import type { LucideIcon } from "lucide-react";
+import { Info } from "lucide-react";
 import { InformationCard } from "./InformationCard";
 import { PlayMouseClick } from "./scene/MouseClickSound";
 
@@ -24,6 +25,7 @@ export function InfoButtons({ items, villageName }: InfoButtonsProps) {
   const [displayedItem, setDisplayedItem] = useState<InfoButtonItem | null>(
     null
   );
+  const [showHint, setShowHint] = useState(true);
   const timeoutRef = useRef<number | null>(null);
   const audioRefsRef = useRef<Map<number, HTMLAudioElement>>(new Map());
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -170,24 +172,40 @@ export function InfoButtons({ items, villageName }: InfoButtonsProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const hintTimeout = window.setTimeout(() => {
+      setShowHint(false);
+    }, 10000);
+
+    return () => {
+      window.clearTimeout(hintTimeout);
+    };
+  }, []);
+
   return (
     <>
+      {showHint && (
+        <div className="select-none absolute left-4 sm:left-8 md:left-12 bottom-22 sm:bottom-26 md:bottom-30 z-40 flex items-center gap-2 text-xs sm:text-sm text-white bg-[#2563EB]/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+          <Info className="w-3.5 h-3.5" />
+          <span>Click the buttons to navigate</span>
+        </div>
+      )}
       <div className="absolute left-4 sm:left-8 md:left-12 bottom-4 sm:bottom-8 md:bottom-12 z-40 flex flex-row gap-2">
         {items.map((item, index) => (
           <button
             key={index}
             type="button"
             onClick={() => handleClick(item)}
-            className={`w-14 h-14 rounded-full backdrop-blur-sm border flex items-center justify-center hover:bg-[#E9E9E9]/90 transition cursor-pointer ${
+            className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full backdrop-blur-sm border flex items-center justify-center hover:bg-[#E9E9E9]/90 transition cursor-pointer ${
               isActive(item)
                 ? "bg-[#E9E9E9]/90 border-[#A4E3D8] border-2"
                 : "bg-[#DBDBDB]/70 border-[#E9E9E9]/60"
-            }`}
+            } ${showHint ? "info-button-pulsate" : ""}`}
           >
             {item.icon ? (
-              <item.icon className="w-6 h-6 text-black" />
+              <item.icon className="w-4 h-4 sm:w-6 sm:h-6 text-black" />
             ) : (
-              <span className="text-black text-xs font-medium text-center px-2">
+              <span className="text-black text-[10px] sm:text-xs font-medium text-center px-1 sm:px-2">
                 {item.title}
               </span>
             )}
