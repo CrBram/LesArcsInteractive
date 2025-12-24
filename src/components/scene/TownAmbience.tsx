@@ -12,7 +12,6 @@ const TownAmbience = () => {
   const hasStartedRef = useRef(false);
   const audioBuffer = useLoader(AudioLoader, "/sound/town_ambience.mp3");
 
-  // Only create AudioListener after user interaction (when isAudioInitialized is true)
   useEffect(() => {
     if (!isAudioInitialized || !audioBuffer) return;
 

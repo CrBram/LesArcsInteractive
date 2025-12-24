@@ -16,7 +16,7 @@ interface InfoButtonItem {
 
 interface InfoButtonsProps {
   items: InfoButtonItem[];
-  villageName?: string; // e.g., "arc1800", "arc1600", "arc2000", "vallandry"
+  villageName?: string;
 }
 
 export function InfoButtons({ items, villageName }: InfoButtonsProps) {

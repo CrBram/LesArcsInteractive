@@ -21,7 +21,7 @@ export function CameraNavigator() {
         position: [pos.x, pos.y, pos.z],
         rotation: [camera.rotation.x, camera.rotation.y, camera.rotation.z],
       };
-      // Set initial active target to the home position
+
       setActiveTarget({
         position: [pos.x, pos.y, pos.z],
         restoreInitial: true,

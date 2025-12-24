@@ -10,7 +10,6 @@ const Lights = () => {
   return (
     <>
       <Environment preset={environmentPreset} background={false} />
-      {/* Preload the other preset to prevent white flash on first switch */}
       <Environment preset={preloadPreset} background={false} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
       <directionalLight position={[-3, 2, 1]} intensity={0.5} color="#ffa500" />

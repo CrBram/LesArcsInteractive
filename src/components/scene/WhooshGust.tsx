@@ -19,7 +19,6 @@ const WhooshGust = () => {
   const listenerRef = useRef<AudioListener | null>(null);
   const audioBuffer = useLoader(AudioLoader, "/sound/whoosh_gust.mp3");
 
-  // Only create AudioListener after user interaction (when isAudioInitialized is true)
   useEffect(() => {
     if (!isAudioInitialized || !audioBuffer) return;
 
